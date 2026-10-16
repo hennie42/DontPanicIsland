@@ -2289,6 +2289,48 @@
      "url": "https://kenney.nl/assets/kenney-fonts"
     }
    ]
+  },
+  "generated:whale": {
+   "source": "generated",
+   "pack": "intro-gags",
+   "name": "whale",
+   "kind": "model",
+   "license": "own work",
+   "license_note": "made by the director with tools/make_intro_props.py (Blender), ticket C1",
+   "license_checked": "2026-10-16",
+   "url": "tools/make_intro_props.py",
+   "need": "intro-gags",
+   "decorative": true,
+   "fetched": "2026-10-16",
+   "res": null,
+   "files": [
+    {
+     "path": "assets/generated/whale.glb",
+     "sha256": "e8c6f27205b746e8ced850cb1daf63fecb931c8bc2edd99e1e445435dc19dc37",
+     "url": ""
+    }
+   ]
+  },
+  "generated:petunias": {
+   "source": "generated",
+   "pack": "intro-gags",
+   "name": "petunias",
+   "kind": "model",
+   "license": "own work",
+   "license_note": "made by the director with tools/make_intro_props.py (Blender), ticket C1",
+   "license_checked": "2026-10-16",
+   "url": "tools/make_intro_props.py",
+   "need": "intro-gags",
+   "decorative": true,
+   "fetched": "2026-10-16",
+   "res": null,
+   "files": [
+    {
+     "path": "assets/generated/petunias.glb",
+     "sha256": "eb42478b2abbebbf1f4678aa2c31edd23fdf0b32af23d5a474ffe108c5a0fe36",
+     "url": ""
+    }
+   ]
   }
  }
 }

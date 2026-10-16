@@ -88,3 +88,7 @@ Scale props relative to a tile; don't move or edit asset files.
 - `res://assets/kenney/tower-defense-kit/Models/GLB format/enemy-ufo-a.glb` (model, 1.00 x 0.68 x 1.00)
 - `res://assets/kenney/tower-defense-kit/Models/GLB format/enemy-ufo-beam.glb` (model, 0.80 x 1.00 x 0.80)
 - `res://assets/kenney/tower-defense-kit/Models/GLB format/enemy-ufo-c.glb` (model, 1.00 x 0.53 x 1.00)
+
+## intro-gags (made for this game)
+- `res://assets/generated/whale.glb` (model, 2.50 x 0.75 x 1.08)
+- `res://assets/generated/petunias.glb` (model, 0.32 x 0.29 x 0.34)
