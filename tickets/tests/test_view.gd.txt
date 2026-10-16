@@ -55,7 +55,7 @@ func _init() -> void:
 	var nc := cell(v, centre)
 	check(absf(nc.position.y) < 0.001, "revealed cell at y 0")
 	check(not nc.get_node("Number").visible, "zero cell shows no number")
-	check(nc.get_node("Dug").visible, "revealed cell is dug")
+	check(nc.get_node("Dug").visible and not nc.get_node("Tile").visible, "revealed cell: sand (Dug) instead of the terrain tile")
 	var border: Vector2i = Hex.ring(centre, 2)[0]
 	var nb := cell(v, border)
 	var lbl := nb.get_node("Number") as Label3D
@@ -63,6 +63,7 @@ func _init() -> void:
 	var hid := cell(v, ring3[1])
 	check(absf(hid.position.y - BoardView.HIDDEN_Y) < 0.001, "hidden cell raised")
 	check(not hid.get_node("Fog").visible, "hidden-but-visible cell has no fog")
+	check(hid.get_node("Tile").visible and not hid.get_node("Dug").visible, "hidden cell shows its terrain tile")
 	var fogc := cell(v, Hex.ring(centre, 4)[12])
 	check(fogc.get_node("Fog").visible, "fog beyond the territory")
 	check(cell(v, ring3[0]).get_node("Flag").visible and not hid.get_node("Flag").visible, "flag only on the flagged cell")
