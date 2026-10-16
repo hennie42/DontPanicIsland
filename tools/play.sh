@@ -4,6 +4,7 @@
 # appears (as GAME_<MARKER>) and there is no SCRIPT ERROR. The dispatcher's play checks use this.
 set -u
 cd "$(dirname "$0")/.."
+studio godot-import >/dev/null 2>&1   # registers new class_name scripts (Board, Solver, ...) before running
 secs=$1; want=$2; shift 2
 out=$(studio godot-play scenes/main.tscn "$secs" --headless "$@" 2>&1)
 log=$(grep -o '\.studio/logs/[^ )]*\.log' <<<"$out" | tail -1)

@@ -3,6 +3,7 @@
 # fail unless every one prints "ALL TESTS PASSED". The dispatcher's acceptance checks use this.
 set -u
 cd "$(dirname "$0")/.."
+studio godot-import >/dev/null 2>&1   # registers new class_name scripts (Board, Solver, ...) before running
 rc=0
 for t in "$@"; do
   out=$(studio godot-script "$t" 2>&1)
