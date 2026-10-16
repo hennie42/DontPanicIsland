@@ -1,0 +1,235 @@
+{
+ "preamble": "tickets/PREAMBLE.md",
+ "tickets": [
+  {
+   "id": "T02",
+   "title": "Board core: mines, numbers, flood fill",
+   "deps": [],
+   "prompt": "tickets/T02.md",
+   "check": "tools/test.sh tests/test_board_core.gd",
+   "check_pass": "CHECK OK",
+   "owner": "local",
+   "attempts": 3,
+   "timeout": 2400,
+   "tests": [
+    "test_board_core.gd"
+   ]
+  },
+  {
+   "id": "T03",
+   "title": "Territory, flags, chording, turns",
+   "deps": [
+    "T02"
+   ],
+   "prompt": "tickets/T03.md",
+   "check": "tools/test.sh tests/test_board_core.gd tests/test_board_rules.gd",
+   "check_pass": "CHECK OK",
+   "owner": "local",
+   "attempts": 3,
+   "timeout": 2400,
+   "tests": [
+    "test_board_core.gd",
+    "test_board_rules.gd"
+   ]
+  },
+  {
+   "id": "T04",
+   "title": "Crew, resources, tools, win/lose, score",
+   "deps": [
+    "T03"
+   ],
+   "prompt": "tickets/T04.md",
+   "check": "tools/test.sh tests/test_board_core.gd tests/test_board_rules.gd tests/test_board_economy.gd",
+   "check_pass": "CHECK OK",
+   "owner": "local",
+   "attempts": 3,
+   "timeout": 2400,
+   "tests": [
+    "test_board_core.gd",
+    "test_board_rules.gd",
+    "test_board_economy.gd"
+   ]
+  },
+  {
+   "id": "T05",
+   "title": "Solver bot",
+   "deps": [
+    "T04"
+   ],
+   "prompt": "tickets/T05.md",
+   "check": "tools/test.sh tests/test_solver.gd",
+   "check_pass": "CHECK OK",
+   "owner": "local",
+   "attempts": 3,
+   "timeout": 2400,
+   "tests": [
+    "test_solver.gd"
+   ]
+  },
+  {
+   "id": "T06",
+   "title": "Board view",
+   "deps": [
+    "T04"
+   ],
+   "prompt": "tickets/T06.md",
+   "check": "tools/test.sh tests/test_view.gd",
+   "check_pass": "CHECK OK",
+   "owner": "local",
+   "attempts": 3,
+   "timeout": 2400,
+   "tests": [
+    "test_view.gd"
+   ]
+  },
+  {
+   "id": "T07",
+   "title": "Camera rig",
+   "deps": [],
+   "prompt": "tickets/T07.md",
+   "check": "tools/test.sh tests/test_camera.gd",
+   "check_pass": "CHECK OK",
+   "owner": "local",
+   "attempts": 3,
+   "timeout": 2400,
+   "tests": [
+    "test_camera.gd"
+   ]
+  },
+  {
+   "id": "T08",
+   "title": "HUD",
+   "deps": [
+    "T04"
+   ],
+   "prompt": "tickets/T08.md",
+   "check": "tools/test.sh tests/test_hud.gd",
+   "check_pass": "CHECK OK",
+   "owner": "local",
+   "attempts": 3,
+   "timeout": 2400,
+   "tests": [
+    "test_hud.gd"
+   ]
+  },
+  {
+   "id": "T09",
+   "title": "Game controller, input, autopilot",
+   "deps": [
+    "T05",
+    "T06",
+    "T07",
+    "T08"
+   ],
+   "prompt": "tickets/T09.md",
+   "check": "tools/play.sh 120 \"START MOVE END FINISH\" --autopilot --skip-intro && tools/play.sh 60 \"START END FINISH\" --autopilot --skip-intro --force-lose",
+   "check_pass": "CHECK OK",
+   "owner": "local",
+   "attempts": 3,
+   "timeout": 2400,
+   "tests": []
+  },
+  {
+   "id": "T10",
+   "title": "Help, Esc menu, tips",
+   "deps": [
+    "T09"
+   ],
+   "prompt": "tickets/T10.md",
+   "check": "tools/play.sh 120 \"START HELP_OPEN HELP_CLOSE MENU_OPEN MENU_CLOSE TIP END FINISH\" --autopilot --skip-intro && tools/test.sh tests/test_hud.gd",
+   "check_pass": "CHECK OK",
+   "owner": "local",
+   "attempts": 3,
+   "timeout": 2400,
+   "tests": [
+    "test_hud.gd"
+   ]
+  },
+  {
+   "id": "C1",
+   "title": "Whale and petunias models (director)",
+   "deps": [],
+   "prompt": "tickets/C1.md",
+   "check": "test -f assets/generated/whale.glb && test -f assets/generated/petunias.glb && echo CHECK OK",
+   "check_pass": "CHECK OK",
+   "owner": "claude",
+   "attempts": 3,
+   "timeout": 2400,
+   "tests": []
+  },
+  {
+   "id": "T11",
+   "title": "Intro: Grumbleflox mines the island",
+   "deps": [
+    "T09",
+    "C1"
+   ],
+   "prompt": "tickets/T11.md",
+   "check": "tools/play.sh 150 \"INTRO_START INTRO_END START END FINISH\" --autopilot",
+   "check_pass": "CHECK OK",
+   "owner": "local",
+   "attempts": 3,
+   "timeout": 2400,
+   "tests": []
+  },
+  {
+   "id": "T12",
+   "title": "Win and lose screens",
+   "deps": [
+    "T09"
+   ],
+   "prompt": "tickets/T12.md",
+   "check": "tools/play.sh 150 \"END ENDING ENDING_PANEL FINISH\" --autopilot --skip-intro && tools/play.sh 90 \"ENDING ENDING_PANEL FINISH\" --autopilot --skip-intro --force-lose",
+   "check_pass": "CHECK OK",
+   "owner": "local",
+   "attempts": 3,
+   "timeout": 2400,
+   "tests": []
+  },
+  {
+   "id": "T13",
+   "title": "Music and sound effects",
+   "deps": [
+    "T10",
+    "T11",
+    "T12"
+   ],
+   "prompt": "tickets/T13.md",
+   "check": "test -f audio/music_loop.wav && tools/play.sh 150 \"MUSIC_START SFX END FINISH\" --autopilot --skip-intro",
+   "check_pass": "CHECK OK",
+   "owner": "local",
+   "attempts": 3,
+   "timeout": 2400,
+   "tests": []
+  },
+  {
+   "id": "T14",
+   "title": "Camp, crew and beach dressing",
+   "deps": [
+    "T09"
+   ],
+   "prompt": "tickets/T14.md",
+   "check": "tools/play.sh 150 \"CAMP END FINISH\" --autopilot --skip-intro && tools/play.sh 90 \"CAMP CREW END FINISH\" --autopilot --skip-intro --force-lose",
+   "check_pass": "CHECK OK",
+   "owner": "local",
+   "attempts": 3,
+   "timeout": 2400,
+   "tests": []
+  },
+  {
+   "id": "T15",
+   "title": "Exports and packaged autopilot",
+   "deps": [
+    "T13",
+    "T14"
+   ],
+   "prompt": "tickets/T15.md",
+   "check": "studio godot-export linux && studio godot-export web && test -f build/web/index.html && studio run-export 150 --headless --autopilot --skip-intro | tee /dev/stderr | grep -q GAME_FINISH && echo CHECK OK",
+   "check_pass": "CHECK OK",
+   "owner": "local",
+   "attempts": 3,
+   "timeout": 3000,
+   "tests": []
+  }
+ ]
+}

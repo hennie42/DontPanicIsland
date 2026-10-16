@@ -21,8 +21,9 @@ losing your crew. A homage to The Hitchhiker's Guide to the Galaxy runs through 
   click toggles a flag; clicking a number whose flags are all placed opens its other neighbours (chording).
 - **Landing (first click):** chooses where the camp lands; that tile and its neighbours are guaranteed safe and
   open like a classic first click.
-- **Territory:** after landing you can only reveal tiles adjacent to your revealed land. Flags can go on any
-  visible tile.
+- **Territory:** after landing you can only reveal tiles adjacent to your revealed land **or to a flag** (you walk
+  around a marked mine; without this, safe pockets enclosed by mines could never be reached). Flags can go on any
+  visible tile. (Rule refined by the director on 2026-10-16 after the solver test found unwinnable boards.)
 - **Crew:** 3 crewmates. A mine hit costs one crewmate (explosion, a skeleton stays on the tile as a gravestone,
   play continues). 0 crew = game over.
 - **Resources:** wood from palm tiles (+1 each) buys tools. Gold is the score: 12 treasure chests on safe tiles
