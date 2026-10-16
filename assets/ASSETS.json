@@ -1,0 +1,2294 @@
+{
+ "version": 1,
+ "assets": {
+  "kenney:hexagon-kit/Models/GLB format/sand.glb": {
+   "source": "kenney",
+   "pack": "hexagon-kit",
+   "name": "sand",
+   "kind": "model",
+   "license": "CC0",
+   "license_note": "Hexagon Kit (2.0) Created/distributed by Kenney (www.kenney.nl) Creation date: 23-01-2024 11:58 ------------------------------ License: (Creative Commons Zero, CC0) http://creativecommons.org/publicdo",
+   "license_checked": "2026-10-16",
+   "url": "https://kenney.nl/assets/hexagon-kit",
+   "need": "terrain-hexes",
+   "decorative": false,
+   "fetched": "2026-10-16",
+   "res": null,
+   "files": [
+    {
+     "path": "assets/kenney/hexagon-kit/Models/GLB format/sand.glb",
+     "sha256": "37abdbc4cf0b0dea2158443066e4916525bfc146793a17041387c2e57848c591",
+     "url": "https://kenney.nl/assets/hexagon-kit"
+    },
+    {
+     "path": "assets/kenney/hexagon-kit/Models/GLB format/Textures/colormap.png",
+     "sha256": "1c3ae3b62c14acc87810027ebbe3397f21c3de7a076fdd2b2246782bab88afd3",
+     "url": "https://kenney.nl/assets/hexagon-kit"
+    }
+   ],
+   "measured": {
+    "dims_m": [
+     1.0,
+     0.2,
+     1.1547
+    ],
+    "tris": 32,
+    "meshes": 1,
+    "origin_offset_m": [
+     0.0,
+     0.0,
+     -0.0
+    ]
+   }
+  },
+  "kenney:hexagon-kit/Models/GLB format/sand-desert.glb": {
+   "source": "kenney",
+   "pack": "hexagon-kit",
+   "name": "sand-desert",
+   "kind": "model",
+   "license": "CC0",
+   "license_note": "Hexagon Kit (2.0) Created/distributed by Kenney (www.kenney.nl) Creation date: 23-01-2024 11:58 ------------------------------ License: (Creative Commons Zero, CC0) http://creativecommons.org/publicdo",
+   "license_checked": "2026-10-16",
+   "url": "https://kenney.nl/assets/hexagon-kit",
+   "need": "terrain-hexes",
+   "decorative": false,
+   "fetched": "2026-10-16",
+   "res": null,
+   "files": [
+    {
+     "path": "assets/kenney/hexagon-kit/Models/GLB format/sand-desert.glb",
+     "sha256": "2f6af9e7bbd76c9d2a939104b6d387d93b9dfdf36360773c54f35f4de1f0bc3e",
+     "url": "https://kenney.nl/assets/hexagon-kit"
+    },
+    {
+     "path": "assets/kenney/hexagon-kit/Models/GLB format/Textures/colormap.png",
+     "sha256": "1c3ae3b62c14acc87810027ebbe3397f21c3de7a076fdd2b2246782bab88afd3",
+     "url": "https://kenney.nl/assets/hexagon-kit"
+    }
+   ],
+   "measured": {
+    "dims_m": [
+     1.0,
+     0.51,
+     1.1547
+    ],
+    "tris": 246,
+    "meshes": 1,
+    "origin_offset_m": [
+     0.0,
+     0.0,
+     -0.0
+    ]
+   }
+  },
+  "kenney:hexagon-kit/Models/GLB format/sand-rocks.glb": {
+   "source": "kenney",
+   "pack": "hexagon-kit",
+   "name": "sand-rocks",
+   "kind": "model",
+   "license": "CC0",
+   "license_note": "Hexagon Kit (2.0) Created/distributed by Kenney (www.kenney.nl) Creation date: 23-01-2024 11:58 ------------------------------ License: (Creative Commons Zero, CC0) http://creativecommons.org/publicdo",
+   "license_checked": "2026-10-16",
+   "url": "https://kenney.nl/assets/hexagon-kit",
+   "need": "terrain-hexes",
+   "decorative": false,
+   "fetched": "2026-10-16",
+   "res": null,
+   "files": [
+    {
+     "path": "assets/kenney/hexagon-kit/Models/GLB format/sand-rocks.glb",
+     "sha256": "8f183c353c78b87e61a84fa11305fa904c48e619a284edab0e0ec2c25cd5b68f",
+     "url": "https://kenney.nl/assets/hexagon-kit"
+    },
+    {
+     "path": "assets/kenney/hexagon-kit/Models/GLB format/Textures/colormap.png",
+     "sha256": "1c3ae3b62c14acc87810027ebbe3397f21c3de7a076fdd2b2246782bab88afd3",
+     "url": "https://kenney.nl/assets/hexagon-kit"
+    }
+   ],
+   "measured": {
+    "dims_m": [
+     1.0,
+     0.2435,
+     1.1547
+    ],
+    "tris": 82,
+    "meshes": 1,
+    "origin_offset_m": [
+     0.0,
+     0.0,
+     -0.0
+    ]
+   }
+  },
+  "kenney:hexagon-kit/Models/GLB format/grass.glb": {
+   "source": "kenney",
+   "pack": "hexagon-kit",
+   "name": "grass",
+   "kind": "model",
+   "license": "CC0",
+   "license_note": "Hexagon Kit (2.0) Created/distributed by Kenney (www.kenney.nl) Creation date: 23-01-2024 11:58 ------------------------------ License: (Creative Commons Zero, CC0) http://creativecommons.org/publicdo",
+   "license_checked": "2026-10-16",
+   "url": "https://kenney.nl/assets/hexagon-kit",
+   "need": "terrain-hexes",
+   "decorative": false,
+   "fetched": "2026-10-16",
+   "res": null,
+   "files": [
+    {
+     "path": "assets/kenney/hexagon-kit/Models/GLB format/grass.glb",
+     "sha256": "cd8bf98ad347c8346cf31e68006d013b822364eb602dea2749c85b28ebc465df",
+     "url": "https://kenney.nl/assets/hexagon-kit"
+    },
+    {
+     "path": "assets/kenney/hexagon-kit/Models/GLB format/Textures/colormap.png",
+     "sha256": "1c3ae3b62c14acc87810027ebbe3397f21c3de7a076fdd2b2246782bab88afd3",
+     "url": "https://kenney.nl/assets/hexagon-kit"
+    }
+   ],
+   "measured": {
+    "dims_m": [
+     1.0,
+     0.2,
+     1.1547
+    ],
+    "tris": 32,
+    "meshes": 1,
+    "origin_offset_m": [
+     0.0,
+     0.0,
+     -0.0
+    ]
+   }
+  },
+  "kenney:hexagon-kit/Models/GLB format/grass-forest.glb": {
+   "source": "kenney",
+   "pack": "hexagon-kit",
+   "name": "grass-forest",
+   "kind": "model",
+   "license": "CC0",
+   "license_note": "Hexagon Kit (2.0) Created/distributed by Kenney (www.kenney.nl) Creation date: 23-01-2024 11:58 ------------------------------ License: (Creative Commons Zero, CC0) http://creativecommons.org/publicdo",
+   "license_checked": "2026-10-16",
+   "url": "https://kenney.nl/assets/hexagon-kit",
+   "need": "terrain-hexes",
+   "decorative": false,
+   "fetched": "2026-10-16",
+   "res": null,
+   "files": [
+    {
+     "path": "assets/kenney/hexagon-kit/Models/GLB format/grass-forest.glb",
+     "sha256": "e97c9fe52484e111d103efb4ba27955fa305812c7c4a2940b421fcacc1fde444",
+     "url": "https://kenney.nl/assets/hexagon-kit"
+    },
+    {
+     "path": "assets/kenney/hexagon-kit/Models/GLB format/Textures/colormap.png",
+     "sha256": "1c3ae3b62c14acc87810027ebbe3397f21c3de7a076fdd2b2246782bab88afd3",
+     "url": "https://kenney.nl/assets/hexagon-kit"
+    }
+   ],
+   "measured": {
+    "dims_m": [
+     1.0,
+     0.675,
+     1.1547
+    ],
+    "tris": 448,
+    "meshes": 1,
+    "origin_offset_m": [
+     0.0,
+     0.0,
+     -0.0
+    ]
+   }
+  },
+  "kenney:hexagon-kit/Models/GLB format/grass-hill.glb": {
+   "source": "kenney",
+   "pack": "hexagon-kit",
+   "name": "grass-hill",
+   "kind": "model",
+   "license": "CC0",
+   "license_note": "Hexagon Kit (2.0) Created/distributed by Kenney (www.kenney.nl) Creation date: 23-01-2024 11:58 ------------------------------ License: (Creative Commons Zero, CC0) http://creativecommons.org/publicdo",
+   "license_checked": "2026-10-16",
+   "url": "https://kenney.nl/assets/hexagon-kit",
+   "need": "terrain-hexes",
+   "decorative": false,
+   "fetched": "2026-10-16",
+   "res": null,
+   "files": [
+    {
+     "path": "assets/kenney/hexagon-kit/Models/GLB format/grass-hill.glb",
+     "sha256": "458d42f38f4f53c4d11eb662d383a35da5ba1410565db78925fb13ee4f4290f4",
+     "url": "https://kenney.nl/assets/hexagon-kit"
+    },
+    {
+     "path": "assets/kenney/hexagon-kit/Models/GLB format/Textures/colormap.png",
+     "sha256": "1c3ae3b62c14acc87810027ebbe3397f21c3de7a076fdd2b2246782bab88afd3",
+     "url": "https://kenney.nl/assets/hexagon-kit"
+    }
+   ],
+   "measured": {
+    "dims_m": [
+     1.0,
+     0.8032,
+     1.1547
+    ],
+    "tris": 348,
+    "meshes": 1,
+    "origin_offset_m": [
+     0.0,
+     0.0,
+     -0.0
+    ]
+   }
+  },
+  "kenney:hexagon-kit/Models/GLB format/stone-rocks.glb": {
+   "source": "kenney",
+   "pack": "hexagon-kit",
+   "name": "stone-rocks",
+   "kind": "model",
+   "license": "CC0",
+   "license_note": "Hexagon Kit (2.0) Created/distributed by Kenney (www.kenney.nl) Creation date: 23-01-2024 11:58 ------------------------------ License: (Creative Commons Zero, CC0) http://creativecommons.org/publicdo",
+   "license_checked": "2026-10-16",
+   "url": "https://kenney.nl/assets/hexagon-kit",
+   "need": "terrain-hexes",
+   "decorative": false,
+   "fetched": "2026-10-16",
+   "res": null,
+   "files": [
+    {
+     "path": "assets/kenney/hexagon-kit/Models/GLB format/stone-rocks.glb",
+     "sha256": "4e573589fe87ca5b3960c059613826ad6576d97a61a77ca4e590aff171054878",
+     "url": "https://kenney.nl/assets/hexagon-kit"
+    },
+    {
+     "path": "assets/kenney/hexagon-kit/Models/GLB format/Textures/colormap.png",
+     "sha256": "1c3ae3b62c14acc87810027ebbe3397f21c3de7a076fdd2b2246782bab88afd3",
+     "url": "https://kenney.nl/assets/hexagon-kit"
+    }
+   ],
+   "measured": {
+    "dims_m": [
+     1.0,
+     0.4061,
+     1.1547
+    ],
+    "tris": 268,
+    "meshes": 1,
+    "origin_offset_m": [
+     0.0,
+     0.0,
+     -0.0
+    ]
+   }
+  },
+  "kenney:hexagon-kit/Models/GLB format/dirt.glb": {
+   "source": "kenney",
+   "pack": "hexagon-kit",
+   "name": "dirt",
+   "kind": "model",
+   "license": "CC0",
+   "license_note": "Hexagon Kit (2.0) Created/distributed by Kenney (www.kenney.nl) Creation date: 23-01-2024 11:58 ------------------------------ License: (Creative Commons Zero, CC0) http://creativecommons.org/publicdo",
+   "license_checked": "2026-10-16",
+   "url": "https://kenney.nl/assets/hexagon-kit",
+   "need": "terrain-hexes",
+   "decorative": false,
+   "fetched": "2026-10-16",
+   "res": null,
+   "files": [
+    {
+     "path": "assets/kenney/hexagon-kit/Models/GLB format/dirt.glb",
+     "sha256": "466ba402bd7e6fe64de99eb5285220d362400e2b2b854b3385b75debe8af73ae",
+     "url": "https://kenney.nl/assets/hexagon-kit"
+    },
+    {
+     "path": "assets/kenney/hexagon-kit/Models/GLB format/Textures/colormap.png",
+     "sha256": "1c3ae3b62c14acc87810027ebbe3397f21c3de7a076fdd2b2246782bab88afd3",
+     "url": "https://kenney.nl/assets/hexagon-kit"
+    }
+   ],
+   "measured": {
+    "dims_m": [
+     1.0,
+     0.1,
+     1.1547
+    ],
+    "tris": 20,
+    "meshes": 1,
+    "origin_offset_m": [
+     0.0,
+     0.0,
+     -0.0
+    ]
+   }
+  },
+  "kenney:hexagon-kit/Models/GLB format/water.glb": {
+   "source": "kenney",
+   "pack": "hexagon-kit",
+   "name": "water",
+   "kind": "model",
+   "license": "CC0",
+   "license_note": "Hexagon Kit (2.0) Created/distributed by Kenney (www.kenney.nl) Creation date: 23-01-2024 11:58 ------------------------------ License: (Creative Commons Zero, CC0) http://creativecommons.org/publicdo",
+   "license_checked": "2026-10-16",
+   "url": "https://kenney.nl/assets/hexagon-kit",
+   "need": "terrain-hexes",
+   "decorative": false,
+   "fetched": "2026-10-16",
+   "res": null,
+   "files": [
+    {
+     "path": "assets/kenney/hexagon-kit/Models/GLB format/water.glb",
+     "sha256": "f5ed8094f91b1b8b80e2c32b6bc16a444de85574de9bc11efb4e07d8a062fced",
+     "url": "https://kenney.nl/assets/hexagon-kit"
+    },
+    {
+     "path": "assets/kenney/hexagon-kit/Models/GLB format/Textures/colormap.png",
+     "sha256": "1c3ae3b62c14acc87810027ebbe3397f21c3de7a076fdd2b2246782bab88afd3",
+     "url": "https://kenney.nl/assets/hexagon-kit"
+    }
+   ],
+   "measured": {
+    "dims_m": [
+     1.0,
+     0.1,
+     1.1547
+    ],
+    "tris": 20,
+    "meshes": 1,
+    "origin_offset_m": [
+     0.0,
+     0.0,
+     -0.0
+    ]
+   }
+  },
+  "kenney:hexagon-kit/Models/GLB format/water-rocks.glb": {
+   "source": "kenney",
+   "pack": "hexagon-kit",
+   "name": "water-rocks",
+   "kind": "model",
+   "license": "CC0",
+   "license_note": "Hexagon Kit (2.0) Created/distributed by Kenney (www.kenney.nl) Creation date: 23-01-2024 11:58 ------------------------------ License: (Creative Commons Zero, CC0) http://creativecommons.org/publicdo",
+   "license_checked": "2026-10-16",
+   "url": "https://kenney.nl/assets/hexagon-kit",
+   "need": "terrain-hexes",
+   "decorative": false,
+   "fetched": "2026-10-16",
+   "res": null,
+   "files": [
+    {
+     "path": "assets/kenney/hexagon-kit/Models/GLB format/water-rocks.glb",
+     "sha256": "fec764fdd5be61f6107beb7aba93d7166dfe76d22be355a9b1241ff32017ef37",
+     "url": "https://kenney.nl/assets/hexagon-kit"
+    },
+    {
+     "path": "assets/kenney/hexagon-kit/Models/GLB format/Textures/colormap.png",
+     "sha256": "1c3ae3b62c14acc87810027ebbe3397f21c3de7a076fdd2b2246782bab88afd3",
+     "url": "https://kenney.nl/assets/hexagon-kit"
+    }
+   ],
+   "measured": {
+    "dims_m": [
+     1.0,
+     0.2593,
+     1.1547
+    ],
+    "tris": 164,
+    "meshes": 1,
+    "origin_offset_m": [
+     0.0,
+     0.0,
+     -0.0
+    ]
+   }
+  },
+  "kenney:hexagon-kit/Models/GLB format/water-island.glb": {
+   "source": "kenney",
+   "pack": "hexagon-kit",
+   "name": "water-island",
+   "kind": "model",
+   "license": "CC0",
+   "license_note": "Hexagon Kit (2.0) Created/distributed by Kenney (www.kenney.nl) Creation date: 23-01-2024 11:58 ------------------------------ License: (Creative Commons Zero, CC0) http://creativecommons.org/publicdo",
+   "license_checked": "2026-10-16",
+   "url": "https://kenney.nl/assets/hexagon-kit",
+   "need": "terrain-hexes",
+   "decorative": false,
+   "fetched": "2026-10-16",
+   "res": null,
+   "files": [
+    {
+     "path": "assets/kenney/hexagon-kit/Models/GLB format/water-island.glb",
+     "sha256": "bf40f6c76814c2ef03be501d85b65e303a21a0305ead18875fd3c692a7d82649",
+     "url": "https://kenney.nl/assets/hexagon-kit"
+    },
+    {
+     "path": "assets/kenney/hexagon-kit/Models/GLB format/Textures/colormap.png",
+     "sha256": "1c3ae3b62c14acc87810027ebbe3397f21c3de7a076fdd2b2246782bab88afd3",
+     "url": "https://kenney.nl/assets/hexagon-kit"
+    }
+   ],
+   "measured": {
+    "dims_m": [
+     1.0,
+     0.2435,
+     1.1547
+    ],
+    "tris": 84,
+    "meshes": 1,
+    "origin_offset_m": [
+     0.0,
+     0.0,
+     -0.0
+    ]
+   }
+  },
+  "kenney:pirate-kit/Models/GLB format/palm-bend.glb": {
+   "source": "kenney",
+   "pack": "pirate-kit",
+   "name": "palm-bend",
+   "kind": "model",
+   "license": "CC0",
+   "license_note": "Pirate Kit (2.1) Created/distributed by Kenney (www.kenney.nl) Creation date: 17-02-2026 13:57 ------------------------------ License: (Creative Commons Zero, CC0) http://creativecommons.org/publicdom",
+   "license_checked": "2026-10-16",
+   "url": "https://kenney.nl/assets/pirate-kit",
+   "need": "island-props",
+   "decorative": false,
+   "fetched": "2026-10-16",
+   "res": null,
+   "files": [
+    {
+     "path": "assets/kenney/pirate-kit/Models/GLB format/palm-bend.glb",
+     "sha256": "8c5c6f119ca62b63d4a6e5e3e3b74b3a7415815a9e448fd1408a2858ae95d40f",
+     "url": "https://kenney.nl/assets/pirate-kit"
+    },
+    {
+     "path": "assets/kenney/pirate-kit/Models/GLB format/Textures/colormap.png",
+     "sha256": "451e1d7a53b8e76f4b2ee58742e241509fee5f82cf2cee6e3f7aca86ba718abe",
+     "url": "https://kenney.nl/assets/pirate-kit"
+    }
+   ],
+   "measured": {
+    "dims_m": [
+     2.8804,
+     4.2513,
+     3.216
+    ],
+    "tris": 338,
+    "meshes": 1,
+    "origin_offset_m": [
+     -0.7334,
+     0.0,
+     -0.0
+    ]
+   }
+  },
+  "kenney:pirate-kit/Models/GLB format/palm-straight.glb": {
+   "source": "kenney",
+   "pack": "pirate-kit",
+   "name": "palm-straight",
+   "kind": "model",
+   "license": "CC0",
+   "license_note": "Pirate Kit (2.1) Created/distributed by Kenney (www.kenney.nl) Creation date: 17-02-2026 13:57 ------------------------------ License: (Creative Commons Zero, CC0) http://creativecommons.org/publicdom",
+   "license_checked": "2026-10-16",
+   "url": "https://kenney.nl/assets/pirate-kit",
+   "need": "island-props",
+   "decorative": false,
+   "fetched": "2026-10-16",
+   "res": null,
+   "files": [
+    {
+     "path": "assets/kenney/pirate-kit/Models/GLB format/palm-straight.glb",
+     "sha256": "a4101242b8c825280dfb6152900285aacc091203ce7bf9c743579599f1496520",
+     "url": "https://kenney.nl/assets/pirate-kit"
+    },
+    {
+     "path": "assets/kenney/pirate-kit/Models/GLB format/Textures/colormap.png",
+     "sha256": "451e1d7a53b8e76f4b2ee58742e241509fee5f82cf2cee6e3f7aca86ba718abe",
+     "url": "https://kenney.nl/assets/pirate-kit"
+    }
+   ],
+   "measured": {
+    "dims_m": [
+     2.4886,
+     4.2129,
+     2.4886
+    ],
+    "tris": 338,
+    "meshes": 1,
+    "origin_offset_m": [
+     0.0,
+     0.0,
+     -0.0
+    ]
+   }
+  },
+  "kenney:pirate-kit/Models/GLB format/palm-detailed-bend.glb": {
+   "source": "kenney",
+   "pack": "pirate-kit",
+   "name": "palm-detailed-bend",
+   "kind": "model",
+   "license": "CC0",
+   "license_note": "Pirate Kit (2.1) Created/distributed by Kenney (www.kenney.nl) Creation date: 17-02-2026 13:57 ------------------------------ License: (Creative Commons Zero, CC0) http://creativecommons.org/publicdom",
+   "license_checked": "2026-10-16",
+   "url": "https://kenney.nl/assets/pirate-kit",
+   "need": "island-props",
+   "decorative": false,
+   "fetched": "2026-10-16",
+   "res": null,
+   "files": [
+    {
+     "path": "assets/kenney/pirate-kit/Models/GLB format/palm-detailed-bend.glb",
+     "sha256": "9bc339e2942d6fba9007caa9fa4301a6a08f4b134511bea65ce236ba2910e7f8",
+     "url": "https://kenney.nl/assets/pirate-kit"
+    },
+    {
+     "path": "assets/kenney/pirate-kit/Models/GLB format/Textures/colormap.png",
+     "sha256": "451e1d7a53b8e76f4b2ee58742e241509fee5f82cf2cee6e3f7aca86ba718abe",
+     "url": "https://kenney.nl/assets/pirate-kit"
+    }
+   ],
+   "measured": {
+    "dims_m": [
+     2.8804,
+     4.2513,
+     3.216
+    ],
+    "tris": 482,
+    "meshes": 1,
+    "origin_offset_m": [
+     -0.7334,
+     0.0,
+     -0.0
+    ]
+   }
+  },
+  "kenney:pirate-kit/Models/GLB format/palm-detailed-straight.glb": {
+   "source": "kenney",
+   "pack": "pirate-kit",
+   "name": "palm-detailed-straight",
+   "kind": "model",
+   "license": "CC0",
+   "license_note": "Pirate Kit (2.1) Created/distributed by Kenney (www.kenney.nl) Creation date: 17-02-2026 13:57 ------------------------------ License: (Creative Commons Zero, CC0) http://creativecommons.org/publicdom",
+   "license_checked": "2026-10-16",
+   "url": "https://kenney.nl/assets/pirate-kit",
+   "need": "island-props",
+   "decorative": false,
+   "fetched": "2026-10-16",
+   "res": null,
+   "files": [
+    {
+     "path": "assets/kenney/pirate-kit/Models/GLB format/palm-detailed-straight.glb",
+     "sha256": "cdc42b4bd02d01a5e15a5d69f1db83e1c77ca7d0a97ad2d9ae8f6a409fed8a36",
+     "url": "https://kenney.nl/assets/pirate-kit"
+    },
+    {
+     "path": "assets/kenney/pirate-kit/Models/GLB format/Textures/colormap.png",
+     "sha256": "451e1d7a53b8e76f4b2ee58742e241509fee5f82cf2cee6e3f7aca86ba718abe",
+     "url": "https://kenney.nl/assets/pirate-kit"
+    }
+   ],
+   "measured": {
+    "dims_m": [
+     3.216,
+     4.2129,
+     3.216
+    ],
+    "tris": 482,
+    "meshes": 1,
+    "origin_offset_m": [
+     0.0,
+     0.0,
+     -0.0
+    ]
+   }
+  },
+  "kenney:pirate-kit/Models/GLB format/ship-wreck.glb": {
+   "source": "kenney",
+   "pack": "pirate-kit",
+   "name": "ship-wreck",
+   "kind": "model",
+   "license": "CC0",
+   "license_note": "Pirate Kit (2.1) Created/distributed by Kenney (www.kenney.nl) Creation date: 17-02-2026 13:57 ------------------------------ License: (Creative Commons Zero, CC0) http://creativecommons.org/publicdom",
+   "license_checked": "2026-10-16",
+   "url": "https://kenney.nl/assets/pirate-kit",
+   "need": "island-props",
+   "decorative": false,
+   "fetched": "2026-10-16",
+   "res": null,
+   "files": [
+    {
+     "path": "assets/kenney/pirate-kit/Models/GLB format/ship-wreck.glb",
+     "sha256": "0b2cac74f23ffdc3bf5020880126338287a0a0317d6a98ce4250123d8821ad2b",
+     "url": "https://kenney.nl/assets/pirate-kit"
+    },
+    {
+     "path": "assets/kenney/pirate-kit/Models/GLB format/Textures/colormap.png",
+     "sha256": "451e1d7a53b8e76f4b2ee58742e241509fee5f82cf2cee6e3f7aca86ba718abe",
+     "url": "https://kenney.nl/assets/pirate-kit"
+    }
+   ],
+   "measured": {
+    "dims_m": [
+     4.8,
+     9.9635,
+     10.6
+    ],
+    "tris": 2282,
+    "meshes": 16,
+    "origin_offset_m": [
+     0.0,
+     0.0,
+     -0.0
+    ]
+   }
+  },
+  "kenney:pirate-kit/Models/GLB format/chest.glb": {
+   "source": "kenney",
+   "pack": "pirate-kit",
+   "name": "chest",
+   "kind": "model",
+   "license": "CC0",
+   "license_note": "Pirate Kit (2.1) Created/distributed by Kenney (www.kenney.nl) Creation date: 17-02-2026 13:57 ------------------------------ License: (Creative Commons Zero, CC0) http://creativecommons.org/publicdom",
+   "license_checked": "2026-10-16",
+   "url": "https://kenney.nl/assets/pirate-kit",
+   "need": "island-props",
+   "decorative": false,
+   "fetched": "2026-10-16",
+   "res": null,
+   "files": [
+    {
+     "path": "assets/kenney/pirate-kit/Models/GLB format/chest.glb",
+     "sha256": "26d26c4c032a12320fe05b5005a72eba96db7167db0d35873639a4b7dcc06bcb",
+     "url": "https://kenney.nl/assets/pirate-kit"
+    },
+    {
+     "path": "assets/kenney/pirate-kit/Models/GLB format/Textures/colormap.png",
+     "sha256": "451e1d7a53b8e76f4b2ee58742e241509fee5f82cf2cee6e3f7aca86ba718abe",
+     "url": "https://kenney.nl/assets/pirate-kit"
+    }
+   ],
+   "measured": {
+    "dims_m": [
+     1.275,
+     1.3478,
+     1.3137
+    ],
+    "tris": 232,
+    "meshes": 2,
+    "origin_offset_m": [
+     0.0,
+     0.0,
+     -0.0194
+    ]
+   }
+  },
+  "kenney:pirate-kit/Models/GLB format/barrel.glb": {
+   "source": "kenney",
+   "pack": "pirate-kit",
+   "name": "barrel",
+   "kind": "model",
+   "license": "CC0",
+   "license_note": "Pirate Kit (2.1) Created/distributed by Kenney (www.kenney.nl) Creation date: 17-02-2026 13:57 ------------------------------ License: (Creative Commons Zero, CC0) http://creativecommons.org/publicdom",
+   "license_checked": "2026-10-16",
+   "url": "https://kenney.nl/assets/pirate-kit",
+   "need": "island-props",
+   "decorative": false,
+   "fetched": "2026-10-16",
+   "res": null,
+   "files": [
+    {
+     "path": "assets/kenney/pirate-kit/Models/GLB format/barrel.glb",
+     "sha256": "7616dedf7c1023afa6ecd3c52a4609460aae0e582dee14e60ec5e47c1174793b",
+     "url": "https://kenney.nl/assets/pirate-kit"
+    },
+    {
+     "path": "assets/kenney/pirate-kit/Models/GLB format/Textures/colormap.png",
+     "sha256": "451e1d7a53b8e76f4b2ee58742e241509fee5f82cf2cee6e3f7aca86ba718abe",
+     "url": "https://kenney.nl/assets/pirate-kit"
+    }
+   ],
+   "measured": {
+    "dims_m": [
+     1.3361,
+     1.2291,
+     1.3361
+    ],
+    "tris": 148,
+    "meshes": 1,
+    "origin_offset_m": [
+     0.0,
+     0.0,
+     -0.0
+    ]
+   }
+  },
+  "kenney:pirate-kit/Models/GLB format/crate.glb": {
+   "source": "kenney",
+   "pack": "pirate-kit",
+   "name": "crate",
+   "kind": "model",
+   "license": "CC0",
+   "license_note": "Pirate Kit (2.1) Created/distributed by Kenney (www.kenney.nl) Creation date: 17-02-2026 13:57 ------------------------------ License: (Creative Commons Zero, CC0) http://creativecommons.org/publicdom",
+   "license_checked": "2026-10-16",
+   "url": "https://kenney.nl/assets/pirate-kit",
+   "need": "island-props",
+   "decorative": false,
+   "fetched": "2026-10-16",
+   "res": null,
+   "files": [
+    {
+     "path": "assets/kenney/pirate-kit/Models/GLB format/crate.glb",
+     "sha256": "b525674e07c8b83667512a8dd93be0d7684358347d0e64d2bb16b156ac382ed1",
+     "url": "https://kenney.nl/assets/pirate-kit"
+    },
+    {
+     "path": "assets/kenney/pirate-kit/Models/GLB format/Textures/colormap.png",
+     "sha256": "451e1d7a53b8e76f4b2ee58742e241509fee5f82cf2cee6e3f7aca86ba718abe",
+     "url": "https://kenney.nl/assets/pirate-kit"
+    }
+   ],
+   "measured": {
+    "dims_m": [
+     1.078,
+     0.77,
+     1.309
+    ],
+    "tris": 76,
+    "meshes": 1,
+    "origin_offset_m": [
+     0.0,
+     0.0,
+     -0.0
+    ]
+   }
+  },
+  "kenney:pirate-kit/Models/GLB format/hole.glb": {
+   "source": "kenney",
+   "pack": "pirate-kit",
+   "name": "hole",
+   "kind": "model",
+   "license": "CC0",
+   "license_note": "Pirate Kit (2.1) Created/distributed by Kenney (www.kenney.nl) Creation date: 17-02-2026 13:57 ------------------------------ License: (Creative Commons Zero, CC0) http://creativecommons.org/publicdom",
+   "license_checked": "2026-10-16",
+   "url": "https://kenney.nl/assets/pirate-kit",
+   "need": "island-props",
+   "decorative": false,
+   "fetched": "2026-10-16",
+   "res": null,
+   "files": [
+    {
+     "path": "assets/kenney/pirate-kit/Models/GLB format/hole.glb",
+     "sha256": "700b45b6f97046298cd3936637f5ad3e484a742adf21bc7b7ca0c280b15c311d",
+     "url": "https://kenney.nl/assets/pirate-kit"
+    },
+    {
+     "path": "assets/kenney/pirate-kit/Models/GLB format/Textures/colormap.png",
+     "sha256": "451e1d7a53b8e76f4b2ee58742e241509fee5f82cf2cee6e3f7aca86ba718abe",
+     "url": "https://kenney.nl/assets/pirate-kit"
+    }
+   ],
+   "measured": {
+    "dims_m": [
+     2.8608,
+     0.354,
+     2.704
+    ],
+    "tris": 286,
+    "meshes": 1,
+    "origin_offset_m": [
+     -0.0082,
+     0.0,
+     0.009
+    ]
+   }
+  },
+  "kenney:pirate-kit/Models/GLB format/flag-pirate.glb": {
+   "source": "kenney",
+   "pack": "pirate-kit",
+   "name": "flag-pirate",
+   "kind": "model",
+   "license": "CC0",
+   "license_note": "Pirate Kit (2.1) Created/distributed by Kenney (www.kenney.nl) Creation date: 17-02-2026 13:57 ------------------------------ License: (Creative Commons Zero, CC0) http://creativecommons.org/publicdom",
+   "license_checked": "2026-10-16",
+   "url": "https://kenney.nl/assets/pirate-kit",
+   "need": "island-props",
+   "decorative": false,
+   "fetched": "2026-10-16",
+   "res": null,
+   "files": [
+    {
+     "path": "assets/kenney/pirate-kit/Models/GLB format/flag-pirate.glb",
+     "sha256": "4672c3a8c2844e9fb09838b65c97fdf5c49447c2566310918f8e7563f7200baf",
+     "url": "https://kenney.nl/assets/pirate-kit"
+    },
+    {
+     "path": "assets/kenney/pirate-kit/Models/GLB format/Textures/colormap.png",
+     "sha256": "451e1d7a53b8e76f4b2ee58742e241509fee5f82cf2cee6e3f7aca86ba718abe",
+     "url": "https://kenney.nl/assets/pirate-kit"
+    }
+   ],
+   "measured": {
+    "dims_m": [
+     1.3368,
+     2.0968,
+     0.3989
+    ],
+    "tris": 144,
+    "meshes": 1,
+    "origin_offset_m": [
+     0.4689,
+     0.0,
+     0.0
+    ]
+   }
+  },
+  "kenney:pirate-kit/Models/GLB format/tool-shovel.glb": {
+   "source": "kenney",
+   "pack": "pirate-kit",
+   "name": "tool-shovel",
+   "kind": "model",
+   "license": "CC0",
+   "license_note": "Pirate Kit (2.1) Created/distributed by Kenney (www.kenney.nl) Creation date: 17-02-2026 13:57 ------------------------------ License: (Creative Commons Zero, CC0) http://creativecommons.org/publicdom",
+   "license_checked": "2026-10-16",
+   "url": "https://kenney.nl/assets/pirate-kit",
+   "need": "island-props",
+   "decorative": false,
+   "fetched": "2026-10-16",
+   "res": null,
+   "files": [
+    {
+     "path": "assets/kenney/pirate-kit/Models/GLB format/tool-shovel.glb",
+     "sha256": "b468372526e419c712f50b824eff50d6e7838de646eaa5a6aacfc4dcdfcfa265",
+     "url": "https://kenney.nl/assets/pirate-kit"
+    },
+    {
+     "path": "assets/kenney/pirate-kit/Models/GLB format/Textures/colormap.png",
+     "sha256": "451e1d7a53b8e76f4b2ee58742e241509fee5f82cf2cee6e3f7aca86ba718abe",
+     "url": "https://kenney.nl/assets/pirate-kit"
+    }
+   ],
+   "measured": {
+    "dims_m": [
+     0.6578,
+     2.3491,
+     0.2829
+    ],
+    "tris": 168,
+    "meshes": 1,
+    "origin_offset_m": [
+     0.0,
+     0.0,
+     -0.0
+    ]
+   }
+  },
+  "kenney:pirate-kit/Models/GLB format/rocks-sand-a.glb": {
+   "source": "kenney",
+   "pack": "pirate-kit",
+   "name": "rocks-sand-a",
+   "kind": "model",
+   "license": "CC0",
+   "license_note": "Pirate Kit (2.1) Created/distributed by Kenney (www.kenney.nl) Creation date: 17-02-2026 13:57 ------------------------------ License: (Creative Commons Zero, CC0) http://creativecommons.org/publicdom",
+   "license_checked": "2026-10-16",
+   "url": "https://kenney.nl/assets/pirate-kit",
+   "need": "island-props",
+   "decorative": false,
+   "fetched": "2026-10-16",
+   "res": null,
+   "files": [
+    {
+     "path": "assets/kenney/pirate-kit/Models/GLB format/rocks-sand-a.glb",
+     "sha256": "bde0570946080d6f2dafd63a34be640d5c3713abd4559d6a9d689ce63f74113f",
+     "url": "https://kenney.nl/assets/pirate-kit"
+    },
+    {
+     "path": "assets/kenney/pirate-kit/Models/GLB format/Textures/colormap.png",
+     "sha256": "451e1d7a53b8e76f4b2ee58742e241509fee5f82cf2cee6e3f7aca86ba718abe",
+     "url": "https://kenney.nl/assets/pirate-kit"
+    }
+   ],
+   "measured": {
+    "dims_m": [
+     5.1126,
+     3.2119,
+     4.3864
+    ],
+    "tris": 552,
+    "meshes": 1,
+    "origin_offset_m": [
+     -0.1393,
+     0.0,
+     -0.0598
+    ]
+   }
+  },
+  "kenney:pirate-kit/Models/GLB format/rocks-sand-b.glb": {
+   "source": "kenney",
+   "pack": "pirate-kit",
+   "name": "rocks-sand-b",
+   "kind": "model",
+   "license": "CC0",
+   "license_note": "Pirate Kit (2.1) Created/distributed by Kenney (www.kenney.nl) Creation date: 17-02-2026 13:57 ------------------------------ License: (Creative Commons Zero, CC0) http://creativecommons.org/publicdom",
+   "license_checked": "2026-10-16",
+   "url": "https://kenney.nl/assets/pirate-kit",
+   "need": "island-props",
+   "decorative": false,
+   "fetched": "2026-10-16",
+   "res": null,
+   "files": [
+    {
+     "path": "assets/kenney/pirate-kit/Models/GLB format/rocks-sand-b.glb",
+     "sha256": "55ef34f2e96fcd8687a422b6287295cb94e04540ec964a0f42900ce55c89b719",
+     "url": "https://kenney.nl/assets/pirate-kit"
+    },
+    {
+     "path": "assets/kenney/pirate-kit/Models/GLB format/Textures/colormap.png",
+     "sha256": "451e1d7a53b8e76f4b2ee58742e241509fee5f82cf2cee6e3f7aca86ba718abe",
+     "url": "https://kenney.nl/assets/pirate-kit"
+    }
+   ],
+   "measured": {
+    "dims_m": [
+     4.379,
+     3.7144,
+     4.7098
+    ],
+    "tris": 516,
+    "meshes": 1,
+    "origin_offset_m": [
+     -0.1527,
+     0.0,
+     -0.112
+    ]
+   }
+  },
+  "kenney:pirate-kit/Models/GLB format/patch-sand-foliage.glb": {
+   "source": "kenney",
+   "pack": "pirate-kit",
+   "name": "patch-sand-foliage",
+   "kind": "model",
+   "license": "CC0",
+   "license_note": "Pirate Kit (2.1) Created/distributed by Kenney (www.kenney.nl) Creation date: 17-02-2026 13:57 ------------------------------ License: (Creative Commons Zero, CC0) http://creativecommons.org/publicdom",
+   "license_checked": "2026-10-16",
+   "url": "https://kenney.nl/assets/pirate-kit",
+   "need": "island-props",
+   "decorative": false,
+   "fetched": "2026-10-16",
+   "res": null,
+   "files": [
+    {
+     "path": "assets/kenney/pirate-kit/Models/GLB format/patch-sand-foliage.glb",
+     "sha256": "35eea1e7ad6ef7c2349aa69f67824e4698ec1320f19b42bf1870013106e51680",
+     "url": "https://kenney.nl/assets/pirate-kit"
+    },
+    {
+     "path": "assets/kenney/pirate-kit/Models/GLB format/Textures/colormap.png",
+     "sha256": "451e1d7a53b8e76f4b2ee58742e241509fee5f82cf2cee6e3f7aca86ba718abe",
+     "url": "https://kenney.nl/assets/pirate-kit"
+    }
+   ],
+   "measured": {
+    "dims_m": [
+     7.7363,
+     0.5639,
+     6.0361
+    ],
+    "tris": 636,
+    "meshes": 1,
+    "origin_offset_m": [
+     0.0,
+     0.0,
+     -0.0
+    ]
+   }
+  },
+  "kenney:pirate-kit/Models/GLB format/grass-plant.glb": {
+   "source": "kenney",
+   "pack": "pirate-kit",
+   "name": "grass-plant",
+   "kind": "model",
+   "license": "CC0",
+   "license_note": "Pirate Kit (2.1) Created/distributed by Kenney (www.kenney.nl) Creation date: 17-02-2026 13:57 ------------------------------ License: (Creative Commons Zero, CC0) http://creativecommons.org/publicdom",
+   "license_checked": "2026-10-16",
+   "url": "https://kenney.nl/assets/pirate-kit",
+   "need": "island-props",
+   "decorative": false,
+   "fetched": "2026-10-16",
+   "res": null,
+   "files": [
+    {
+     "path": "assets/kenney/pirate-kit/Models/GLB format/grass-plant.glb",
+     "sha256": "f422f991fdf75df2b7bd7cd642d67f9ec884279590130e7a213e2ddaea5d0a54",
+     "url": "https://kenney.nl/assets/pirate-kit"
+    },
+    {
+     "path": "assets/kenney/pirate-kit/Models/GLB format/Textures/colormap.png",
+     "sha256": "451e1d7a53b8e76f4b2ee58742e241509fee5f82cf2cee6e3f7aca86ba718abe",
+     "url": "https://kenney.nl/assets/pirate-kit"
+    }
+   ],
+   "measured": {
+    "dims_m": [
+     1.1142,
+     0.5196,
+     1.237
+    ],
+    "tris": 144,
+    "meshes": 1,
+    "origin_offset_m": [
+     0.0228,
+     0.0,
+     -0.0366
+    ]
+   }
+  },
+  "kenney:pirate-kit/Models/GLB format/boat-row-small.glb": {
+   "source": "kenney",
+   "pack": "pirate-kit",
+   "name": "boat-row-small",
+   "kind": "model",
+   "license": "CC0",
+   "license_note": "Pirate Kit (2.1) Created/distributed by Kenney (www.kenney.nl) Creation date: 17-02-2026 13:57 ------------------------------ License: (Creative Commons Zero, CC0) http://creativecommons.org/publicdom",
+   "license_checked": "2026-10-16",
+   "url": "https://kenney.nl/assets/pirate-kit",
+   "need": "island-props",
+   "decorative": false,
+   "fetched": "2026-10-16",
+   "res": null,
+   "files": [
+    {
+     "path": "assets/kenney/pirate-kit/Models/GLB format/boat-row-small.glb",
+     "sha256": "846d9b17a73f80e03f7201d3bf0ad1b1bbb49e114b99697740d3426e4f42482d",
+     "url": "https://kenney.nl/assets/pirate-kit"
+    },
+    {
+     "path": "assets/kenney/pirate-kit/Models/GLB format/Textures/colormap.png",
+     "sha256": "451e1d7a53b8e76f4b2ee58742e241509fee5f82cf2cee6e3f7aca86ba718abe",
+     "url": "https://kenney.nl/assets/pirate-kit"
+    }
+   ],
+   "measured": {
+    "dims_m": [
+     2.7485,
+     0.8477,
+     2.3721
+    ],
+    "tris": 168,
+    "meshes": 2,
+    "origin_offset_m": [
+     0.0,
+     -0.0,
+     -0.0
+    ]
+   }
+  },
+  "kenney:nature-kit/Models/GLTF format/campfire_logs.glb": {
+   "source": "kenney",
+   "pack": "nature-kit",
+   "name": "campfire_logs",
+   "kind": "model",
+   "license": "CC0",
+   "license_note": "Nature Kit (2.1) Created/distributed by Kenney (www.kenney.nl) Creation date: 29-04-2020 01:02 ------------------------------ License: (Creative Commons Zero, CC0) http://creativecommons.org/publicdom",
+   "license_checked": "2026-10-16",
+   "url": "https://kenney.nl/assets/nature-kit",
+   "need": "island-props",
+   "decorative": false,
+   "fetched": "2026-10-16",
+   "res": null,
+   "files": [
+    {
+     "path": "assets/kenney/nature-kit/Models/GLTF format/campfire_logs.glb",
+     "sha256": "98d87cdcf9095b94fd348d0946e911dd4ca6c0956bac3318cfd2b0030b86055a",
+     "url": "https://kenney.nl/assets/nature-kit"
+    }
+   ],
+   "measured": {
+    "dims_m": [
+     0.2919,
+     0.0626,
+     0.2919
+    ],
+    "tris": 112,
+    "meshes": 1,
+    "origin_offset_m": [
+     0.0,
+     -0.05,
+     -0.0
+    ]
+   }
+  },
+  "kaykit:kaykit-adventurers/Characters/gltf/Rogue.glb": {
+   "source": "kaykit",
+   "pack": "kaykit-adventurers",
+   "name": "Rogue",
+   "kind": "model",
+   "license": "CC0",
+   "license_note": "KayKit : Adventurers Character Pack (2.0) Created/distributed by Kay Lousberg (www.kaylousberg.com) Creation date: 22/10/2025 09:00 ------------------------------ License: (Creative Commons Zero, CC0)",
+   "license_checked": "2026-10-16",
+   "url": "https://kaylousberg.itch.io/kaykit-adventurers",
+   "need": "crew",
+   "decorative": false,
+   "fetched": "2026-10-16",
+   "res": null,
+   "files": [
+    {
+     "path": "assets/kaykit/kaykit-adventurers/Characters/gltf/Rogue.glb",
+     "sha256": "cae5d9b2f08d53f7b4ab2617d9f42f021c546eb10920455fdcd82a110867fae4",
+     "url": "https://kaylousberg.itch.io/kaykit-adventurers"
+    }
+   ],
+   "measured": {
+    "dims_m": [
+     1.9447,
+     3.1783,
+     2.0
+    ],
+    "tris": 7642,
+    "meshes": 8,
+    "origin_offset_m": [
+     0.0,
+     -1.0,
+     -0.0
+    ]
+   }
+  },
+  "kaykit:kaykit-adventurers/Characters/gltf/Rogue_Hooded.glb": {
+   "source": "kaykit",
+   "pack": "kaykit-adventurers",
+   "name": "Rogue_Hooded",
+   "kind": "model",
+   "license": "CC0",
+   "license_note": "KayKit : Adventurers Character Pack (2.0) Created/distributed by Kay Lousberg (www.kaylousberg.com) Creation date: 22/10/2025 09:00 ------------------------------ License: (Creative Commons Zero, CC0)",
+   "license_checked": "2026-10-16",
+   "url": "https://kaylousberg.itch.io/kaykit-adventurers",
+   "need": "crew",
+   "decorative": false,
+   "fetched": "2026-10-16",
+   "res": null,
+   "files": [
+    {
+     "path": "assets/kaykit/kaykit-adventurers/Characters/gltf/Rogue_Hooded.glb",
+     "sha256": "e8f3233c6db190506fbef3ad855683e6cb8bd7350de637d923e14a08aef088dc",
+     "url": "https://kaylousberg.itch.io/kaykit-adventurers"
+    }
+   ],
+   "measured": {
+    "dims_m": [
+     1.9447,
+     3.171,
+     2.0
+    ],
+    "tris": 7265,
+    "meshes": 9,
+    "origin_offset_m": [
+     0.0,
+     -1.0,
+     -0.0
+    ]
+   }
+  },
+  "kaykit:kaykit-adventurers/Characters/gltf/Barbarian.glb": {
+   "source": "kaykit",
+   "pack": "kaykit-adventurers",
+   "name": "Barbarian",
+   "kind": "model",
+   "license": "CC0",
+   "license_note": "KayKit : Adventurers Character Pack (2.0) Created/distributed by Kay Lousberg (www.kaylousberg.com) Creation date: 22/10/2025 09:00 ------------------------------ License: (Creative Commons Zero, CC0)",
+   "license_checked": "2026-10-16",
+   "url": "https://kaylousberg.itch.io/kaykit-adventurers",
+   "need": "crew",
+   "decorative": false,
+   "fetched": "2026-10-16",
+   "res": null,
+   "files": [
+    {
+     "path": "assets/kaykit/kaykit-adventurers/Characters/gltf/Barbarian.glb",
+     "sha256": "d37824a1d6e8e8af57ef9ae4a87e9271c3986210fbc432fb44670749a577ccac",
+     "url": "https://kaylousberg.itch.io/kaykit-adventurers"
+    }
+   ],
+   "measured": {
+    "dims_m": [
+     1.9425,
+     3.3978,
+     2.0
+    ],
+    "tris": 7203,
+    "meshes": 8,
+    "origin_offset_m": [
+     0.0,
+     -1.0,
+     -0.0
+    ]
+   }
+  },
+  "kaykit:kaykit-adventurers/Animations/gltf/Rig_Medium/Rig_Medium_General.glb": {
+   "source": "kaykit",
+   "pack": "kaykit-adventurers",
+   "name": "Rig_Medium_General",
+   "kind": "model",
+   "license": "CC0",
+   "license_note": "KayKit : Adventurers Character Pack (2.0) Created/distributed by Kay Lousberg (www.kaylousberg.com) Creation date: 22/10/2025 09:00 ------------------------------ License: (Creative Commons Zero, CC0)",
+   "license_checked": "2026-10-16",
+   "url": "https://kaylousberg.itch.io/kaykit-adventurers",
+   "need": "crew",
+   "decorative": false,
+   "fetched": "2026-10-16",
+   "res": null,
+   "files": [
+    {
+     "path": "assets/kaykit/kaykit-adventurers/Animations/gltf/Rig_Medium/Rig_Medium_General.glb",
+     "sha256": "5f725c0f745f36078c7238968cd5c04843cbc6260689eb6e7f5e2bbd7ffdd7ad",
+     "url": "https://kaylousberg.itch.io/kaykit-adventurers"
+    }
+   ],
+   "measured": {
+    "dims_m": [
+     1.9785,
+     3.2037,
+     2.0
+    ],
+    "tris": 6996,
+    "meshes": 7,
+    "origin_offset_m": [
+     0.0,
+     -1.0,
+     -0.0
+    ]
+   }
+  },
+  "kaykit:kaykit-adventurers/Animations/gltf/Rig_Medium/Rig_Medium_MovementBasic.glb": {
+   "source": "kaykit",
+   "pack": "kaykit-adventurers",
+   "name": "Rig_Medium_MovementBasic",
+   "kind": "model",
+   "license": "CC0",
+   "license_note": "KayKit : Adventurers Character Pack (2.0) Created/distributed by Kay Lousberg (www.kaylousberg.com) Creation date: 22/10/2025 09:00 ------------------------------ License: (Creative Commons Zero, CC0)",
+   "license_checked": "2026-10-16",
+   "url": "https://kaylousberg.itch.io/kaykit-adventurers",
+   "need": "crew",
+   "decorative": false,
+   "fetched": "2026-10-16",
+   "res": null,
+   "files": [
+    {
+     "path": "assets/kaykit/kaykit-adventurers/Animations/gltf/Rig_Medium/Rig_Medium_MovementBasic.glb",
+     "sha256": "11422afd50abf7e8c92ea107e2e0bc94abd38023d6d15f55ad580347efbfa29e",
+     "url": "https://kaylousberg.itch.io/kaykit-adventurers"
+    }
+   ],
+   "measured": {
+    "dims_m": [
+     1.9785,
+     3.2037,
+     2.0
+    ],
+    "tris": 6996,
+    "meshes": 7,
+    "origin_offset_m": [
+     0.0,
+     -1.0,
+     -0.0
+    ]
+   }
+  },
+  "kaykit:kaykit-skeletons/characters/gltf/Skeleton_Minion.glb": {
+   "source": "kaykit",
+   "pack": "kaykit-skeletons",
+   "name": "Skeleton_Minion",
+   "kind": "model",
+   "license": "CC0",
+   "license_note": "KayKit Character Pack : Skeletons (1.1) Created/distributed by Kay Lousberg (www.kaylousberg.com) Creation date: 22/10/2025 09:00 ------------------------------ License: (Creative Commons Zero, CC0) h",
+   "license_checked": "2026-10-16",
+   "url": "https://kaylousberg.itch.io/kaykit-skeletons",
+   "need": "skeletons",
+   "decorative": true,
+   "fetched": "2026-10-16",
+   "res": null,
+   "files": [
+    {
+     "path": "assets/kaykit/kaykit-skeletons/characters/gltf/Skeleton_Minion.glb",
+     "sha256": "1fadbf1bc66fd7ce008eecd0ffccc8f8089e1c2887813559ca553680a738fece",
+     "url": "https://kaylousberg.itch.io/kaykit-skeletons"
+    }
+   ],
+   "measured": {
+    "dims_m": [
+     1.9382,
+     3.1661,
+     2.0
+    ],
+    "tris": 5368,
+    "meshes": 10,
+    "origin_offset_m": [
+     0.0,
+     -1.0,
+     -0.0
+    ]
+   }
+  },
+  "kaykit:kaykit-skeletons/characters/gltf/Skeleton_Rogue.glb": {
+   "source": "kaykit",
+   "pack": "kaykit-skeletons",
+   "name": "Skeleton_Rogue",
+   "kind": "model",
+   "license": "CC0",
+   "license_note": "KayKit Character Pack : Skeletons (1.1) Created/distributed by Kay Lousberg (www.kaylousberg.com) Creation date: 22/10/2025 09:00 ------------------------------ License: (Creative Commons Zero, CC0) h",
+   "license_checked": "2026-10-16",
+   "url": "https://kaylousberg.itch.io/kaykit-skeletons",
+   "need": "skeletons",
+   "decorative": true,
+   "fetched": "2026-10-16",
+   "res": null,
+   "files": [
+    {
+     "path": "assets/kaykit/kaykit-skeletons/characters/gltf/Skeleton_Rogue.glb",
+     "sha256": "d5b8f074a78a9972af0966014905ea1df2e71d2c3495d37a211980e6343ee774",
+     "url": "https://kaylousberg.itch.io/kaykit-skeletons"
+    }
+   ],
+   "measured": {
+    "dims_m": [
+     1.9425,
+     3.3079,
+     2.0
+    ],
+    "tris": 5358,
+    "meshes": 11,
+    "origin_offset_m": [
+     0.0,
+     -1.0,
+     -0.0
+    ]
+   }
+  },
+  "kenney:tower-defense-kit/Models/GLB format/enemy-ufo-a.glb": {
+   "source": "kenney",
+   "pack": "tower-defense-kit",
+   "name": "enemy-ufo-a",
+   "kind": "model",
+   "license": "CC0",
+   "license_note": "Tower Defense Kit (2.1) Created/distributed by Kenney (www.kenney.nl) Creation date: 16-09-2024 09:24 ------------------------------ License: (Creative Commons Zero, CC0) http://creativecommons.org/pu",
+   "license_checked": "2026-10-16",
+   "url": "https://kenney.nl/assets/tower-defense-kit",
+   "need": "villain-ufo",
+   "decorative": true,
+   "fetched": "2026-10-16",
+   "res": null,
+   "files": [
+    {
+     "path": "assets/kenney/tower-defense-kit/Models/GLB format/enemy-ufo-a.glb",
+     "sha256": "9687292bb5845e85c269ca7ecf7b1f568daac776768161ea191355baf07dc9a6",
+     "url": "https://kenney.nl/assets/tower-defense-kit"
+    },
+    {
+     "path": "assets/kenney/tower-defense-kit/Models/GLB format/Textures/colormap.png",
+     "sha256": "cbd2f95976ed3f18070769ce32a819527d9bc00d74253844e3882f747b5d76b6",
+     "url": "https://kenney.nl/assets/tower-defense-kit"
+    }
+   ],
+   "measured": {
+    "dims_m": [
+     1.0,
+     0.6779,
+     1.0
+    ],
+    "tris": 520,
+    "meshes": 1,
+    "origin_offset_m": [
+     0.0,
+     0.0,
+     -0.0
+    ]
+   }
+  },
+  "kenney:tower-defense-kit/Models/GLB format/enemy-ufo-c.glb": {
+   "source": "kenney",
+   "pack": "tower-defense-kit",
+   "name": "enemy-ufo-c",
+   "kind": "model",
+   "license": "CC0",
+   "license_note": "Tower Defense Kit (2.1) Created/distributed by Kenney (www.kenney.nl) Creation date: 16-09-2024 09:24 ------------------------------ License: (Creative Commons Zero, CC0) http://creativecommons.org/pu",
+   "license_checked": "2026-10-16",
+   "url": "https://kenney.nl/assets/tower-defense-kit",
+   "need": "villain-ufo",
+   "decorative": true,
+   "fetched": "2026-10-16",
+   "res": null,
+   "files": [
+    {
+     "path": "assets/kenney/tower-defense-kit/Models/GLB format/enemy-ufo-c.glb",
+     "sha256": "84d5f618e7498f97869fad53c23054a7ba629c9e70b1ce3862536355d32728db",
+     "url": "https://kenney.nl/assets/tower-defense-kit"
+    },
+    {
+     "path": "assets/kenney/tower-defense-kit/Models/GLB format/Textures/colormap.png",
+     "sha256": "cbd2f95976ed3f18070769ce32a819527d9bc00d74253844e3882f747b5d76b6",
+     "url": "https://kenney.nl/assets/tower-defense-kit"
+    }
+   ],
+   "measured": {
+    "dims_m": [
+     1.0043,
+     0.5254,
+     1.0
+    ],
+    "tris": 440,
+    "meshes": 1,
+    "origin_offset_m": [
+     0.0,
+     0.0,
+     -0.0
+    ]
+   }
+  },
+  "kenney:tower-defense-kit/Models/GLB format/enemy-ufo-beam.glb": {
+   "source": "kenney",
+   "pack": "tower-defense-kit",
+   "name": "enemy-ufo-beam",
+   "kind": "model",
+   "license": "CC0",
+   "license_note": "Tower Defense Kit (2.1) Created/distributed by Kenney (www.kenney.nl) Creation date: 16-09-2024 09:24 ------------------------------ License: (Creative Commons Zero, CC0) http://creativecommons.org/pu",
+   "license_checked": "2026-10-16",
+   "url": "https://kenney.nl/assets/tower-defense-kit",
+   "need": "villain-ufo",
+   "decorative": true,
+   "fetched": "2026-10-16",
+   "res": null,
+   "files": [
+    {
+     "path": "assets/kenney/tower-defense-kit/Models/GLB format/enemy-ufo-beam.glb",
+     "sha256": "60f2f6974c55808ec5ca08c0854576761706408b36a3ee4027654e1703082197",
+     "url": "https://kenney.nl/assets/tower-defense-kit"
+    },
+    {
+     "path": "assets/kenney/tower-defense-kit/Models/GLB format/Textures/colormap.png",
+     "sha256": "cbd2f95976ed3f18070769ce32a819527d9bc00d74253844e3882f747b5d76b6",
+     "url": "https://kenney.nl/assets/tower-defense-kit"
+    }
+   ],
+   "measured": {
+    "dims_m": [
+     0.8,
+     1.0,
+     0.8
+    ],
+    "tris": 56,
+    "meshes": 1,
+    "origin_offset_m": [
+     0.0,
+     0.0,
+     -0.0
+    ]
+   }
+  },
+  "kaykit:kaykit-platformer/Assets/gltf/neutral/bomb.gltf": {
+   "source": "kaykit",
+   "pack": "kaykit-platformer",
+   "name": "bomb",
+   "kind": "model",
+   "license": "CC0",
+   "license_note": "KayKit : Platformer Pack (1.0) Created/distributed by Kay Lousberg (www.kaylousberg.com) Creation date: 10/03/2025 12:00 ------------------------------ License: (Creative Commons Zero, CC0) http://cre",
+   "license_checked": "2026-10-16",
+   "url": "https://kaylousberg.itch.io/kaykit-platformer",
+   "need": "mines",
+   "decorative": true,
+   "fetched": "2026-10-16",
+   "res": null,
+   "files": [
+    {
+     "path": "assets/kaykit/kaykit-platformer/Assets/gltf/neutral/bomb.gltf",
+     "sha256": "3ebcf207c329ad4371e0315373f2c32d409e9f7e85a0e224978b1af6a4ee3898",
+     "url": "https://kaylousberg.itch.io/kaykit-platformer"
+    },
+    {
+     "path": "assets/kaykit/kaykit-platformer/Assets/gltf/neutral/platformer_texture.png",
+     "sha256": "2771a7c3f7fd59bcba08dc967858942d9f83820ecc9146e98d25707a07210273",
+     "url": "https://kaylousberg.itch.io/kaykit-platformer"
+    },
+    {
+     "path": "assets/kaykit/kaykit-platformer/Assets/gltf/neutral/bomb.bin",
+     "sha256": "cae10f4e3117f80c1df855776cdb90bce22c7f449ac583bab71b6e0d288c7874",
+     "url": "https://kaylousberg.itch.io/kaykit-platformer"
+    }
+   ],
+   "measured": {
+    "dims_m": [
+     0.8,
+     1.0089,
+     0.8
+    ],
+    "tris": 688,
+    "meshes": 1,
+    "origin_offset_m": [
+     0.0,
+     -0.4,
+     0.0
+    ]
+   }
+  },
+  "kaykit:kaykit-platformer/Assets/gltf/red/bomb_A_red.gltf": {
+   "source": "kaykit",
+   "pack": "kaykit-platformer",
+   "name": "bomb_A_red",
+   "kind": "model",
+   "license": "CC0",
+   "license_note": "KayKit : Platformer Pack (1.0) Created/distributed by Kay Lousberg (www.kaylousberg.com) Creation date: 10/03/2025 12:00 ------------------------------ License: (Creative Commons Zero, CC0) http://cre",
+   "license_checked": "2026-10-16",
+   "url": "https://kaylousberg.itch.io/kaykit-platformer",
+   "need": "mines",
+   "decorative": true,
+   "fetched": "2026-10-16",
+   "res": null,
+   "files": [
+    {
+     "path": "assets/kaykit/kaykit-platformer/Assets/gltf/red/bomb_A_red.gltf",
+     "sha256": "798fc229895032ec9a695efec7cc818208c6f9ff51c8518cc34bf81ba0987a78",
+     "url": "https://kaylousberg.itch.io/kaykit-platformer"
+    },
+    {
+     "path": "assets/kaykit/kaykit-platformer/Assets/gltf/red/platformer_texture.png",
+     "sha256": "2771a7c3f7fd59bcba08dc967858942d9f83820ecc9146e98d25707a07210273",
+     "url": "https://kaylousberg.itch.io/kaykit-platformer"
+    },
+    {
+     "path": "assets/kaykit/kaykit-platformer/Assets/gltf/red/bomb_A_red.bin",
+     "sha256": "b29299a0a4bd114b67bcb0bc8a6b7f0780fed9a408bf649a84e9ae177bcf96b4",
+     "url": "https://kaylousberg.itch.io/kaykit-platformer"
+    }
+   ],
+   "measured": {
+    "dims_m": [
+     0.8,
+     1.0089,
+     0.8
+    ],
+    "tris": 688,
+    "meshes": 1,
+    "origin_offset_m": [
+     0.0,
+     -0.4,
+     0.0
+    ]
+   }
+  },
+  "kaykit:kaykit-platformer/Assets/gltf/red/ball_red.gltf": {
+   "source": "kaykit",
+   "pack": "kaykit-platformer",
+   "name": "ball_red",
+   "kind": "model",
+   "license": "CC0",
+   "license_note": "KayKit : Platformer Pack (1.0) Created/distributed by Kay Lousberg (www.kaylousberg.com) Creation date: 10/03/2025 12:00 ------------------------------ License: (Creative Commons Zero, CC0) http://cre",
+   "license_checked": "2026-10-16",
+   "url": "https://kaylousberg.itch.io/kaykit-platformer",
+   "need": "beach-toys-and-critters",
+   "decorative": true,
+   "fetched": "2026-10-16",
+   "res": null,
+   "files": [
+    {
+     "path": "assets/kaykit/kaykit-platformer/Assets/gltf/red/ball_red.gltf",
+     "sha256": "0dcd336ead1db69118c6256e13364c73b03f24d698fed86f1bf62f4866d1c5eb",
+     "url": "https://kaylousberg.itch.io/kaykit-platformer"
+    },
+    {
+     "path": "assets/kaykit/kaykit-platformer/Assets/gltf/red/platformer_texture.png",
+     "sha256": "2771a7c3f7fd59bcba08dc967858942d9f83820ecc9146e98d25707a07210273",
+     "url": "https://kaylousberg.itch.io/kaykit-platformer"
+    },
+    {
+     "path": "assets/kaykit/kaykit-platformer/Assets/gltf/red/ball_red.bin",
+     "sha256": "8440a5ca71ed75e8acebf18c0e12482d4bb873dd9293b79924253f2b0e615f9d",
+     "url": "https://kaylousberg.itch.io/kaykit-platformer"
+    }
+   ],
+   "measured": {
+    "dims_m": [
+     2.0,
+     2.0,
+     2.0
+    ],
+    "tris": 528,
+    "meshes": 1,
+    "origin_offset_m": [
+     0.0,
+     -1.0,
+     0.0
+    ]
+   }
+  },
+  "kaykit:kaykit-platformer/Assets/gltf/yellow/ball_yellow.gltf": {
+   "source": "kaykit",
+   "pack": "kaykit-platformer",
+   "name": "ball_yellow",
+   "kind": "model",
+   "license": "CC0",
+   "license_note": "KayKit : Platformer Pack (1.0) Created/distributed by Kay Lousberg (www.kaylousberg.com) Creation date: 10/03/2025 12:00 ------------------------------ License: (Creative Commons Zero, CC0) http://cre",
+   "license_checked": "2026-10-16",
+   "url": "https://kaylousberg.itch.io/kaykit-platformer",
+   "need": "beach-toys-and-critters",
+   "decorative": true,
+   "fetched": "2026-10-16",
+   "res": null,
+   "files": [
+    {
+     "path": "assets/kaykit/kaykit-platformer/Assets/gltf/yellow/ball_yellow.gltf",
+     "sha256": "1e1cbd186534dd6189c45fbdcb2117e8c3a3abe350705d29b54b90cbcd17b859",
+     "url": "https://kaylousberg.itch.io/kaykit-platformer"
+    },
+    {
+     "path": "assets/kaykit/kaykit-platformer/Assets/gltf/yellow/platformer_texture.png",
+     "sha256": "2771a7c3f7fd59bcba08dc967858942d9f83820ecc9146e98d25707a07210273",
+     "url": "https://kaylousberg.itch.io/kaykit-platformer"
+    },
+    {
+     "path": "assets/kaykit/kaykit-platformer/Assets/gltf/yellow/ball_yellow.bin",
+     "sha256": "f299ee13cc5d5735a2bffb62fbd0b57c4900960dade6ac17ed4f2e17499ec52b",
+     "url": "https://kaylousberg.itch.io/kaykit-platformer"
+    }
+   ],
+   "measured": {
+    "dims_m": [
+     2.0,
+     2.0,
+     2.0
+    ],
+    "tris": 528,
+    "meshes": 1,
+    "origin_offset_m": [
+     0.0,
+     -1.0,
+     0.0
+    ]
+   }
+  },
+  "kenney:survival-kit/Models/GLB format/bucket.glb": {
+   "source": "kenney",
+   "pack": "survival-kit",
+   "name": "bucket",
+   "kind": "model",
+   "license": "CC0",
+   "license_note": "Survival Kit (2.0) Created/distributed by Kenney (www.kenney.nl) Creation date: 03-04-2024 14:59 ------------------------------ License: (Creative Commons Zero, CC0) http://creativecommons.org/publicd",
+   "license_checked": "2026-10-16",
+   "url": "https://kenney.nl/assets/survival-kit",
+   "need": "beach-toys-and-critters",
+   "decorative": true,
+   "fetched": "2026-10-16",
+   "res": null,
+   "files": [
+    {
+     "path": "assets/kenney/survival-kit/Models/GLB format/bucket.glb",
+     "sha256": "ff173908480929067cd634d5edfedba038428f1503db487521492975fa5c8274",
+     "url": "https://kenney.nl/assets/survival-kit"
+    },
+    {
+     "path": "assets/kenney/survival-kit/Models/GLB format/Textures/colormap.png",
+     "sha256": "6ca023be9f12e8c2358fcf94320c8a894b4c05a3dd0bad1f5c268312053caca1",
+     "url": "https://kenney.nl/assets/survival-kit"
+    }
+   ],
+   "measured": {
+    "dims_m": [
+     0.1441,
+     0.1921,
+     0.1441
+    ],
+    "tris": 68,
+    "meshes": 1,
+    "origin_offset_m": [
+     0.0,
+     0.0,
+     -0.0
+    ]
+   }
+  },
+  "kenney:cube-pets/Models/GLB format/animal-parrot.glb": {
+   "source": "kenney",
+   "pack": "cube-pets",
+   "name": "animal-parrot",
+   "kind": "model",
+   "license": "CC0",
+   "license_note": "Cube Pets (2.0) Created/distributed by Kenney (www.kenney.nl) Creation date: 26-03-2026 11:16 ------------------------------ License: (Creative Commons Zero, CC0) http://creativecommons.org/publicdoma",
+   "license_checked": "2026-10-16",
+   "url": "https://kenney.nl/assets/cube-pets",
+   "need": "beach-toys-and-critters",
+   "decorative": true,
+   "fetched": "2026-10-16",
+   "res": null,
+   "files": [
+    {
+     "path": "assets/kenney/cube-pets/Models/GLB format/animal-parrot.glb",
+     "sha256": "a028fcccd8559652ea100fabaceb82ef53633e3474025eca593a753b008f52ab",
+     "url": "https://kenney.nl/assets/cube-pets"
+    },
+    {
+     "path": "assets/kenney/cube-pets/Models/GLB format/Textures/colormap.png",
+     "sha256": "2f6d0032e51c2d49b13b8e689d59eb39aa3ee6c32f2a1851213e11fc7593177d",
+     "url": "https://kenney.nl/assets/cube-pets"
+    }
+   ],
+   "measured": {
+    "dims_m": [
+     2.196,
+     1.6812,
+     1.9023
+    ],
+    "tris": 530,
+    "meshes": 7,
+    "origin_offset_m": [
+     0.0,
+     0.0,
+     -0.1428
+    ]
+   }
+  },
+  "kenney:cube-pets/Models/GLB format/animal-crab.glb": {
+   "source": "kenney",
+   "pack": "cube-pets",
+   "name": "animal-crab",
+   "kind": "model",
+   "license": "CC0",
+   "license_note": "Cube Pets (2.0) Created/distributed by Kenney (www.kenney.nl) Creation date: 26-03-2026 11:16 ------------------------------ License: (Creative Commons Zero, CC0) http://creativecommons.org/publicdoma",
+   "license_checked": "2026-10-16",
+   "url": "https://kenney.nl/assets/cube-pets",
+   "need": "beach-toys-and-critters",
+   "decorative": true,
+   "fetched": "2026-10-16",
+   "res": null,
+   "files": [
+    {
+     "path": "assets/kenney/cube-pets/Models/GLB format/animal-crab.glb",
+     "sha256": "80fa5fd7c3652938d9e3c3024bb97dc9391a0e174fcc8b9459b63c613ed050f6",
+     "url": "https://kenney.nl/assets/cube-pets"
+    },
+    {
+     "path": "assets/kenney/cube-pets/Models/GLB format/Textures/colormap.png",
+     "sha256": "2f6d0032e51c2d49b13b8e689d59eb39aa3ee6c32f2a1851213e11fc7593177d",
+     "url": "https://kenney.nl/assets/cube-pets"
+    }
+   ],
+   "measured": {
+    "dims_m": [
+     2.3358,
+     1.4312,
+     1.3474
+    ],
+    "tris": 676,
+    "meshes": 6,
+    "origin_offset_m": [
+     0.0,
+     0.0,
+     -0.0
+    ]
+   }
+  },
+  "kaykit:board-game-bits/Assets/gltf/coin_gold.gltf": {
+   "source": "kaykit",
+   "pack": "board-game-bits",
+   "name": "coin_gold",
+   "kind": "model",
+   "license": "CC0",
+   "license_note": "KayKit : Board Game Bits (1.0) Created/distributed by Kay Lousberg (www.kaylousberg.com) Creation date: 28/04/2026 09:00 ------------------------------ License: (Creative Commons Zero, CC0) http://cre",
+   "license_checked": "2026-10-16",
+   "url": "https://kaylousberg.itch.io/board-game-bits",
+   "need": "treasure-and-sky",
+   "decorative": true,
+   "fetched": "2026-10-16",
+   "res": null,
+   "files": [
+    {
+     "path": "assets/kaykit/board-game-bits/Assets/gltf/coin_gold.gltf",
+     "sha256": "def6cb1929f5f7d9148dab987915708e7831da0ccf35b91c63c1c8ade871d7c5",
+     "url": "https://kaylousberg.itch.io/board-game-bits"
+    },
+    {
+     "path": "assets/kaykit/board-game-bits/Assets/gltf/boardgame_bits_texture.png",
+     "sha256": "c5268bd14b8e8dd1f981e6784269996f828199dec3837143e374eba9bb440abb",
+     "url": "https://kaylousberg.itch.io/board-game-bits"
+    },
+    {
+     "path": "assets/kaykit/board-game-bits/Assets/gltf/coin_gold.bin",
+     "sha256": "3ae0297f7ec987fb738d0d7ba15e41bff698a01b6a5bd5c4aeb868dc3d345790",
+     "url": "https://kaylousberg.itch.io/board-game-bits"
+    }
+   ],
+   "measured": {
+    "dims_m": [
+     1.0397,
+     0.2,
+     1.0397
+    ],
+    "tris": 320,
+    "meshes": 1,
+    "origin_offset_m": [
+     0.0,
+     0.0,
+     -0.0
+    ]
+   }
+  },
+  "kaykit:board-game-bits/Assets/gltf/coin_10_gold.gltf": {
+   "source": "kaykit",
+   "pack": "board-game-bits",
+   "name": "coin_10_gold",
+   "kind": "model",
+   "license": "CC0",
+   "license_note": "KayKit : Board Game Bits (1.0) Created/distributed by Kay Lousberg (www.kaylousberg.com) Creation date: 28/04/2026 09:00 ------------------------------ License: (Creative Commons Zero, CC0) http://cre",
+   "license_checked": "2026-10-16",
+   "url": "https://kaylousberg.itch.io/board-game-bits",
+   "need": "treasure-and-sky",
+   "decorative": true,
+   "fetched": "2026-10-16",
+   "res": null,
+   "files": [
+    {
+     "path": "assets/kaykit/board-game-bits/Assets/gltf/coin_10_gold.gltf",
+     "sha256": "a9f276e2b65eb20291779615822a1a32e22b05df45d0aee26f3be646a403d59e",
+     "url": "https://kaylousberg.itch.io/board-game-bits"
+    },
+    {
+     "path": "assets/kaykit/board-game-bits/Assets/gltf/boardgame_bits_texture.png",
+     "sha256": "c5268bd14b8e8dd1f981e6784269996f828199dec3837143e374eba9bb440abb",
+     "url": "https://kaylousberg.itch.io/board-game-bits"
+    },
+    {
+     "path": "assets/kaykit/board-game-bits/Assets/gltf/coin_10_gold.bin",
+     "sha256": "8815aaeaddfacbe5b547fe3082a0c5981390477fd810a1b988a0568eae7434b8",
+     "url": "https://kaylousberg.itch.io/board-game-bits"
+    }
+   ],
+   "measured": {
+    "dims_m": [
+     1.0397,
+     0.2,
+     1.0397
+    ],
+    "tris": 658,
+    "meshes": 1,
+    "origin_offset_m": [
+     0.0,
+     0.0,
+     -0.0
+    ]
+   }
+  },
+  "kaykit:kaykit-medieval-hexagon/Assets/gltf/decoration/nature/cloud_big.gltf": {
+   "source": "kaykit",
+   "pack": "kaykit-medieval-hexagon",
+   "name": "cloud_big",
+   "kind": "model",
+   "license": "CC0",
+   "license_note": "KayKit : Medieval Hexagon Pack (1.0) Created/distributed by Kay Lousberg (www.kaylousberg.com) Creation date: 26/04/2024 12:00 ------------------------------ License: (Creative Commons Zero, CC0) http",
+   "license_checked": "2026-10-16",
+   "url": "https://kaylousberg.itch.io/kaykit-medieval-hexagon",
+   "need": "treasure-and-sky",
+   "decorative": true,
+   "fetched": "2026-10-16",
+   "res": null,
+   "files": [
+    {
+     "path": "assets/kaykit/kaykit-medieval-hexagon/Assets/gltf/decoration/nature/cloud_big.gltf",
+     "sha256": "de414aab3585db0e5728c43c074941c875cb4b89e13d59992208fa2bcc777fb6",
+     "url": "https://kaylousberg.itch.io/kaykit-medieval-hexagon"
+    },
+    {
+     "path": "assets/kaykit/kaykit-medieval-hexagon/Assets/gltf/decoration/nature/hexagons_medieval.png",
+     "sha256": "5301a06866ba3be68dcc14cc429bd6d0f69004b72884283715d7e233f2e9782e",
+     "url": "https://kaylousberg.itch.io/kaykit-medieval-hexagon"
+    },
+    {
+     "path": "assets/kaykit/kaykit-medieval-hexagon/Assets/gltf/decoration/nature/cloud_big.bin",
+     "sha256": "5868ebf6be7315cb9221c929c202e7177d44cbe97852e71ae957c86bba22bd57",
+     "url": "https://kaylousberg.itch.io/kaykit-medieval-hexagon"
+    }
+   ],
+   "measured": {
+    "dims_m": [
+     3.6072,
+     1.9458,
+     2.2422
+    ],
+    "tris": 672,
+    "meshes": 1,
+    "origin_offset_m": [
+     0.0062,
+     -0.8838,
+     0.0273
+    ]
+   }
+  },
+  "kaykit:kaykit-medieval-hexagon/Assets/gltf/decoration/nature/cloud_small.gltf": {
+   "source": "kaykit",
+   "pack": "kaykit-medieval-hexagon",
+   "name": "cloud_small",
+   "kind": "model",
+   "license": "CC0",
+   "license_note": "KayKit : Medieval Hexagon Pack (1.0) Created/distributed by Kay Lousberg (www.kaylousberg.com) Creation date: 26/04/2024 12:00 ------------------------------ License: (Creative Commons Zero, CC0) http",
+   "license_checked": "2026-10-16",
+   "url": "https://kaylousberg.itch.io/kaykit-medieval-hexagon",
+   "need": "treasure-and-sky",
+   "decorative": true,
+   "fetched": "2026-10-16",
+   "res": null,
+   "files": [
+    {
+     "path": "assets/kaykit/kaykit-medieval-hexagon/Assets/gltf/decoration/nature/cloud_small.gltf",
+     "sha256": "581f5a9227488ef1b377c527764bd8f009d670bf229def04460e569ad8c46684",
+     "url": "https://kaylousberg.itch.io/kaykit-medieval-hexagon"
+    },
+    {
+     "path": "assets/kaykit/kaykit-medieval-hexagon/Assets/gltf/decoration/nature/hexagons_medieval.png",
+     "sha256": "5301a06866ba3be68dcc14cc429bd6d0f69004b72884283715d7e233f2e9782e",
+     "url": "https://kaylousberg.itch.io/kaykit-medieval-hexagon"
+    },
+    {
+     "path": "assets/kaykit/kaykit-medieval-hexagon/Assets/gltf/decoration/nature/cloud_small.bin",
+     "sha256": "5d3bb56004b2a5535e2f9594b33df95cb9509bef2cf6da39fd9042a2336939b6",
+     "url": "https://kaylousberg.itch.io/kaykit-medieval-hexagon"
+    }
+   ],
+   "measured": {
+    "dims_m": [
+     2.3378,
+     1.8397,
+     1.7917
+    ],
+    "tris": 366,
+    "meshes": 1,
+    "origin_offset_m": [
+     0.006,
+     -0.9079,
+     -0.0671
+    ]
+   }
+  },
+  "kenney:impact-sounds/Audio/footstep_grass_000.ogg": {
+   "source": "kenney",
+   "pack": "impact-sounds",
+   "name": "footstep_grass_000",
+   "kind": "sound",
+   "license": "CC0",
+   "license_note": "Impact Sounds (1.0) Created/distributed by Kenney (www.kenney.nl) Creation date: 19-12-2019 ------------------------------ License: (Creative Commons Zero, CC0) http://creativecommons.org/publicdomain",
+   "license_checked": "2026-10-16",
+   "url": "https://kenney.nl/assets/impact-sounds",
+   "need": "sound-effects",
+   "decorative": false,
+   "fetched": "2026-10-16",
+   "res": null,
+   "files": [
+    {
+     "path": "assets/kenney/impact-sounds/Audio/footstep_grass_000.ogg",
+     "sha256": "9d49497777405d78d7cf7f2888e28277f3a23192300cfd1d79d54876b20f479f",
+     "url": "https://kenney.nl/assets/impact-sounds"
+    }
+   ]
+  },
+  "kenney:impact-sounds/Audio/footstep_grass_002.ogg": {
+   "source": "kenney",
+   "pack": "impact-sounds",
+   "name": "footstep_grass_002",
+   "kind": "sound",
+   "license": "CC0",
+   "license_note": "Impact Sounds (1.0) Created/distributed by Kenney (www.kenney.nl) Creation date: 19-12-2019 ------------------------------ License: (Creative Commons Zero, CC0) http://creativecommons.org/publicdomain",
+   "license_checked": "2026-10-16",
+   "url": "https://kenney.nl/assets/impact-sounds",
+   "need": "sound-effects",
+   "decorative": false,
+   "fetched": "2026-10-16",
+   "res": null,
+   "files": [
+    {
+     "path": "assets/kenney/impact-sounds/Audio/footstep_grass_002.ogg",
+     "sha256": "73a520139f5be716a403bfe9c80e0e94d1e61d8e9de04a354b336392164b53dc",
+     "url": "https://kenney.nl/assets/impact-sounds"
+    }
+   ]
+  },
+  "kenney:rpg-audio/Audio/cloth1.ogg": {
+   "source": "kenney",
+   "pack": "rpg-audio",
+   "name": "cloth1",
+   "kind": "sound",
+   "license": "CC0",
+   "license_note": "RPG Audio by Kenney Vleugels (Kenney.nl) ------------------------------ License (Creative Commons Zero, CC0) http://creativecommons.org/publicdomain/zero/1.0/ You may use these assets in personal and ",
+   "license_checked": "2026-10-16",
+   "url": "https://kenney.nl/assets/rpg-audio",
+   "need": "sound-effects",
+   "decorative": false,
+   "fetched": "2026-10-16",
+   "res": null,
+   "files": [
+    {
+     "path": "assets/kenney/rpg-audio/Audio/cloth1.ogg",
+     "sha256": "ddb93a3671233f95da0e0b10367f082f7eb42fa6caaddcf776410aa8833c747d",
+     "url": "https://kenney.nl/assets/rpg-audio"
+    }
+   ]
+  },
+  "kenney:desert-shooter-pack/Sounds/explosion-a.ogg": {
+   "source": "kenney",
+   "pack": "desert-shooter-pack",
+   "name": "explosion-a",
+   "kind": "sound",
+   "license": "CC0",
+   "license_note": "Desert Shooter Pack (1.0) Created/distributed by Kenney (www.kenney.nl) Sponsored by: GameMaker (www.gamemaker.io) Creation date: 24-04-2024 ------------------------------ License: (Creative Commons Z",
+   "license_checked": "2026-10-16",
+   "url": "https://kenney.nl/assets/desert-shooter-pack",
+   "need": "sound-effects",
+   "decorative": false,
+   "fetched": "2026-10-16",
+   "res": null,
+   "files": [
+    {
+     "path": "assets/kenney/desert-shooter-pack/Sounds/explosion-a.ogg",
+     "sha256": "336cd73aa1650c823c05e20c450b228f6b143706e5a38227903a89f0005d22bc",
+     "url": "https://kenney.nl/assets/desert-shooter-pack"
+    }
+   ]
+  },
+  "kenney:desert-shooter-pack/Sounds/coin-a.ogg": {
+   "source": "kenney",
+   "pack": "desert-shooter-pack",
+   "name": "coin-a",
+   "kind": "sound",
+   "license": "CC0",
+   "license_note": "Desert Shooter Pack (1.0) Created/distributed by Kenney (www.kenney.nl) Sponsored by: GameMaker (www.gamemaker.io) Creation date: 24-04-2024 ------------------------------ License: (Creative Commons Z",
+   "license_checked": "2026-10-16",
+   "url": "https://kenney.nl/assets/desert-shooter-pack",
+   "need": "sound-effects",
+   "decorative": false,
+   "fetched": "2026-10-16",
+   "res": null,
+   "files": [
+    {
+     "path": "assets/kenney/desert-shooter-pack/Sounds/coin-a.ogg",
+     "sha256": "9a73dd01396ec477b8d8057b77e7cda3b01dbdd2a41eb29ff9cf6ae5995c4521",
+     "url": "https://kenney.nl/assets/desert-shooter-pack"
+    }
+   ]
+  },
+  "kenney:desert-shooter-pack/Sounds/lose-a.ogg": {
+   "source": "kenney",
+   "pack": "desert-shooter-pack",
+   "name": "lose-a",
+   "kind": "sound",
+   "license": "CC0",
+   "license_note": "Desert Shooter Pack (1.0) Created/distributed by Kenney (www.kenney.nl) Sponsored by: GameMaker (www.gamemaker.io) Creation date: 24-04-2024 ------------------------------ License: (Creative Commons Z",
+   "license_checked": "2026-10-16",
+   "url": "https://kenney.nl/assets/desert-shooter-pack",
+   "need": "sound-effects",
+   "decorative": false,
+   "fetched": "2026-10-16",
+   "res": null,
+   "files": [
+    {
+     "path": "assets/kenney/desert-shooter-pack/Sounds/lose-a.ogg",
+     "sha256": "02be06b906ce44714d49792021a35d016a899a81618a3af654111d5720b9cc2c",
+     "url": "https://kenney.nl/assets/desert-shooter-pack"
+    }
+   ]
+  },
+  "kenney:interface-sounds/Audio/click_001.ogg": {
+   "source": "kenney",
+   "pack": "interface-sounds",
+   "name": "click_001",
+   "kind": "sound",
+   "license": "CC0",
+   "license_note": "Interface Sounds (1.0) Created/distributed by Kenney (www.kenney.nl) Creation date: 11-02-2020 ------------------------------ License: (Creative Commons Zero, CC0) http://creativecommons.org/publicdom",
+   "license_checked": "2026-10-16",
+   "url": "https://kenney.nl/assets/interface-sounds",
+   "need": "sound-effects",
+   "decorative": false,
+   "fetched": "2026-10-16",
+   "res": null,
+   "files": [
+    {
+     "path": "assets/kenney/interface-sounds/Audio/click_001.ogg",
+     "sha256": "ccfb7fa0cccdd9faec0eb16033c732b1e308d139d80f799161495d58f7adcdb9",
+     "url": "https://kenney.nl/assets/interface-sounds"
+    }
+   ]
+  },
+  "kenney:interface-sounds/Audio/drop_001.ogg": {
+   "source": "kenney",
+   "pack": "interface-sounds",
+   "name": "drop_001",
+   "kind": "sound",
+   "license": "CC0",
+   "license_note": "Interface Sounds (1.0) Created/distributed by Kenney (www.kenney.nl) Creation date: 11-02-2020 ------------------------------ License: (Creative Commons Zero, CC0) http://creativecommons.org/publicdom",
+   "license_checked": "2026-10-16",
+   "url": "https://kenney.nl/assets/interface-sounds",
+   "need": "sound-effects",
+   "decorative": false,
+   "fetched": "2026-10-16",
+   "res": null,
+   "files": [
+    {
+     "path": "assets/kenney/interface-sounds/Audio/drop_001.ogg",
+     "sha256": "692ee3a6f1821402ca649ff735bee9591dc4846c8098fc7d6a90fd15fa57c1af",
+     "url": "https://kenney.nl/assets/interface-sounds"
+    }
+   ]
+  },
+  "kenney:sci-fi-sounds/Audio/spaceEngineLow_000.ogg": {
+   "source": "kenney",
+   "pack": "sci-fi-sounds",
+   "name": "spaceEngineLow_000",
+   "kind": "sound",
+   "license": "CC0",
+   "license_note": "Sci-Fi Sounds (1.0) Created/distributed by Kenney (www.kenney.nl) Creation date: 11-10-2020 ------------------------------ License: (Creative Commons Zero, CC0) http://creativecommons.org/publicdomain",
+   "license_checked": "2026-10-16",
+   "url": "https://kenney.nl/assets/sci-fi-sounds",
+   "need": "sound-effects",
+   "decorative": false,
+   "fetched": "2026-10-16",
+   "res": null,
+   "files": [
+    {
+     "path": "assets/kenney/sci-fi-sounds/Audio/spaceEngineLow_000.ogg",
+     "sha256": "d7deee8d7217ce63aab802ad7365a59cacfd243392dc1bd03b0a9d454aa494df",
+     "url": "https://kenney.nl/assets/sci-fi-sounds"
+    }
+   ]
+  },
+  "kenney:digital-audio/Audio/powerUp2.ogg": {
+   "source": "kenney",
+   "pack": "digital-audio",
+   "name": "powerUp2",
+   "kind": "sound",
+   "license": "CC0",
+   "license_note": "Digital Audio by Kenney Vleugels (Kenney.nl) ------------------------------ License (Creative Commons Zero, CC0) http://creativecommons.org/publicdomain/zero/1.0/ You may use these assets in personal ",
+   "license_checked": "2026-10-16",
+   "url": "https://kenney.nl/assets/digital-audio",
+   "need": "sound-effects",
+   "decorative": false,
+   "fetched": "2026-10-16",
+   "res": null,
+   "files": [
+    {
+     "path": "assets/kenney/digital-audio/Audio/powerUp2.ogg",
+     "sha256": "83786b43d828a399e14ac20604b63a60ca05385977f5477d00304c2adc696204",
+     "url": "https://kenney.nl/assets/digital-audio"
+    }
+   ]
+  },
+  "kenney:music-jingles/Audio/Hit jingles/jingles_HIT00.ogg": {
+   "source": "kenney",
+   "pack": "music-jingles",
+   "name": "jingles_HIT00",
+   "kind": "sound",
+   "license": "CC0",
+   "license_note": "Music Jingles by Kenney Vleugels (Kenney.nl) ------------------------------ License (Creative Commons Zero, CC0) http://creativecommons.org/publicdomain/zero/1.0/ You may use these assets in personal ",
+   "license_checked": "2026-10-16",
+   "url": "https://kenney.nl/assets/music-jingles",
+   "need": "sound-effects",
+   "decorative": false,
+   "fetched": "2026-10-16",
+   "res": null,
+   "files": [
+    {
+     "path": "assets/kenney/music-jingles/Audio/Hit jingles/jingles_HIT00.ogg",
+     "sha256": "e23d8c9e971a4e34484bc834a3ec1d560811ec6f5edd5efa2c61e583c18c504a",
+     "url": "https://kenney.nl/assets/music-jingles"
+    }
+   ]
+  },
+  "kenney:space-kit/Models/GLTF format/alien.glb": {
+   "source": "kenney",
+   "pack": "space-kit",
+   "name": "alien",
+   "kind": "model",
+   "license": "CC0",
+   "license_note": "Space Kit (2.0) Created/distributed by Kenney (www.kenney.nl) Creation date: 27-08-2020 14:20 ------------------------------ License: (Creative Commons Zero, CC0) http://creativecommons.org/publicdoma",
+   "license_checked": "2026-10-16",
+   "url": "https://kenney.nl/assets/space-kit",
+   "need": "grumbleflox",
+   "decorative": true,
+   "fetched": "2026-10-16",
+   "res": null,
+   "files": [
+    {
+     "path": "assets/kenney/space-kit/Models/GLTF format/alien.glb",
+     "sha256": "c041e8ed0eff82f0b25b944a8107f1268ddbec9c2c93afedc4ee0e8b047d983d",
+     "url": "https://kenney.nl/assets/space-kit"
+    }
+   ],
+   "measured": {
+    "dims_m": [
+     0.4832,
+     0.8432,
+     0.33
+    ],
+    "tris": 292,
+    "meshes": 6,
+    "origin_offset_m": [
+     2.0,
+     0.0,
+     1.535
+    ]
+   }
+  },
+  "kenney:kenney-fonts/Fonts/Kenney Future.ttf": {
+   "source": "kenney",
+   "pack": "kenney-fonts",
+   "name": "Kenney Future",
+   "kind": "font",
+   "license": "CC0",
+   "license_note": "Kenney Fonts License.txt: Creative Commons Zero, CC0 (font exception approved by the user 2026-10-16)",
+   "license_checked": "2026-10-16",
+   "url": "https://kenney.nl/assets/kenney-fonts",
+   "need": "ui-font",
+   "decorative": true,
+   "fetched": "2026-10-16",
+   "res": null,
+   "files": [
+    {
+     "path": "assets/kenney/kenney-fonts/Kenney Future.ttf",
+     "sha256": "bd36e536cc26672bdba652547494a4877f2a446329bb7141840d9cd73bceffc2",
+     "url": "https://kenney.nl/assets/kenney-fonts"
+    }
+   ]
+  },
+  "kenney:kenney-fonts/Fonts/Kenney Future Narrow.ttf": {
+   "source": "kenney",
+   "pack": "kenney-fonts",
+   "name": "Kenney Future Narrow",
+   "kind": "font",
+   "license": "CC0",
+   "license_note": "Kenney Fonts License.txt: Creative Commons Zero, CC0 (font exception approved by the user 2026-10-16)",
+   "license_checked": "2026-10-16",
+   "url": "https://kenney.nl/assets/kenney-fonts",
+   "need": "ui-font",
+   "decorative": true,
+   "fetched": "2026-10-16",
+   "res": null,
+   "files": [
+    {
+     "path": "assets/kenney/kenney-fonts/Kenney Future Narrow.ttf",
+     "sha256": "572a3fc36adedf951365f77fa37011115363c7e8a537a308e563abdb299d7477",
+     "url": "https://kenney.nl/assets/kenney-fonts"
+    }
+   ]
+  },
+  "kenney:kenney-fonts/Fonts/Kenney Blocks.ttf": {
+   "source": "kenney",
+   "pack": "kenney-fonts",
+   "name": "Kenney Blocks",
+   "kind": "font",
+   "license": "CC0",
+   "license_note": "Kenney Fonts License.txt: Creative Commons Zero, CC0 (font exception approved by the user 2026-10-16)",
+   "license_checked": "2026-10-16",
+   "url": "https://kenney.nl/assets/kenney-fonts",
+   "need": "ui-font",
+   "decorative": true,
+   "fetched": "2026-10-16",
+   "res": null,
+   "files": [
+    {
+     "path": "assets/kenney/kenney-fonts/Kenney Blocks.ttf",
+     "sha256": "bb2f9ba39f4fa7d8dbb3d3d1af05c2517b848f278bbe4f7ab53e518f2429bad5",
+     "url": "https://kenney.nl/assets/kenney-fonts"
+    }
+   ]
+  }
+ }
+}

@@ -1,0 +1,1219 @@
+{
+ "brief": "Don't Panic Island: hex Minesweeper meets Civ on a sunny cartoon desert island; Kenney low-poly look (BRIEF.md).",
+ "needs": [
+  {
+   "id": "terrain-hexes",
+   "why": "the island board: beach, desert, grass/jungle, palm grove base, rocks, water ring, dug tiles",
+   "sets": [
+    {
+     "id": "A",
+     "why": "Kenney Hexagon Kit: one tile per terrain type, all 1.0 wide, matches the style lock we want",
+     "items": [
+      {
+       "id": "kenney:hexagon-kit/Models/GLB format/sand.glb",
+       "origin": "keep",
+       "name": "sand",
+       "kind": "model",
+       "source": "kenney",
+       "pack": "hexagon-kit",
+       "style": "Kenney low-poly",
+       "page_url": "https://kenney.nl/assets/hexagon-kit",
+       "thumb": "mirror/kenney/hexagon-kit/Previews/sand.png",
+       "dims_m": [
+        1.0,
+        0.2,
+        1.1547
+       ],
+       "tris": 32
+      },
+      {
+       "id": "kenney:hexagon-kit/Models/GLB format/sand-desert.glb",
+       "origin": "keep",
+       "name": "sand-desert",
+       "kind": "model",
+       "source": "kenney",
+       "pack": "hexagon-kit",
+       "style": "Kenney low-poly",
+       "page_url": "https://kenney.nl/assets/hexagon-kit",
+       "thumb": "mirror/kenney/hexagon-kit/Previews/sand-desert.png",
+       "dims_m": [
+        1.0,
+        0.51,
+        1.1547
+       ],
+       "tris": 246
+      },
+      {
+       "id": "kenney:hexagon-kit/Models/GLB format/sand-rocks.glb",
+       "origin": "keep",
+       "name": "sand-rocks",
+       "kind": "model",
+       "source": "kenney",
+       "pack": "hexagon-kit",
+       "style": "Kenney low-poly",
+       "page_url": "https://kenney.nl/assets/hexagon-kit",
+       "thumb": "mirror/kenney/hexagon-kit/Previews/sand-rocks.png",
+       "dims_m": [
+        1.0,
+        0.2435,
+        1.1547
+       ],
+       "tris": 82
+      },
+      {
+       "id": "kenney:hexagon-kit/Models/GLB format/grass.glb",
+       "origin": "keep",
+       "name": "grass",
+       "kind": "model",
+       "source": "kenney",
+       "pack": "hexagon-kit",
+       "style": "Kenney low-poly",
+       "page_url": "https://kenney.nl/assets/hexagon-kit",
+       "thumb": "mirror/kenney/hexagon-kit/Previews/grass.png",
+       "dims_m": [
+        1.0,
+        0.2,
+        1.1547
+       ],
+       "tris": 32
+      },
+      {
+       "id": "kenney:hexagon-kit/Models/GLB format/grass-forest.glb",
+       "origin": "keep",
+       "name": "grass-forest",
+       "kind": "model",
+       "source": "kenney",
+       "pack": "hexagon-kit",
+       "style": "Kenney low-poly",
+       "page_url": "https://kenney.nl/assets/hexagon-kit",
+       "thumb": "mirror/kenney/hexagon-kit/Previews/grass-forest.png",
+       "dims_m": [
+        1.0,
+        0.675,
+        1.1547
+       ],
+       "tris": 448
+      },
+      {
+       "id": "kenney:hexagon-kit/Models/GLB format/grass-hill.glb",
+       "origin": "keep",
+       "name": "grass-hill",
+       "kind": "model",
+       "source": "kenney",
+       "pack": "hexagon-kit",
+       "style": "Kenney low-poly",
+       "page_url": "https://kenney.nl/assets/hexagon-kit",
+       "thumb": "mirror/kenney/hexagon-kit/Previews/grass-hill.png",
+       "dims_m": [
+        1.0,
+        0.8032,
+        1.1547
+       ],
+       "tris": 348
+      },
+      {
+       "id": "kenney:hexagon-kit/Models/GLB format/stone-rocks.glb",
+       "origin": "keep",
+       "name": "stone-rocks",
+       "kind": "model",
+       "source": "kenney",
+       "pack": "hexagon-kit",
+       "style": "Kenney low-poly",
+       "page_url": "https://kenney.nl/assets/hexagon-kit",
+       "thumb": "mirror/kenney/hexagon-kit/Previews/stone-rocks.png",
+       "dims_m": [
+        1.0,
+        0.4061,
+        1.1547
+       ],
+       "tris": 268
+      },
+      {
+       "id": "kenney:hexagon-kit/Models/GLB format/dirt.glb",
+       "origin": "keep",
+       "name": "dirt",
+       "kind": "model",
+       "source": "kenney",
+       "pack": "hexagon-kit",
+       "style": "Kenney low-poly",
+       "page_url": "https://kenney.nl/assets/hexagon-kit",
+       "thumb": "mirror/kenney/hexagon-kit/Previews/dirt.png",
+       "dims_m": [
+        1.0,
+        0.1,
+        1.1547
+       ],
+       "tris": 20
+      },
+      {
+       "id": "kenney:hexagon-kit/Models/GLB format/water.glb",
+       "origin": "keep",
+       "name": "water",
+       "kind": "model",
+       "source": "kenney",
+       "pack": "hexagon-kit",
+       "style": "Kenney low-poly",
+       "page_url": "https://kenney.nl/assets/hexagon-kit",
+       "thumb": "mirror/kenney/hexagon-kit/Previews/water.png",
+       "dims_m": [
+        1.0,
+        0.1,
+        1.1547
+       ],
+       "tris": 20
+      },
+      {
+       "id": "kenney:hexagon-kit/Models/GLB format/water-rocks.glb",
+       "origin": "keep",
+       "name": "water-rocks",
+       "kind": "model",
+       "source": "kenney",
+       "pack": "hexagon-kit",
+       "style": "Kenney low-poly",
+       "page_url": "https://kenney.nl/assets/hexagon-kit",
+       "thumb": "mirror/kenney/hexagon-kit/Previews/water-rocks.png",
+       "dims_m": [
+        1.0,
+        0.2593,
+        1.1547
+       ],
+       "tris": 164
+      },
+      {
+       "id": "kenney:hexagon-kit/Models/GLB format/water-island.glb",
+       "origin": "keep",
+       "name": "water-island",
+       "kind": "model",
+       "source": "kenney",
+       "pack": "hexagon-kit",
+       "style": "Kenney low-poly",
+       "page_url": "https://kenney.nl/assets/hexagon-kit",
+       "thumb": "mirror/kenney/hexagon-kit/Previews/water-island.png",
+       "dims_m": [
+        1.0,
+        0.2435,
+        1.1547
+       ],
+       "tris": 84
+      }
+     ],
+     "style": "Kenney low-poly"
+    }
+   ],
+   "decision": {
+    "set": "A",
+    "reason": "",
+    "vetoed": []
+   }
+  },
+  {
+   "id": "island-props",
+   "why": "palms (wood), wrecks and chests (gold), camp, dug holes, rocks and foliage for variety",
+   "sets": [
+    {
+     "id": "A",
+     "why": "Kenney Pirate + Nature kits: same flat-colour low-poly as the hex tiles",
+     "items": [
+      {
+       "id": "kenney:pirate-kit/Models/GLB format/palm-bend.glb",
+       "origin": "keep",
+       "name": "palm-bend",
+       "kind": "model",
+       "source": "kenney",
+       "pack": "pirate-kit",
+       "style": "Kenney low-poly",
+       "page_url": "https://kenney.nl/assets/pirate-kit",
+       "thumb": "mirror/kenney/pirate-kit/Previews/palm-bend.png",
+       "dims_m": [
+        2.8804,
+        4.2513,
+        3.216
+       ],
+       "tris": 338
+      },
+      {
+       "id": "kenney:pirate-kit/Models/GLB format/palm-straight.glb",
+       "origin": "keep",
+       "name": "palm-straight",
+       "kind": "model",
+       "source": "kenney",
+       "pack": "pirate-kit",
+       "style": "Kenney low-poly",
+       "page_url": "https://kenney.nl/assets/pirate-kit",
+       "thumb": "mirror/kenney/pirate-kit/Previews/palm-straight.png",
+       "dims_m": [
+        2.4886,
+        4.2129,
+        2.4886
+       ],
+       "tris": 338
+      },
+      {
+       "id": "kenney:pirate-kit/Models/GLB format/palm-detailed-bend.glb",
+       "origin": "keep",
+       "name": "palm-detailed-bend",
+       "kind": "model",
+       "source": "kenney",
+       "pack": "pirate-kit",
+       "style": "Kenney low-poly",
+       "page_url": "https://kenney.nl/assets/pirate-kit",
+       "thumb": "mirror/kenney/pirate-kit/Previews/palm-detailed-bend.png",
+       "dims_m": [
+        2.8804,
+        4.2513,
+        3.216
+       ],
+       "tris": 482
+      },
+      {
+       "id": "kenney:pirate-kit/Models/GLB format/palm-detailed-straight.glb",
+       "origin": "keep",
+       "name": "palm-detailed-straight",
+       "kind": "model",
+       "source": "kenney",
+       "pack": "pirate-kit",
+       "style": "Kenney low-poly",
+       "page_url": "https://kenney.nl/assets/pirate-kit",
+       "thumb": "mirror/kenney/pirate-kit/Previews/palm-detailed-straight.png",
+       "dims_m": [
+        3.216,
+        4.2129,
+        3.216
+       ],
+       "tris": 482
+      },
+      {
+       "id": "kenney:pirate-kit/Models/GLB format/ship-wreck.glb",
+       "origin": "keep",
+       "name": "ship-wreck",
+       "kind": "model",
+       "source": "kenney",
+       "pack": "pirate-kit",
+       "style": "Kenney low-poly",
+       "page_url": "https://kenney.nl/assets/pirate-kit",
+       "thumb": "mirror/kenney/pirate-kit/Previews/ship-wreck.png",
+       "dims_m": [
+        4.8,
+        9.9635,
+        10.6
+       ],
+       "tris": 2282
+      },
+      {
+       "id": "kenney:pirate-kit/Models/GLB format/chest.glb",
+       "origin": "keep",
+       "name": "chest",
+       "kind": "model",
+       "source": "kenney",
+       "pack": "pirate-kit",
+       "style": "Kenney low-poly",
+       "page_url": "https://kenney.nl/assets/pirate-kit",
+       "thumb": "mirror/kenney/pirate-kit/Previews/chest.png",
+       "dims_m": [
+        1.275,
+        1.3478,
+        1.3137
+       ],
+       "tris": 232
+      },
+      {
+       "id": "kenney:pirate-kit/Models/GLB format/barrel.glb",
+       "origin": "keep",
+       "name": "barrel",
+       "kind": "model",
+       "source": "kenney",
+       "pack": "pirate-kit",
+       "style": "Kenney low-poly",
+       "page_url": "https://kenney.nl/assets/pirate-kit",
+       "thumb": "mirror/kenney/pirate-kit/Previews/barrel.png",
+       "dims_m": [
+        1.3361,
+        1.2291,
+        1.3361
+       ],
+       "tris": 148
+      },
+      {
+       "id": "kenney:pirate-kit/Models/GLB format/crate.glb",
+       "origin": "keep",
+       "name": "crate",
+       "kind": "model",
+       "source": "kenney",
+       "pack": "pirate-kit",
+       "style": "Kenney low-poly",
+       "page_url": "https://kenney.nl/assets/pirate-kit",
+       "thumb": "mirror/kenney/pirate-kit/Previews/crate.png",
+       "dims_m": [
+        1.078,
+        0.77,
+        1.309
+       ],
+       "tris": 76
+      },
+      {
+       "id": "kenney:pirate-kit/Models/GLB format/hole.glb",
+       "origin": "keep",
+       "name": "hole",
+       "kind": "model",
+       "source": "kenney",
+       "pack": "pirate-kit",
+       "style": "Kenney low-poly",
+       "page_url": "https://kenney.nl/assets/pirate-kit",
+       "thumb": "mirror/kenney/pirate-kit/Previews/hole.png",
+       "dims_m": [
+        2.8608,
+        0.354,
+        2.704
+       ],
+       "tris": 286
+      },
+      {
+       "id": "kenney:pirate-kit/Models/GLB format/flag-pirate.glb",
+       "origin": "keep",
+       "name": "flag-pirate",
+       "kind": "model",
+       "source": "kenney",
+       "pack": "pirate-kit",
+       "style": "Kenney low-poly",
+       "page_url": "https://kenney.nl/assets/pirate-kit",
+       "thumb": "mirror/kenney/pirate-kit/Previews/flag-pirate.png",
+       "dims_m": [
+        1.3368,
+        2.0968,
+        0.3989
+       ],
+       "tris": 144
+      },
+      {
+       "id": "kenney:pirate-kit/Models/GLB format/tool-shovel.glb",
+       "origin": "keep",
+       "name": "tool-shovel",
+       "kind": "model",
+       "source": "kenney",
+       "pack": "pirate-kit",
+       "style": "Kenney low-poly",
+       "page_url": "https://kenney.nl/assets/pirate-kit",
+       "thumb": "mirror/kenney/pirate-kit/Previews/tool-shovel.png",
+       "dims_m": [
+        0.6578,
+        2.3491,
+        0.2829
+       ],
+       "tris": 168
+      },
+      {
+       "id": "kenney:pirate-kit/Models/GLB format/rocks-sand-a.glb",
+       "origin": "keep",
+       "name": "rocks-sand-a",
+       "kind": "model",
+       "source": "kenney",
+       "pack": "pirate-kit",
+       "style": "Kenney low-poly",
+       "page_url": "https://kenney.nl/assets/pirate-kit",
+       "thumb": "mirror/kenney/pirate-kit/Previews/rocks-sand-a.png",
+       "dims_m": [
+        5.1126,
+        3.2119,
+        4.3864
+       ],
+       "tris": 552
+      },
+      {
+       "id": "kenney:pirate-kit/Models/GLB format/rocks-sand-b.glb",
+       "origin": "keep",
+       "name": "rocks-sand-b",
+       "kind": "model",
+       "source": "kenney",
+       "pack": "pirate-kit",
+       "style": "Kenney low-poly",
+       "page_url": "https://kenney.nl/assets/pirate-kit",
+       "thumb": "mirror/kenney/pirate-kit/Previews/rocks-sand-b.png",
+       "dims_m": [
+        4.379,
+        3.7144,
+        4.7098
+       ],
+       "tris": 516
+      },
+      {
+       "id": "kenney:pirate-kit/Models/GLB format/patch-sand-foliage.glb",
+       "origin": "keep",
+       "name": "patch-sand-foliage",
+       "kind": "model",
+       "source": "kenney",
+       "pack": "pirate-kit",
+       "style": "Kenney low-poly",
+       "page_url": "https://kenney.nl/assets/pirate-kit",
+       "thumb": "mirror/kenney/pirate-kit/Previews/patch-sand-foliage.png",
+       "dims_m": [
+        7.7363,
+        0.5639,
+        6.0361
+       ],
+       "tris": 636
+      },
+      {
+       "id": "kenney:pirate-kit/Models/GLB format/grass-plant.glb",
+       "origin": "keep",
+       "name": "grass-plant",
+       "kind": "model",
+       "source": "kenney",
+       "pack": "pirate-kit",
+       "style": "Kenney low-poly",
+       "page_url": "https://kenney.nl/assets/pirate-kit",
+       "thumb": "mirror/kenney/pirate-kit/Previews/grass-plant.png",
+       "dims_m": [
+        1.1142,
+        0.5196,
+        1.237
+       ],
+       "tris": 144
+      },
+      {
+       "id": "kenney:pirate-kit/Models/GLB format/boat-row-small.glb",
+       "origin": "keep",
+       "name": "boat-row-small",
+       "kind": "model",
+       "source": "kenney",
+       "pack": "pirate-kit",
+       "style": "Kenney low-poly",
+       "page_url": "https://kenney.nl/assets/pirate-kit",
+       "thumb": "mirror/kenney/pirate-kit/Previews/boat-row-small.png",
+       "dims_m": [
+        2.7485,
+        0.8477,
+        2.3721
+       ],
+       "tris": 168
+      },
+      {
+       "id": "kenney:nature-kit/Models/GLTF format/campfire_logs.glb",
+       "origin": "keep",
+       "name": "campfire_logs",
+       "kind": "model",
+       "source": "kenney",
+       "pack": "nature-kit",
+       "style": "Kenney low-poly",
+       "page_url": "https://kenney.nl/assets/nature-kit",
+       "thumb": "thumbs/kenney/nature-kit/Models/GLTF format/campfire_logs.png",
+       "dims_m": [
+        0.2919,
+        0.0626,
+        0.2919
+       ],
+       "tris": 112
+      }
+     ],
+     "style": "Kenney low-poly"
+    }
+   ],
+   "decision": {
+    "set": "A",
+    "reason": "",
+    "vetoed": []
+   }
+  },
+  {
+   "id": "crew",
+   "why": "3 small pirate crewmates at the camp; a lost one turns into a skeleton",
+   "sets": [
+    {
+     "id": "A",
+     "why": "KayKit Adventurers: same artist and rig as the KayKit skeletons, so the crew-to-skeleton swap matches (animated)",
+     "items": [
+      {
+       "id": "kaykit:kaykit-adventurers/Characters/gltf/Rogue.glb",
+       "origin": "keep",
+       "name": "Rogue",
+       "kind": "model",
+       "source": "kaykit",
+       "pack": "kaykit-adventurers",
+       "style": "KayKit low-poly",
+       "page_url": "https://kaylousberg.itch.io/kaykit-adventurers",
+       "thumb": "thumbs/kaykit/kaykit-adventurers/Characters/gltf/Rogue.png",
+       "dims_m": [
+        1.9447,
+        3.1783,
+        2.0
+       ],
+       "tris": 7642
+      },
+      {
+       "id": "kaykit:kaykit-adventurers/Characters/gltf/Rogue_Hooded.glb",
+       "origin": "keep",
+       "name": "Rogue_Hooded",
+       "kind": "model",
+       "source": "kaykit",
+       "pack": "kaykit-adventurers",
+       "style": "KayKit low-poly",
+       "page_url": "https://kaylousberg.itch.io/kaykit-adventurers",
+       "thumb": "thumbs/kaykit/kaykit-adventurers/Characters/gltf/Rogue_Hooded.png",
+       "dims_m": [
+        1.9447,
+        3.171,
+        2.0
+       ],
+       "tris": 7265
+      },
+      {
+       "id": "kaykit:kaykit-adventurers/Characters/gltf/Barbarian.glb",
+       "origin": "keep",
+       "name": "Barbarian",
+       "kind": "model",
+       "source": "kaykit",
+       "pack": "kaykit-adventurers",
+       "style": "KayKit low-poly",
+       "page_url": "https://kaylousberg.itch.io/kaykit-adventurers",
+       "thumb": "thumbs/kaykit/kaykit-adventurers/Characters/gltf/Barbarian.png",
+       "dims_m": [
+        1.9425,
+        3.3978,
+        2.0
+       ],
+       "tris": 7203
+      },
+      {
+       "id": "kaykit:kaykit-adventurers/Animations/gltf/Rig_Medium/Rig_Medium_General.glb",
+       "origin": "keep",
+       "name": "Rig_Medium_General",
+       "kind": "model",
+       "source": "kaykit",
+       "pack": "kaykit-adventurers",
+       "style": "KayKit low-poly",
+       "page_url": "https://kaylousberg.itch.io/kaykit-adventurers",
+       "thumb": "thumbs/kaykit/kaykit-adventurers/Animations/gltf/Rig_Medium/Rig_Medium_General.png",
+       "dims_m": [
+        1.9785,
+        3.2037,
+        2.0
+       ],
+       "tris": 6996
+      },
+      {
+       "id": "kaykit:kaykit-adventurers/Animations/gltf/Rig_Medium/Rig_Medium_MovementBasic.glb",
+       "origin": "keep",
+       "name": "Rig_Medium_MovementBasic",
+       "kind": "model",
+       "source": "kaykit",
+       "pack": "kaykit-adventurers",
+       "style": "KayKit low-poly",
+       "page_url": "https://kaylousberg.itch.io/kaykit-adventurers",
+       "thumb": "thumbs/kaykit/kaykit-adventurers/Animations/gltf/Rig_Medium/Rig_Medium_MovementBasic.png",
+       "dims_m": [
+        1.9785,
+        3.2037,
+        2.0
+       ],
+       "tris": 6996
+      }
+     ],
+     "style": "KayKit low-poly"
+    },
+    {
+     "id": "B",
+     "why": "Kenney Blocky Characters: Minecraft-like, closer to Kenney colours, no matching skeleton (would need a recolour)",
+     "items": [
+      {
+       "id": "kenney:blocky-characters/Models/GLB format/character-a.glb",
+       "origin": "keep",
+       "name": "character-a",
+       "kind": "model",
+       "source": "kenney",
+       "pack": "blocky-characters",
+       "style": "Kenney low-poly",
+       "page_url": "https://kenney.nl/assets/blocky-characters",
+       "thumb": "mirror/kenney/blocky-characters/Previews/character-a.png",
+       "dims_m": [
+        1.6,
+        2.7,
+        0.8
+       ],
+       "tris": 72
+      },
+      {
+       "id": "kenney:blocky-characters/Models/GLB format/character-b.glb",
+       "origin": "keep",
+       "name": "character-b",
+       "kind": "model",
+       "source": "kenney",
+       "pack": "blocky-characters",
+       "style": "Kenney low-poly",
+       "page_url": "https://kenney.nl/assets/blocky-characters",
+       "thumb": "mirror/kenney/blocky-characters/Previews/character-b.png",
+       "dims_m": [
+        1.6,
+        2.7,
+        0.8
+       ],
+       "tris": 72
+      },
+      {
+       "id": "kenney:blocky-characters/Models/GLB format/character-f.glb",
+       "origin": "keep",
+       "name": "character-f",
+       "kind": "model",
+       "source": "kenney",
+       "pack": "blocky-characters",
+       "style": "Kenney low-poly",
+       "page_url": "https://kenney.nl/assets/blocky-characters",
+       "thumb": "mirror/kenney/blocky-characters/Previews/character-f.png",
+       "dims_m": [
+        1.6,
+        2.7,
+        0.8
+       ],
+       "tris": 72
+      }
+     ],
+     "style": "Kenney low-poly"
+    }
+   ],
+   "decision": {
+    "set": "A",
+    "reason": "",
+    "vetoed": []
+   }
+  },
+  {
+   "id": "skeletons",
+   "why": "gravestone skeleton on a mine tile that cost a crewmate",
+   "sets": [
+    {
+     "id": "A",
+     "why": "KayKit Skeletons (animated, same rig as the crew)",
+     "items": [
+      {
+       "id": "kaykit:kaykit-skeletons/characters/gltf/Skeleton_Minion.glb",
+       "origin": "keep",
+       "decorative": true,
+       "name": "Skeleton_Minion",
+       "kind": "model",
+       "source": "kaykit",
+       "pack": "kaykit-skeletons",
+       "style": "KayKit low-poly",
+       "page_url": "https://kaylousberg.itch.io/kaykit-skeletons",
+       "thumb": "thumbs/kaykit/kaykit-skeletons/characters/gltf/Skeleton_Minion.png",
+       "dims_m": [
+        1.9382,
+        3.1661,
+        2.0
+       ],
+       "tris": 5368
+      },
+      {
+       "id": "kaykit:kaykit-skeletons/characters/gltf/Skeleton_Rogue.glb",
+       "origin": "keep",
+       "decorative": true,
+       "name": "Skeleton_Rogue",
+       "kind": "model",
+       "source": "kaykit",
+       "pack": "kaykit-skeletons",
+       "style": "KayKit low-poly",
+       "page_url": "https://kaylousberg.itch.io/kaykit-skeletons",
+       "thumb": "thumbs/kaykit/kaykit-skeletons/characters/gltf/Skeleton_Rogue.png",
+       "dims_m": [
+        1.9425,
+        3.3079,
+        2.0
+       ],
+       "tris": 5358
+      }
+     ],
+     "style": "KayKit low-poly"
+    }
+   ],
+   "decision": {
+    "set": "A",
+    "reason": "",
+    "vetoed": []
+   }
+  },
+  {
+   "id": "villain-ufo",
+   "why": "Commissioner Grumbleflox's wobbly UFO (intro, lose and win screens)",
+   "sets": [
+    {
+     "id": "A",
+     "why": "Kenney Tower Defense UFOs with a tractor beam: goofy, low-poly, Kenney colours",
+     "items": [
+      {
+       "id": "kenney:tower-defense-kit/Models/GLB format/enemy-ufo-a.glb",
+       "origin": "keep",
+       "decorative": true,
+       "name": "enemy-ufo-a",
+       "kind": "model",
+       "source": "kenney",
+       "pack": "tower-defense-kit",
+       "style": "Kenney low-poly",
+       "page_url": "https://kenney.nl/assets/tower-defense-kit",
+       "thumb": "mirror/kenney/tower-defense-kit/Previews/enemy-ufo-a.png",
+       "dims_m": [
+        1.0,
+        0.6779,
+        1.0
+       ],
+       "tris": 520
+      },
+      {
+       "id": "kenney:tower-defense-kit/Models/GLB format/enemy-ufo-c.glb",
+       "origin": "keep",
+       "decorative": true,
+       "name": "enemy-ufo-c",
+       "kind": "model",
+       "source": "kenney",
+       "pack": "tower-defense-kit",
+       "style": "Kenney low-poly",
+       "page_url": "https://kenney.nl/assets/tower-defense-kit",
+       "thumb": "mirror/kenney/tower-defense-kit/Previews/enemy-ufo-c.png",
+       "dims_m": [
+        1.0043,
+        0.5254,
+        1.0
+       ],
+       "tris": 440
+      },
+      {
+       "id": "kenney:tower-defense-kit/Models/GLB format/enemy-ufo-beam.glb",
+       "origin": "keep",
+       "decorative": true,
+       "name": "enemy-ufo-beam",
+       "kind": "model",
+       "source": "kenney",
+       "pack": "tower-defense-kit",
+       "style": "Kenney low-poly",
+       "page_url": "https://kenney.nl/assets/tower-defense-kit",
+       "thumb": "mirror/kenney/tower-defense-kit/Previews/enemy-ufo-beam.png",
+       "dims_m": [
+        0.8,
+        1.0,
+        0.8
+       ],
+       "tris": 56
+      }
+     ],
+     "style": "Kenney low-poly"
+    }
+   ],
+   "gaps": [
+    "Grumbleflox himself: no alien bureaucrat figure; I'd use the Kenney Space Kit alien (alien.glb) in the dome, or keep him unseen with only a speech bubble"
+   ],
+   "decision": {
+    "set": "A",
+    "reason": "",
+    "vetoed": []
+   }
+  },
+  {
+   "id": "mines",
+   "why": "the bombs dropped in the intro and popping up on the lose screen",
+   "sets": [
+    {
+     "id": "A",
+     "why": "KayKit Platformer bomb: round cartoon bomb with a fuse",
+     "items": [
+      {
+       "id": "kaykit:kaykit-platformer/Assets/gltf/neutral/bomb.gltf",
+       "origin": "keep",
+       "decorative": true,
+       "name": "bomb",
+       "kind": "model",
+       "source": "kaykit",
+       "pack": "kaykit-platformer",
+       "style": "KayKit low-poly",
+       "page_url": "https://kaylousberg.itch.io/kaykit-platformer",
+       "thumb": "thumbs/kaykit/kaykit-platformer/Assets/gltf/neutral/bomb.png",
+       "dims_m": [
+        0.8,
+        1.0089,
+        0.8
+       ],
+       "tris": 688
+      },
+      {
+       "id": "kaykit:kaykit-platformer/Assets/gltf/red/bomb_A_red.gltf",
+       "origin": "keep",
+       "decorative": true,
+       "name": "bomb_A_red",
+       "kind": "model",
+       "source": "kaykit",
+       "pack": "kaykit-platformer",
+       "style": "KayKit low-poly",
+       "page_url": "https://kaylousberg.itch.io/kaykit-platformer",
+       "thumb": "thumbs/kaykit/kaykit-platformer/Assets/gltf/red/bomb_A_red.png",
+       "dims_m": [
+        0.8,
+        1.0089,
+        0.8
+       ],
+       "tris": 688
+      }
+     ],
+     "style": "KayKit low-poly"
+    }
+   ],
+   "decision": {
+    "set": "A",
+    "reason": "",
+    "vetoed": []
+   }
+  },
+  {
+   "id": "beach-toys-and-critters",
+   "why": "sunny beach dressing: ball, bucket, spade, parrot (also the parrot scout tool), crab",
+   "sets": [
+    {
+     "id": "A",
+     "why": "KayKit ball, Kenney bucket, Kenney Cube Pets parrot and crab",
+     "items": [
+      {
+       "id": "kaykit:kaykit-platformer/Assets/gltf/red/ball_red.gltf",
+       "origin": "keep",
+       "decorative": true,
+       "name": "ball_red",
+       "kind": "model",
+       "source": "kaykit",
+       "pack": "kaykit-platformer",
+       "style": "KayKit low-poly",
+       "page_url": "https://kaylousberg.itch.io/kaykit-platformer",
+       "thumb": "thumbs/kaykit/kaykit-platformer/Assets/gltf/red/ball_red.png",
+       "dims_m": [
+        2.0,
+        2.0,
+        2.0
+       ],
+       "tris": 528
+      },
+      {
+       "id": "kaykit:kaykit-platformer/Assets/gltf/yellow/ball_yellow.gltf",
+       "origin": "keep",
+       "decorative": true,
+       "name": "ball_yellow",
+       "kind": "model",
+       "source": "kaykit",
+       "pack": "kaykit-platformer",
+       "style": "KayKit low-poly",
+       "page_url": "https://kaylousberg.itch.io/kaykit-platformer",
+       "thumb": "thumbs/kaykit/kaykit-platformer/Assets/gltf/yellow/ball_yellow.png",
+       "dims_m": [
+        2.0,
+        2.0,
+        2.0
+       ],
+       "tris": 528
+      },
+      {
+       "id": "kenney:survival-kit/Models/GLB format/bucket.glb",
+       "origin": "keep",
+       "decorative": true,
+       "name": "bucket",
+       "kind": "model",
+       "source": "kenney",
+       "pack": "survival-kit",
+       "style": "Kenney low-poly",
+       "page_url": "https://kenney.nl/assets/survival-kit",
+       "thumb": "mirror/kenney/survival-kit/Previews/bucket.png",
+       "dims_m": [
+        0.1441,
+        0.1921,
+        0.1441
+       ],
+       "tris": 68
+      },
+      {
+       "id": "kenney:cube-pets/Models/GLB format/animal-parrot.glb",
+       "origin": "keep",
+       "decorative": true,
+       "name": "animal-parrot",
+       "kind": "model",
+       "source": "kenney",
+       "pack": "cube-pets",
+       "style": "Kenney low-poly",
+       "page_url": "https://kenney.nl/assets/cube-pets",
+       "thumb": "mirror/kenney/cube-pets/Previews/animal-parrot.png",
+       "dims_m": [
+        2.196,
+        1.6812,
+        1.9023
+       ],
+       "tris": 530
+      },
+      {
+       "id": "kenney:cube-pets/Models/GLB format/animal-crab.glb",
+       "origin": "keep",
+       "decorative": true,
+       "name": "animal-crab",
+       "kind": "model",
+       "source": "kenney",
+       "pack": "cube-pets",
+       "style": "Kenney low-poly",
+       "page_url": "https://kenney.nl/assets/cube-pets",
+       "thumb": "mirror/kenney/cube-pets/Previews/animal-crab.png",
+       "dims_m": [
+        2.3358,
+        1.4312,
+        1.3474
+       ],
+       "tris": 676
+      }
+     ],
+     "style": "KayKit low-poly"
+    }
+   ],
+   "gaps": [
+    "beach umbrella and the striped towel flag: none in the library; simple procedural meshes in Godot (a cone + pole, a cloth plane)"
+   ],
+   "decision": {
+    "set": "A",
+    "reason": "",
+    "vetoed": []
+   }
+  },
+  {
+   "id": "treasure-and-sky",
+   "why": "gold coins for the treasure pile and HUD, clouds for the fog of war",
+   "sets": [
+    {
+     "id": "A",
+     "why": "KayKit gold coins and hexagon-pack clouds",
+     "items": [
+      {
+       "id": "kaykit:board-game-bits/Assets/gltf/coin_gold.gltf",
+       "origin": "keep",
+       "decorative": true,
+       "name": "coin_gold",
+       "kind": "model",
+       "source": "kaykit",
+       "pack": "board-game-bits",
+       "style": "KayKit low-poly",
+       "page_url": "https://kaylousberg.itch.io/board-game-bits",
+       "thumb": "thumbs/kaykit/board-game-bits/Assets/gltf/coin_gold.png",
+       "dims_m": [
+        1.0397,
+        0.2,
+        1.0397
+       ],
+       "tris": 320
+      },
+      {
+       "id": "kaykit:board-game-bits/Assets/gltf/coin_10_gold.gltf",
+       "origin": "keep",
+       "decorative": true,
+       "name": "coin_10_gold",
+       "kind": "model",
+       "source": "kaykit",
+       "pack": "board-game-bits",
+       "style": "KayKit low-poly",
+       "page_url": "https://kaylousberg.itch.io/board-game-bits",
+       "thumb": "thumbs/kaykit/board-game-bits/Assets/gltf/coin_10_gold.png",
+       "dims_m": [
+        1.0397,
+        0.2,
+        1.0397
+       ],
+       "tris": 658
+      },
+      {
+       "id": "kaykit:kaykit-medieval-hexagon/Assets/gltf/decoration/nature/cloud_big.gltf",
+       "origin": "keep",
+       "decorative": true,
+       "name": "cloud_big",
+       "kind": "model",
+       "source": "kaykit",
+       "pack": "kaykit-medieval-hexagon",
+       "style": "KayKit low-poly",
+       "page_url": "https://kaylousberg.itch.io/kaykit-medieval-hexagon",
+       "thumb": "thumbs/kaykit/kaykit-medieval-hexagon/Assets/gltf/decoration/nature/cloud_big.png",
+       "dims_m": [
+        3.6072,
+        1.9458,
+        2.2422
+       ],
+       "tris": 672
+      },
+      {
+       "id": "kaykit:kaykit-medieval-hexagon/Assets/gltf/decoration/nature/cloud_small.gltf",
+       "origin": "keep",
+       "decorative": true,
+       "name": "cloud_small",
+       "kind": "model",
+       "source": "kaykit",
+       "pack": "kaykit-medieval-hexagon",
+       "style": "KayKit low-poly",
+       "page_url": "https://kaylousberg.itch.io/kaykit-medieval-hexagon",
+       "thumb": "thumbs/kaykit/kaykit-medieval-hexagon/Assets/gltf/decoration/nature/cloud_small.png",
+       "dims_m": [
+        2.3378,
+        1.8397,
+        1.7917
+       ],
+       "tris": 366
+      }
+     ],
+     "style": "KayKit low-poly"
+    }
+   ],
+   "decision": {
+    "set": "A",
+    "reason": "",
+    "vetoed": []
+   }
+  },
+  {
+   "id": "sound-effects",
+   "why": "dig, flag, explosion, coins, UI, UFO engine, bomb drop, tool, lose",
+   "sets": [
+    {
+     "id": "A",
+     "why": "Kenney audio packs",
+     "items": [
+      {
+       "id": "kenney:impact-sounds/Audio/footstep_grass_000.ogg",
+       "name": "footstep_grass_000",
+       "kind": "sound",
+       "source": "kenney",
+       "pack": "impact-sounds",
+       "style": "Kenney audio",
+       "page_url": "https://kenney.nl/assets/impact-sounds",
+       "thumb": null,
+       "dims_m": null,
+       "tris": null
+      },
+      {
+       "id": "kenney:impact-sounds/Audio/footstep_grass_002.ogg",
+       "name": "footstep_grass_002",
+       "kind": "sound",
+       "source": "kenney",
+       "pack": "impact-sounds",
+       "style": "Kenney audio",
+       "page_url": "https://kenney.nl/assets/impact-sounds",
+       "thumb": null,
+       "dims_m": null,
+       "tris": null
+      },
+      {
+       "id": "kenney:rpg-audio/Audio/cloth1.ogg",
+       "name": "cloth1",
+       "kind": "sound",
+       "source": "kenney",
+       "pack": "rpg-audio",
+       "style": "Kenney audio",
+       "page_url": "https://kenney.nl/assets/rpg-audio",
+       "thumb": null,
+       "dims_m": null,
+       "tris": null
+      },
+      {
+       "id": "kenney:desert-shooter-pack/Sounds/explosion-a.ogg",
+       "name": "explosion-a",
+       "kind": "sound",
+       "source": "kenney",
+       "pack": "desert-shooter-pack",
+       "style": "Kenney pixel",
+       "page_url": "https://kenney.nl/assets/desert-shooter-pack",
+       "thumb": null,
+       "dims_m": null,
+       "tris": null
+      },
+      {
+       "id": "kenney:desert-shooter-pack/Sounds/coin-a.ogg",
+       "name": "coin-a",
+       "kind": "sound",
+       "source": "kenney",
+       "pack": "desert-shooter-pack",
+       "style": "Kenney pixel",
+       "page_url": "https://kenney.nl/assets/desert-shooter-pack",
+       "thumb": null,
+       "dims_m": null,
+       "tris": null
+      },
+      {
+       "id": "kenney:desert-shooter-pack/Sounds/lose-a.ogg",
+       "name": "lose-a",
+       "kind": "sound",
+       "source": "kenney",
+       "pack": "desert-shooter-pack",
+       "style": "Kenney pixel",
+       "page_url": "https://kenney.nl/assets/desert-shooter-pack",
+       "thumb": null,
+       "dims_m": null,
+       "tris": null
+      },
+      {
+       "id": "kenney:interface-sounds/Audio/click_001.ogg",
+       "name": "click_001",
+       "kind": "sound",
+       "source": "kenney",
+       "pack": "interface-sounds",
+       "style": "Kenney audio",
+       "page_url": "https://kenney.nl/assets/interface-sounds",
+       "thumb": null,
+       "dims_m": null,
+       "tris": null
+      },
+      {
+       "id": "kenney:interface-sounds/Audio/drop_001.ogg",
+       "name": "drop_001",
+       "kind": "sound",
+       "source": "kenney",
+       "pack": "interface-sounds",
+       "style": "Kenney audio",
+       "page_url": "https://kenney.nl/assets/interface-sounds",
+       "thumb": null,
+       "dims_m": null,
+       "tris": null
+      },
+      {
+       "id": "kenney:sci-fi-sounds/Audio/spaceEngineLow_000.ogg",
+       "name": "spaceEngineLow_000",
+       "kind": "sound",
+       "source": "kenney",
+       "pack": "sci-fi-sounds",
+       "style": "Kenney audio",
+       "page_url": "https://kenney.nl/assets/sci-fi-sounds",
+       "thumb": null,
+       "dims_m": null,
+       "tris": null
+      },
+      {
+       "id": "kenney:digital-audio/Audio/powerUp2.ogg",
+       "name": "powerUp2",
+       "kind": "sound",
+       "source": "kenney",
+       "pack": "digital-audio",
+       "style": "Kenney audio",
+       "page_url": "https://kenney.nl/assets/digital-audio",
+       "thumb": null,
+       "dims_m": null,
+       "tris": null
+      },
+      {
+       "id": "kenney:music-jingles/Audio/Hit jingles/jingles_HIT00.ogg",
+       "name": "jingles_HIT00",
+       "kind": "sound",
+       "source": "kenney",
+       "pack": "music-jingles",
+       "style": "Kenney audio",
+       "page_url": "https://kenney.nl/assets/music-jingles",
+       "thumb": null,
+       "dims_m": null,
+       "tris": null
+      }
+     ],
+     "style": "Kenney audio"
+    }
+   ],
+   "decision": {
+    "set": "A",
+    "reason": "",
+    "vetoed": []
+   }
+  }
+ ],
+ "gaps": [
+  "sperm whale and a bowl of petunias for the intro: not in the library. Options: (1) a simple low-poly model I script in Blender, (2) a TRELLIS.2 generation from a concept image (needs an image first), (3) a 2D cut-out sprite. I suggest (1).",
+  "font for the 3D numbers and DON'T PANIC: the library skips fonts; Kenney's own fonts are CC0 (Kenney Future in the UI pack). I suggest allowing that one font."
+ ],
+ "status": "decided",
+ "created": "20261016-152206",
+ "decided": "2026-10-16T15:29:49"
+}

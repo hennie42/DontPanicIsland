@@ -1,0 +1,43 @@
+{
+ "brief": "Ad-hoc: Grumbleflox in the UFO dome (user approved in chat 2026-10-16)",
+ "needs": [
+  {
+   "id": "grumbleflox",
+   "why": "the villain sits in the UFO dome",
+   "sets": [
+    {
+     "id": "A",
+     "items": [
+      {
+       "id": "kenney:space-kit/Models/GLTF format/alien.glb",
+       "origin": "keep",
+       "decorative": true,
+       "name": "alien",
+       "kind": "model",
+       "source": "kenney",
+       "pack": "space-kit",
+       "style": "Kenney low-poly",
+       "page_url": "https://kenney.nl/assets/space-kit",
+       "thumb": "thumbs/kenney/space-kit/Models/GLTF format/alien.png",
+       "dims_m": [
+        0.4832,
+        0.8432,
+        0.33
+       ],
+       "tris": 292
+      }
+     ],
+     "style": "Kenney low-poly"
+    }
+   ],
+   "decision": {
+    "set": "A",
+    "vetoed": [],
+    "reason": "user: alien in the dome (chat)"
+   }
+  }
+ ],
+ "status": "decided",
+ "created": "20261016-153005",
+ "decided": "2026-10-16T15:30:05"
+}
