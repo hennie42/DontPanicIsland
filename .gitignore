@@ -10,3 +10,4 @@ shots/
 .studio/check_scripts.gd
 __pycache__/
 *.blend1
+.studio/
