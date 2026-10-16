@@ -1,0 +1,12 @@
+.godot/
+build/
+godot-ref/
+Renders/
+shots/
+.studio/spool/
+.studio/logs/
+.studio/grader/
+.studio/workers/
+.studio/check_scripts.gd
+__pycache__/
+*.blend1
