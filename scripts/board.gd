@@ -14,6 +14,15 @@ var placed: bool = false         # mines placed (happens on the first reveal)
 var exploded: Dictionary = {}    # Vector2i -> true: mine cells that were revealed (a crew loss, see later tickets)
 var turns: int = 0
 
+# T04 new variables
+var crew: int = 3
+var wood: int = 3
+var gold: int = 0
+var towel: bool = false          # towel of safety: the next mine costs no crewmate
+var peeked: Dictionary = {}      # Vector2i -> int: numbers learned with the parrot scout
+var lost: bool = false           # crew reached 0
+var won: bool = false            # every safe land cell revealed
+
 func _init(island_path: String = "res://data/island.json") -> void:
 	var file := FileAccess.open(island_path, FileAccess.READ)
 	if not file:
@@ -121,6 +130,7 @@ func can_reveal(c: Vector2i) -> bool:
 	return false
 
 func toggle_flag(c: Vector2i) -> bool:
+	if won or lost: return false
 	if revealed.is_empty():
 		return false
 	if not is_visible(c) or revealed.has(c):
@@ -140,6 +150,7 @@ func flags_around(c: Vector2i) -> int:
 	return count
 
 func chord(c: Vector2i) -> Array[Vector2i]:
+	if won or lost: return []
 	if not revealed.has(c):
 		return []
 
@@ -165,7 +176,16 @@ func _open(c: Vector2i) -> Array[Vector2i]:
 
 	if mines.has(c):
 		exploded[c] = true
+		if towel:
+			towel = false
+		else:
+			crew -= 1
+			if crew <= 0:
+				lost = true
 		return newly_revealed
+
+	# c is safe
+	_apply_gains(c)
 
 	if number(c) == 0:
 		var queue: Array[Vector2i] = [c]
@@ -175,11 +195,29 @@ func _open(c: Vector2i) -> Array[Vector2i]:
 				if is_land(nb) and not revealed.has(nb) and not flagged.has(nb) and not mines.has(nb):
 					revealed[nb] = true
 					newly_revealed.append(nb)
+					_apply_gains(nb)
 					if number(nb) == 0:
 						queue.append(nb)
+
+	_check_win()
 	return newly_revealed
 
+func _apply_gains(c: Vector2i) -> void:
+	if land[c] == "palm":
+		wood += 1
+	elif land[c] == "wreck":
+		gold += 50
+		wood += 2
+
+	if chests.has(c):
+		gold += chests[c]
+
+func _check_win() -> void:
+	if revealed.size() == (land.size() - mines.size()):
+		won = true
+
 func reveal(c: Vector2i, seed_value: int = 0) -> Array[Vector2i]:
+	if won or lost: return []
 	if not placed:
 		place(c, seed_value)
 
@@ -190,3 +228,60 @@ func reveal(c: Vector2i, seed_value: int = 0) -> Array[Vector2i]:
 	if not newly_revealed.is_empty():
 		turns += 1
 	return newly_revealed
+
+func use_detector(c: Vector2i) -> int:
+	if won or lost: return -1
+	if not placed or not can_reveal(c) or wood < 3:
+		return -1
+
+	turns += 1
+	wood -= 3
+	if mines.has(c):
+		flagged[c] = true
+		return 1
+
+	_open(c)
+	return 0
+
+func use_parrot(c: Vector2i) -> int:
+	if won or lost: return -1
+	if not placed or not is_visible(c) or revealed.has(c) or wood < 2:
+		return -1
+
+	turns += 1
+	wood -= 2
+	var val := number(c)
+	peeked[c] = val
+	return val
+
+func buy_towel() -> bool:
+	if won or lost: return false
+	if towel or wood < 5:
+		return false
+
+	wood -= 5
+	towel = true
+	turns += 1
+	return true
+
+func score() -> int:
+	return gold + crew * 100 + max(0, 400 - 2 * turns)
+
+static func load_best(path: String = "user://best.json") -> int:
+	if not FileAccess.file_exists(path):
+		return 0
+	var file := FileAccess.open(path, FileAccess.READ)
+	var json_string := file.get_as_text()
+	var json_data: Variant = JSON.parse_string(json_string)
+	if json_data and json_data.has("best"):
+		return json_data["best"]
+	return 0
+
+static func save_best(value: int, path: String = "user://best.json") -> int:
+	var current_best := load_best(path)
+	if value > current_best:
+		var file := FileAccess.open(path, FileAccess.WRITE)
+		var json_data := {"best": value}
+		file.store_string(JSON.stringify(json_data))
+		return value
+	return current_best
