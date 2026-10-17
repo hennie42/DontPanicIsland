@@ -1,20 +1,265 @@
 extends Node3D
-## Placeholder main scene: replace with the real game/clip. Shows the GameEvent conventions.
+## Game controller (T09). Builds the environment, the board, the board view,
+## the camera rig and the HUD in code. Handles player mouse input and drives
+## the --autopilot play loop.
+
+var board: Board
+var view: BoardView
+var rig: CameraRig
+var hud: Hud
+var solver: Solver
+
+var seed_value: int = 0
+var autopilot: bool = false
+var force_lose: bool = false
+var skip_intro: bool = false   # parsed for later tickets (intro scene)
+
+var _playing: bool = true      ## human turns active (input + markers)
+var _finished: bool = false    ## END already emitted (win or lose)
+
+# ---------------------------------------------------------------------------
+# Setup
+# ---------------------------------------------------------------------------
 
 func _ready() -> void:
-	var cam := Camera3D.new()
-	cam.position = Vector3(0, 2, 6)
-	add_child(cam)
-	cam.look_at(Vector3.ZERO)
+	_set_up_environment()
+
+	board = Board.new()
+
+	view = BoardView.new()
+	add_child(view)
+	view.build(board)
+	view.refresh(board)
+
+	rig = CameraRig.new()
+	add_child(rig)
+
+	hud = Hud.new()
+	add_child(hud)
+	hud.update_from(board)
+	hud.tool_selected.connect(_on_tool_selected)
+
+	_parse_flags()
+	GameEvent.marker("START", "seed=%d" % seed_value)
+
+	if autopilot:
+		solver = Solver.new()
+		_play_autopilot()
+
+
+func _set_up_environment() -> void:
+	var sky_material := ProceduralSkyMaterial.new()
+	sky_material.sky_top_color = Color("#4aa8ff")
+	sky_material.sky_horizon_color = Color("#bfe6ff")
+	# Sea-blue ground colours so the water reads as an endless ocean.
+	sky_material.ground_horizon_color = Color("#7fc8f0")
+	sky_material.ground_bottom_color = Color("#4a9fd8")
+
+	var sky := Sky.new()
+	sky.sky_material = sky_material
+
+	var env := Environment.new()
+	env.background_mode = Environment.BG_SKY
+	env.sky = sky
+	env.tonemap_mode = Environment.TONE_MAPPER_AGX
+	# Ambient light from the sky (sunny).
+	env.ambient_light_source = Environment.AMBIENT_SOURCE_SKY
+
+	var world_env := WorldEnvironment.new()
+	world_env.environment = env
+	add_child(world_env)
+
 	var sun := DirectionalLight3D.new()
-	sun.rotation_degrees = Vector3(-50, 30, 0)
+	sun.name = "Sun"
+	sun.rotation_degrees = Vector3(-55, 35, 0)
+	sun.shadow_enabled = true
+	sun.light_energy = 1.2
 	add_child(sun)
-	var box := MeshInstance3D.new()
-	box.mesh = BoxMesh.new()
-	add_child(box)
-	GameEvent.marker("READY")
-	if GameEvent.autopilot:
-		await get_tree().create_timer(1.0).timeout
-		await GameEvent.shot("main")
-		GameEvent.marker("FINISH", "t=1.0")
+
+
+func _parse_flags() -> void:
+	autopilot = false
+	force_lose = false
+	skip_intro = false
+	var seed_given: bool = false
+	var seed_val: int = 0
+
+	var args: Array = OS.get_cmdline_user_args()
+	for arg in args:
+		if arg == "--autopilot":
+			autopilot = true
+		elif arg == "--force-lose":
+			force_lose = true
+		elif arg == "--skip-intro":
+			skip_intro = true
+		elif arg.begins_with("--seed="):
+			seed_given = true
+			seed_val = int(arg.substr(6))
+
+	if seed_given:
+		seed_value = seed_val
+	elif autopilot:
+		seed_value = 1
+	else:
+		seed_value = randi()
+
+
+# ---------------------------------------------------------------------------
+# Human input (only while playing and not in autopilot)
+# ---------------------------------------------------------------------------
+
+## The land cell under the mouse, or null if the ray misses a land tile
+## (points at the sky or hits water).
+func _cell_at(pos: Vector2) -> Variant:
+	var origin: Vector3 = rig.camera.project_ray_origin(pos)
+	var dir: Vector3 = rig.camera.project_ray_normal(pos)
+	var hit: Variant = Hex.ray_to_ground(origin, dir)
+	if hit == null:
+		return null
+	var cell: Vector2i = Hex.from_world(hit as Vector3)
+	if not board.is_land(cell):
+		return null
+	return cell
+
+
+func _unhandled_input(event: InputEvent) -> void:
+	if _finished or not _playing or autopilot:
+		return
+	if event is InputEventMouseButton and event.pressed:
+		var pos: Vector2 = event.position
+		if event.button_index == MOUSE_BUTTON_LEFT:
+			_left_click(pos)
+		elif event.button_index == MOUSE_BUTTON_RIGHT:
+			_right_click(pos)
+
+
+func _left_click(pos: Vector2) -> void:
+	var cell: Vector2i = _cell_at(pos) as Vector2i
+	if cell == null:
+		return
+	if hud.selected_tool == "detector":
+		if board.use_detector(cell) >= 0:
+			_after_board_change({"action": "detector", "cell": cell})
+	elif hud.selected_tool == "parrot":
+		if board.use_parrot(cell) >= 0:
+			hud.select_tool("")
+			_after_board_change({"action": "parrot", "cell": cell})
+	else:
+		if board.revealed.has(cell):
+			var cells: Array[Vector2i] = board.chord(cell)
+			if not cells.is_empty():
+				_after_board_change({"action": "chord", "cell": cell})
+		else:
+			var opened: Array[Vector2i] = board.reveal(cell, seed_value)
+			if not opened.is_empty():
+				_after_board_change({"action": "reveal", "cell": cell})
+
+
+func _right_click(pos: Vector2) -> void:
+	var cell: Vector2i = _cell_at(pos) as Vector2i
+	if cell == null:
+		return
+	if board.toggle_flag(cell):
+		_after_board_change({"action": "flag", "cell": cell})
+
+
+func _on_tool_selected(tool: String) -> void:
+	if tool == "towel" and _playing and not _finished:
+		if board.buy_towel():
+			_after_board_change({"action": "towel"})
+		hud.select_tool("")
+
+
+# ---------------------------------------------------------------------------
+# Board-change bookkeeping (refresh view+HUD, log MOVE, check win/lose)
+# ---------------------------------------------------------------------------
+
+func _after_board_change(move: Dictionary) -> void:
+	view.refresh(board)
+	hud.update_from(board)
+	GameEvent.marker("MOVE", _move_data(move))
+	if board.won or board.lost:
+		_end_game()
+
+
+func _move_data(move: Dictionary) -> String:
+	var action: String = move.get("action", "")
+	if move.has("cell"):
+		var c := move.get("cell") as Vector2i
+		return "%s %d %d" % [action, c.x, c.y]
+	return action
+
+
+func _end_game() -> void:
+	if _finished:
+		return
+	_finished = true
+	_playing = false
+	var result: String = "win" if board.won else "lose"
+	GameEvent.marker("END", "result=%s score=%d turns=%d" % [result, board.score(), board.turns])
+	Board.save_best(board.score())
+	await get_tree().create_timer(1.0).timeout
+	GameEvent.marker("FINISH")
+	GameEvent.quit(0)
+
+
+# ---------------------------------------------------------------------------
+# Autopilot (Solver, or forced-lose)
+# ---------------------------------------------------------------------------
+
+func _next_autopilot_move(b: Board) -> Dictionary:
+	if force_lose:
+		return _force_lose_move(b)
+	return solver.next_move(b)
+
+
+## Returns a move that reveals a mine cell the board will accept; if none is
+## on the revealed territory's border yet, it reveals a safe border cell to
+## grow the territory until a mine becomes reachable. This is the only place
+## in the game that reads board.mines.
+func _force_lose_move(b: Board) -> Dictionary:
+	# 1. Reveal a mine that can be revealed right now (border, not flagged,
+	#    not already revealed).
+	for c in b.mines:
+		if b.can_reveal(c):
+			return {"action": "reveal", "cell": c}
+	# 2. No revealable mine yet: reveal a safe border cell to grow the revealed
+	#    territory until a mine sits on the border.
+	for c in b.land:
+		if not b.revealed.has(c) and not b.flagged.has(c) \
+			and not b.mines.has(c) and b.can_reveal(c):
+			return {"action": "reveal", "cell": c}
+	# 3. Fallback (should not happen): reveal the first board-acceptable cell.
+	for c in b.mines:
+		if b.is_land(c) and b.can_reveal(c):
+			return {"action": "reveal", "cell": c}
+	return {"action": "reveal", "cell": b.land.keys()[0]}
+
+
+func _play_autopilot() -> void:
+	var move_count := 0
+	const MAX_MOVES := 5000
+	while not board.won and not board.lost and move_count < MAX_MOVES:
+		await get_tree().create_timer(0.1).timeout
+		var move: Dictionary = _next_autopilot_move(board)
+		if Solver.apply(board, move, seed_value):
+			move_count += 1
+			_after_board_change(move)
+		else:
+			# Board refused the move; in a healthy run this only happens once
+			# the game is already over (won/lost).
+			break
+	if not (board.won or board.lost) and not _finished:
+		# Safety net: the autopilot could not end the game. Log a forced end.
+		GameEvent.marker("END", "result=lose score=%d turns=%d" % [board.score(), board.turns])
+		GameEvent.marker("FINISH")
 		GameEvent.quit(0)
+
+
+# ---------------------------------------------------------------------------
+# Billboard numbers when the camera is zoomed out
+# ---------------------------------------------------------------------------
+
+func _process(_delta: float) -> void:
+	if rig != null and rig.camera != null and view != null:
+		view.set_numbers_billboard(rig.distance > 12.0)
