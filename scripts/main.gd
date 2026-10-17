@@ -303,6 +303,12 @@ func _end_game() -> void:
 	var result: String = "win" if board.won else "lose"
 	GameEvent.marker("END", "result=%s score=%d turns=%d" % [result, board.score(), board.turns])
 	Board.save_best(board.score())
+
+	var ending := Ending.new()
+	add_child(ending)
+	ending.show_ending(board, result)
+
+	await ending.panel_shown
 	await get_tree().create_timer(1.0).timeout
 	GameEvent.marker("FINISH")
 	GameEvent.quit(0)
