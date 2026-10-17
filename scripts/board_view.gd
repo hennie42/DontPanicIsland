@@ -81,6 +81,7 @@ func build(b: Board) -> void:
 		num.outline_modulate = Color.WHITE
 		num.position.y = Art.TILE_TOP + 0.03
 		num.rotation_degrees.x = -90
+		num.vertical_alignment = VERTICAL_ALIGNMENT_BOTTOM   # stands on the tile when tilted up
 		num.billboard = BaseMaterial3D.BILLBOARD_DISABLED
 		cell_node.add_child(num)
 
@@ -94,6 +95,7 @@ func build(b: Board) -> void:
 		peek.outline_modulate = num.outline_modulate
 		peek.position.y = num.position.y
 		peek.rotation_degrees.x = -90
+		peek.vertical_alignment = VERTICAL_ALIGNMENT_BOTTOM
 		peek.modulate.a = 0.55
 		peek.billboard = BaseMaterial3D.BILLBOARD_DISABLED
 		cell_node.add_child(peek)
@@ -200,13 +202,14 @@ func _process(_delta: float) -> void:
 	# Billboard numbers
 	var cam := get_viewport().get_camera_3d()
 	if cam:
-		var cam_rot_y := cam.global_rotation_degrees.y
+		# face the camera's yaw and pitch: flat labels are foreshortened into unreadable shapes at the low camera angle
+		var cam_rot := Vector3(cam.global_rotation_degrees.x, cam.global_rotation_degrees.y, 0.0)
 		for c in cells:
 			var node := cells[c] as Node3D
 			for part in ["Number", "Peek"]:
 				var lbl := node.get_node(part) as Label3D
 				if lbl.visible:
-					lbl.rotation_degrees.y = cam_rot_y
+					lbl.rotation_degrees = cam_rot
 
 func set_numbers_billboard(on: bool) -> void:
 	for c in cells:
