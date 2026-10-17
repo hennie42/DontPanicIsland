@@ -12,6 +12,8 @@ var hud: Hud
 var solver: Solver
 var menu: Menu
 var sfx: Sfx
+var decor: Decor
+var _camp_placed: bool = false
 
 var _last_gold: int = 0
 var seed_value: int = 0
@@ -44,6 +46,10 @@ func _ready() -> void:
 	add_child(view)
 	view.build(board)
 	view.refresh(board)
+
+	decor = Decor.new()
+	add_child(decor)
+	decor.build(board, view)
 
 	rig = CameraRig.new()
 	add_child(rig)
@@ -244,6 +250,18 @@ func _on_tool_selected(tool: String) -> void:
 func _after_board_change(move: Dictionary) -> void:
 	view.refresh(board)
 	hud.update_from(board)
+
+	# First reveal: drop the camp on the landing cell, then report the crew
+	# after every move (figures -> skeletons as crewmates are lost).
+	if not _camp_placed and move.get("action") == "reveal":
+		var c := move.get("cell") as Vector2i
+		var opened: Array = move.get("opened", [])
+		if c == null:
+			c = opened[0] if not opened.is_empty() else Vector2i(0, 0)
+		_camp_placed = true
+		decor.place_camp(board, c)
+	decor.update_crew(board)
+
 	GameEvent.marker("MOVE", _move_data(move))
 	_check_tips(move)
 
