@@ -1,4 +1,6 @@
 extends Node3D
+
+static var _is_first_run: bool = true
 ## Game controller (T09). Builds the environment, the board, the board view,
 ## the camera rig and the HUD in code. Handles player mouse input and drives
 ## the --autopilot play loop.
@@ -57,6 +59,13 @@ func _ready() -> void:
 	menu.menu_closed.connect(_on_menu_menu_closed)
 
 	_parse_flags()
+
+	if not skip_intro:
+		var intro := Intro.new()
+		add_child(intro)
+		await intro.play(_is_first_run, rig)
+		_is_first_run = false
+
 	GameEvent.marker("START", "seed=%d" % seed_value)
 
 	if autopilot:
