@@ -12,6 +12,7 @@ var revealed: Dictionary = {}    # Vector2i -> true
 var flagged: Dictionary = {}     # Vector2i -> true
 var placed: bool = false         # mines placed (happens on the first reveal)
 var exploded: Dictionary = {}    # Vector2i -> true: mine cells that were revealed (a crew loss, see later tickets)
+var turns: int = 0
 
 func _init(island_path: String = "res://data/island.json") -> void:
 	var file := FileAccess.open(island_path, FileAccess.READ)
@@ -95,12 +96,67 @@ func place_fixed(mine_cells: Array[Vector2i], chest_gold: Dictionary) -> void:
 		chests[ch] = chest_gold[ch]
 	placed = true
 
-func reveal(c: Vector2i, seed_value: int = 0) -> Array[Vector2i]:
-	if not placed:
-		place(c, seed_value)
+func is_visible(c: Vector2i) -> bool:
+	if not is_land(c):
+		return false
+	if revealed.is_empty():
+		return true
+	if revealed.has(c) or flagged.has(c):
+		return true
+	for nb in Hex.neighbors(c):
+		if revealed.has(nb) or flagged.has(nb):
+			return true
+	return false
 
+func can_reveal(c: Vector2i) -> bool:
+	if not is_land(c) or flagged.has(c):
+		return false
+	if revealed.is_empty():
+		return true
+	if revealed.has(c):
+		return false
+	for nb in Hex.neighbors(c):
+		if revealed.has(nb) or flagged.has(nb):
+			return true
+	return false
+
+func toggle_flag(c: Vector2i) -> bool:
+	if revealed.is_empty():
+		return false
+	if not is_visible(c) or revealed.has(c):
+		return false
+
+	if flagged.has(c):
+		flagged.erase(c)
+	else:
+		flagged[c] = true
+	return true
+
+func flags_around(c: Vector2i) -> int:
+	var count := 0
+	for nb in Hex.neighbors(c):
+		if flagged.has(nb):
+			count += 1
+	return count
+
+func chord(c: Vector2i) -> Array[Vector2i]:
+	if not revealed.has(c):
+		return []
+
+	var n := number(c)
+	if n > 0 and flags_around(c) == n:
+		var newly_revealed: Array[Vector2i] = []
+		for nb in Hex.neighbors(c):
+			if is_land(nb) and not revealed.has(nb) and not flagged.has(nb):
+				newly_revealed.append_array(_open(nb))
+
+		if not newly_revealed.is_empty():
+			turns += 1
+		return newly_revealed
+	return []
+
+func _open(c: Vector2i) -> Array[Vector2i]:
 	var newly_revealed: Array[Vector2i] = []
-
 	if not is_land(c) or revealed.has(c) or flagged.has(c):
 		return newly_revealed
 
@@ -121,5 +177,16 @@ func reveal(c: Vector2i, seed_value: int = 0) -> Array[Vector2i]:
 					newly_revealed.append(nb)
 					if number(nb) == 0:
 						queue.append(nb)
+	return newly_revealed
 
+func reveal(c: Vector2i, seed_value: int = 0) -> Array[Vector2i]:
+	if not placed:
+		place(c, seed_value)
+
+	if not can_reveal(c):
+		return []
+
+	var newly_revealed = _open(c)
+	if not newly_revealed.is_empty():
+		turns += 1
 	return newly_revealed
