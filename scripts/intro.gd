@@ -6,6 +6,7 @@ signal finished
 
 var rig: CameraRig
 var board: Board
+var _sfx: Sfx
 var _is_skipping: bool = false
 var _tween: Tween
 
@@ -16,9 +17,10 @@ var _tween_dist: float = 14.0
 func _ready() -> void:
 	pass
 
-func play(full: bool, camera_rig: CameraRig) -> void:
+func play(full: bool, camera_rig: CameraRig, sfx: Sfx) -> void:
 	rig = camera_rig
 	board = get_parent().board
+	_sfx = sfx
 	_is_skipping = false
 
 	GameEvent.marker("INTRO_START", "full=%s" % str(full))
@@ -136,6 +138,8 @@ func _drop_bombs_short(ufo: Node3D) -> void:
 	for i in range(3):
 		var cell = land_cells.pick_random()
 		var pos = Hex.to_world(cell) + Vector3(0, 10, 0)
+		_sfx.play("ufo")
+		_sfx.play("drop")
 		_drop_item(pos, Art.prop("bomb"), 2.0, cell)
 		await get_tree().create_timer(0.5).timeout
 
@@ -144,6 +148,8 @@ func _drop_bombs(ufo: Node3D) -> void:
 	for i in range(8):
 		var cell = land_cells.pick_random()
 		var pos = Hex.to_world(cell) + Vector3(0, 10, 0)
+		_sfx.play("ufo")
+		_sfx.play("drop")
 		_drop_item(pos, Art.prop("bomb"), 2.0, cell)
 		await get_tree().create_timer(0.6).timeout
 
@@ -151,6 +157,8 @@ func _drop_gag(ufo: Node3D) -> void:
 	var land_cells = board.land.keys()
 	var cell = land_cells.pick_random()
 	var pos = Hex.to_world(cell) + Vector3(0, 10, 0)
+	_sfx.play("ufo")
+	_sfx.play("drop")
 
 	# Whale
 	var whale := load("res://assets/generated/whale.glb").instantiate() as Node3D
@@ -199,8 +207,8 @@ func _show_speech_bubble(ufo: Node3D) -> void:
 	label.billboard = BaseMaterial3D.BILLBOARD_ENABLED
 	label.font = load("res://assets/kenney/kenney-fonts/Kenney Future.ttf")
 	label.font_size = 32
-	label.outline_size = 4
-	label.outline_modulate = Color.BLACK
+	label.add_theme_color_override("font_outline_color", Color.BLACK)
+	label.add_theme_constant_override("outline_size", 4)
 
 	# White panel look
 	var bg := MeshInstance3D.new()

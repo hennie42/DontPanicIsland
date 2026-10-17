@@ -3,6 +3,7 @@ extends CanvasLayer
 
 signal tool_selected(tool: String)      # "detector", "parrot", "towel", or "" (back to digging)
 signal help_requested                 # button in bottom-left
+signal button_clicked                 # any button click
 
 var selected_tool: String = ""
 
@@ -76,20 +77,29 @@ func _setup_ui() -> void:
 	_detector_button.name = "Detector"
 	_detector_button.text = "Metal detector (3)"
 	_detector_button.toggle_mode = true
-	_detector_button.pressed.connect(func(): select_tool("detector"))
+	_detector_button.pressed.connect(func():
+		select_tool("detector")
+		button_clicked.emit()
+	)
 	bottom_centre_hbox.add_child(_detector_button)
 
 	_parrot_button = Button.new()
 	_parrot_button.name = "Parrot"
 	_parrot_button.text = "Parrot scout (2)"
 	_parrot_button.toggle_mode = true
-	_parrot_button.pressed.connect(func(): select_tool("parrot"))
+	_parrot_button.pressed.connect(func():
+		select_tool("parrot")
+		button_clicked.emit()
+	)
 	bottom_centre_hbox.add_child(_parrot_button)
 
 	_towel_button = Button.new()
 	_towel_button.name = "Towel"
 	_towel_button.text = "Towel of safety (5)"
-	_towel_button.pressed.connect(func(): select_tool("towel"))
+	_towel_button.pressed.connect(func():
+		select_tool("towel")
+		button_clicked.emit()
+	)
 	bottom_centre_hbox.add_child(_towel_button)
 
 	# Bottom-left panel
@@ -105,7 +115,10 @@ func _setup_ui() -> void:
 	_help_button.name = "HelpButton"
 	_help_button.text = "?"
 	_help_button.custom_minimum_size = Vector2(40, 40)
-	_help_button.pressed.connect(func(): help_requested.emit())
+	_help_button.pressed.connect(func():
+		help_requested.emit()
+		button_clicked.emit()
+	)
 	bottom_left_hbox.add_child(_help_button)
 
 	_hint_label = Label.new()

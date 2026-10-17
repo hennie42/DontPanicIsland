@@ -11,7 +11,9 @@ var rig: CameraRig
 var hud: Hud
 var solver: Solver
 var menu: Menu
+var sfx: Sfx
 
+var _last_gold: int = 0
 var seed_value: int = 0
 var autopilot: bool = false
 var force_lose: bool = false
@@ -31,6 +33,10 @@ var _font: FontFile
 func _ready() -> void:
 	_set_up_environment()
 	_ensure_audio_buses()
+	_font = load("res://assets/kenney/kenney-fonts/Kenney Future.ttf")
+
+	sfx = Sfx.new()
+	add_child(sfx)
 
 	board = Board.new()
 
@@ -47,23 +53,24 @@ func _ready() -> void:
 	hud.update_from(board)
 	hud.tool_selected.connect(_on_tool_selected)
 	hud.help_requested.connect(_on_hud_help_requested)
+	hud.button_clicked.connect(func(): sfx.play("click"))
 
 	menu = Menu.new()
 	add_child(menu)
-	menu.help_requested.connect(_on_menu_help_requested)
-	menu.menu_requested.connect(_on_menu_menu_requested)
-	menu.resume_requested.connect(_on_menu_resume_requested)
-	menu.restart_requested.connect(_on_menu_restart_requested)
-	menu.quit_requested.connect(_on_menu_quit_requested)
-	menu.help_closed.connect(_on_menu_help_closed)
-	menu.menu_closed.connect(_on_menu_menu_closed)
+	menu.help_requested.connect(func(): sfx.play("click"); _on_menu_help_requested())
+	menu.menu_requested.connect(func(): sfx.play("click"); _on_menu_menu_requested())
+	menu.resume_requested.connect(func(): sfx.play("click"); _on_menu_resume_requested())
+	menu.restart_requested.connect(func(): sfx.play("click"); _on_menu_restart_requested())
+	menu.quit_requested.connect(func(): sfx.play("click"); _on_menu_quit_requested())
+	menu.help_closed.connect(func(): sfx.play("click"); _on_menu_help_closed())
+	menu.menu_closed.connect(func(): sfx.play("click"); _on_menu_menu_closed())
 
 	_parse_flags()
 
 	if not skip_intro:
 		var intro := Intro.new()
 		add_child(intro)
-		await intro.play(_is_first_run, rig)
+		await intro.play(_is_first_run, rig, sfx)
 		_is_first_run = false
 
 	GameEvent.marker("START", "seed=%d" % seed_value)
@@ -239,6 +246,30 @@ func _after_board_change(move: Dictionary) -> void:
 	hud.update_from(board)
 	GameEvent.marker("MOVE", _move_data(move))
 	_check_tips(move)
+
+	# SFX: gold
+	if board.gold > _last_gold:
+		sfx.play("coin")
+	_last_gold = board.gold
+
+	# SFX: action specific
+	var action: String = move.get("action", "")
+	if action == "reveal":
+		sfx.play("dig")
+		var opened = move.get("opened", []) as Array[Vector2i]
+		for c in opened:
+			if board.mines.has(c):
+				sfx.play("boom")
+				break
+	elif action == "chord":
+		sfx.play("dig")
+	elif action == "flag":
+		sfx.play("flag")
+	elif action == "towel":
+		sfx.play("tool")
+	elif action == "detector" or action == "parrot":
+		sfx.play("tool")
+
 	if board.won or board.lost:
 		_end_game()
 
@@ -280,7 +311,8 @@ func _show_tip(n: int, text: String) -> void:
 	label.text = text
 	label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	label.vertical_alignment = VERTICAL_ALIGNMENT_TOP
-	label.add_theme_font_override("font", _font)
+	if _font:
+		label.add_theme_font_override("font", _font)
 	label.add_theme_font_size_override("font_size", 32)
 	label.add_theme_color_override("font_outline_color", Color.BLACK)
 	label.add_theme_constant_override("outline_size", 4)
@@ -303,6 +335,11 @@ func _end_game() -> void:
 	var result: String = "win" if board.won else "lose"
 	GameEvent.marker("END", "result=%s score=%d turns=%d" % [result, board.score(), board.turns])
 	Board.save_best(board.score())
+
+	if result == "win":
+		sfx.play("win")
+	else:
+		sfx.play("lose")
 
 	var ending := Ending.new()
 	add_child(ending)
