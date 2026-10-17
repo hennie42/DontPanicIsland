@@ -2,6 +2,7 @@ class_name Hud
 extends CanvasLayer
 
 signal tool_selected(tool: String)      # "detector", "parrot", "towel", or "" (back to digging)
+signal help_requested                 # button in bottom-left
 
 var selected_tool: String = ""
 
@@ -14,6 +15,7 @@ var _detector_button: Button
 var _parrot_button: Button
 var _towel_button: Button
 var _hint_label: Label
+var _help_button: Button
 
 func _ready() -> void:
 	_setup_ui()
@@ -90,16 +92,26 @@ func _setup_ui() -> void:
 	_towel_button.pressed.connect(func(): select_tool("towel"))
 	bottom_centre_hbox.add_child(_towel_button)
 
-	# Bottom-left hint
+	# Bottom-left panel
 	var bottom_left_panel := PanelContainer.new()
 	bottom_left_panel.set_anchors_and_offsets_preset(Control.PRESET_BOTTOM_LEFT)
 	bottom_left_panel.add_theme_stylebox_override("panel", label_style)
 	_root.add_child(bottom_left_panel)
 
+	var bottom_left_hbox := HBoxContainer.new()
+	bottom_left_panel.add_child(bottom_left_hbox)
+
+	_help_button = Button.new()
+	_help_button.name = "HelpButton"
+	_help_button.text = "?"
+	_help_button.custom_minimum_size = Vector2(40, 40)
+	_help_button.pressed.connect(func(): help_requested.emit())
+	bottom_left_hbox.add_child(_help_button)
+
 	_hint_label = Label.new()
 	_hint_label.name = "Hint"
 	_hint_label.text = "Left click: dig   Right click: towel flag   H: help   Esc: menu"
-	bottom_left_panel.add_child(_hint_label)
+	bottom_left_hbox.add_child(_hint_label)
 
 	# Apply theme and outline after all children are added
 	_apply_theme_to_all(_root, theme)
