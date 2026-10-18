@@ -245,12 +245,21 @@ func _left_click(pos: Vector2) -> void:
 		return
 	var cell: Vector2i = hit
 	if hud.selected_tool == "detector":
-		if board.use_detector(cell) >= 0:
+		# one use per selection, like the parrot: staying selected made the next normal click another 3-wood use
+		# (and a silent no-op once wood ran out)
+		var found := board.use_detector(cell)
+		if found >= 0:
+			hud.select_tool("")
+			hud.toast("Mine found! Towel placed." if found == 1 else "Safe!", Color("#ff7a45") if found == 1 else Color("#7dff8a"))
 			_after_board_change({"action": "detector", "cell": cell})
+		else:
+			hud.toast("Metal detector: needs 3 wood and a hidden tile next to your land", Color("#ffe14d"))
 	elif hud.selected_tool == "parrot":
 		if board.use_parrot(cell) >= 0:
 			hud.select_tool("")
 			_after_board_change({"action": "parrot", "cell": cell})
+		else:
+			hud.toast("Parrot scout: needs 2 wood and a hidden tile", Color("#ffe14d"))
 	else:
 		if board.revealed.has(cell):
 			var cells: Array[Vector2i] = board.chord(cell)

@@ -221,6 +221,8 @@ func build(b: Board) -> void:
 		# Skeleton
 		var skel := Art.prop("skeleton_a")
 		skel.name = "Skeleton"
+		skel.scale *= 1.8                 # a gravestone you can spot at the default camera distance
+		skel.position.y = Art.TILE_TOP    # standing on the tile, not in it
 		cell_node.add_child(skel)
 
 		# Chest

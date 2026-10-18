@@ -142,10 +142,12 @@ func toggle_flag(c: Vector2i) -> bool:
 		flagged[c] = true
 	return true
 
+## Known mines around c: towels plus mines that already went off (skulls). Chording compares the number with this,
+## so a 2 next to one towel and one skull opens the rest (counting towels only refused it).
 func flags_around(c: Vector2i) -> int:
 	var count := 0
 	for nb in Hex.neighbors(c):
-		if flagged.has(nb):
+		if flagged.has(nb) or exploded.has(nb):
 			count += 1
 	return count
 

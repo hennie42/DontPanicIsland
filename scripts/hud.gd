@@ -176,8 +176,30 @@ func select_tool(tool: String) -> void:
 		selected_tool = ""
 	else:
 		selected_tool = tool
+	# keep the toggle buttons in step when the game switches a tool off (they stayed pressed)
+	_detector_button.set_pressed_no_signal(selected_tool == "detector")
+	_parrot_button.set_pressed_no_signal(selected_tool == "parrot")
 
 	tool_selected.emit(selected_tool)
+
+
+## A short message in the middle of the top area: tool results and refused moves.
+func toast(text: String, color: Color = Color.WHITE) -> void:
+	var label := Label.new()
+	label.text = text
+	label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	label.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	label.add_theme_font_size_override("font_size", 40)
+	label.add_theme_color_override("font_color", color)
+	label.add_theme_color_override("font_outline_color", Color.BLACK)
+	label.add_theme_constant_override("outline_size", 10)
+	_root.add_child(label)
+	label.set_anchors_and_offsets_preset(Control.PRESET_TOP_WIDE)
+	label.offset_top = 220
+	var tw := label.create_tween()
+	tw.tween_interval(1.6)
+	tw.tween_property(label, "modulate:a", 0.0, 0.6)
+	tw.finished.connect(label.queue_free)
 
 func _deselect_tools() -> void:
 	selected_tool = ""
