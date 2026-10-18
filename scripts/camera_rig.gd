@@ -1,7 +1,7 @@
 class_name CameraRig
 extends Node3D
 
-const TILT := 50.0               # degrees above the horizon, fixed
+const TILT := 58.0               # degrees above the horizon, fixed (50 squashed the far rows: hard to click)
 const MIN_DIST := 4.0
 const MAX_DIST := 22.0           # zoom-out limit; raised to fit the island when a window needs more (fit_island)
 # screen kept free around the island (fractions of width / height): the HUD covers the bottom (tool bar and
@@ -47,8 +47,11 @@ func fit_island(points: Array, centre: Vector3) -> void:
 func _on_viewport_resized() -> void:
 	if _fit_points.is_empty():
 		return
+	var kept := target
 	_refit()
-	if not _user_zoomed:
+	if _user_zoomed:          # the player moved the camera: keep their view
+		target = kept
+	else:
 		distance = home_distance
 		apply()
 
@@ -111,8 +114,12 @@ func _setup_input_actions() -> void:
 		"camera_rotate_right": [KEY_E],
 		"camera_zoom_in": [MOUSE_BUTTON_WHEEL_UP],
 		"camera_zoom_out": [MOUSE_BUTTON_WHEEL_DOWN],
-		"camera_pan": [MOUSE_BUTTON_MIDDLE],
-		"camera_orbit": [MOUSE_BUTTON_RIGHT],
+		"camera_zoom_in_key": [KEY_EQUAL, KEY_KP_ADD],
+		"camera_zoom_out_key": [KEY_MINUS, KEY_KP_SUBTRACT],
+		"camera_pan_left": [KEY_A, KEY_LEFT],
+		"camera_pan_right": [KEY_D, KEY_RIGHT],
+		"camera_pan_up": [KEY_W, KEY_UP],
+		"camera_pan_down": [KEY_S, KEY_DOWN],
 	}
 	for action in actions:
 		if not InputMap.has_action(action):
@@ -131,25 +138,52 @@ func _setup_input_actions() -> void:
 				InputMap.action_add_event(action, ev)
 
 func _unhandled_input(event: InputEvent) -> void:
-	if event is InputEventMouseMotion:
-		if Input.is_action_pressed("camera_orbit"):
-			rotate_by(event.relative.x * 0.3)
-		elif Input.is_action_pressed("camera_pan"):
-			var scale := (distance / 14.0) * 0.02
-			pan_by(Vector2(event.relative.x * scale, -event.relative.y * scale))
+	# drags (pan, rotate) and touch gestures are handled by main.gd, which tells a drag from a click; the wheel here
+	if event is InputEventMouseButton and event.pressed and event.device != InputEvent.DEVICE_ID_EMULATION:
+		if event.button_index == MOUSE_BUTTON_WHEEL_UP:
+			zoom_by(0.9)
+		elif event.button_index == MOUSE_BUTTON_WHEEL_DOWN:
+			zoom_by(1.1)
 
-	elif event is InputEventMouseButton:
-		if event.pressed:
-			if event.button_index == MOUSE_BUTTON_WHEEL_UP:
-				zoom_by(0.9)
-			elif event.button_index == MOUSE_BUTTON_WHEEL_DOWN:
-				zoom_by(1.1)
 
 func _process(delta: float) -> void:
 	if Input.is_action_pressed("camera_rotate_left"):
 		rotate_by(-90.0 * delta)
 	if Input.is_action_pressed("camera_rotate_right"):
 		rotate_by(90.0 * delta)
+	var pan := Vector2(Input.get_axis("camera_pan_left", "camera_pan_right"), Input.get_axis("camera_pan_down", "camera_pan_up"))
+	if pan != Vector2.ZERO:
+		pan_by(pan * distance * 0.6 * delta)   # about 60 % of the view distance per second
+	if Input.is_action_just_pressed("camera_zoom_in_key"):
+		zoom_by(0.9)
+	if Input.is_action_just_pressed("camera_zoom_out_key"):
+		zoom_by(1.1)
+
+
+## Pan by a pointer drag in viewport pixels, so the ground follows the finger or the mouse.
+func pan_pixels(d: Vector2) -> void:
+	var size := get_viewport().get_visible_rect().size
+	var span := size.y if camera.keep_aspect == Camera3D.KEEP_HEIGHT else size.x
+	var per_px := 2.0 * distance * tan(deg_to_rad(camera.fov) * 0.5) / maxf(span, 1.0)
+	pan_by(Vector2(-d.x * per_px, d.y * per_px / sin(deg_to_rad(TILT))))
+
+
+## Animated turn by a fixed step (the on-screen buttons).
+func rotate_step(degrees: float) -> void:
+	create_tween().tween_method(func(y): yaw = y; apply(), yaw, yaw + degrees, 0.25)
+
+
+## Back to the framing that shows the whole island.
+func go_home() -> void:
+	_user_zoomed = false
+	var from := target
+	_refit()                 # sets the home target and distance
+	var to := target
+	target = from
+	var tw := create_tween().set_parallel()
+	tw.tween_property(self, "distance", home_distance, 0.35)
+	tw.tween_property(self, "target", to, 0.35)
+	tw.tween_method(func(y): yaw = y; apply(), yaw, 0.0, 0.35)
 
 func rotate_by(degrees: float) -> void:
 	yaw += degrees
@@ -176,10 +210,12 @@ func pan_by(delta: Vector2) -> void:
 
 	target += right * delta.x
 	target += forward * delta.y
+	_user_zoomed = true   # (any camera move by the player: window resizes stop reframing)
 
-	# clamp target to PAN_LIMIT from the origin
-	if target.length() > PAN_LIMIT:
-		target = target.normalized() * PAN_LIMIT
+	# clamp target to PAN_LIMIT from the island centre (the origin until fit_island)
+	var off := target - _fit_centre
+	if off.length() > PAN_LIMIT:
+		target = _fit_centre + off.normalized() * PAN_LIMIT
 
 	apply()
 

@@ -62,6 +62,14 @@ func _ready() -> void:
 	add_child(hud)
 	hud.update_from(board)
 	hud.tool_selected.connect(_on_tool_selected)
+	hud.camera_action.connect(func(a: String):
+		match a:
+			"left": rig.rotate_step(-45.0)
+			"right": rig.rotate_step(45.0)
+			"in": rig.zoom_by(0.8)
+			"out": rig.zoom_by(1.25)
+			"home": rig.go_home()
+	)
 	hud.help_requested.connect(_on_hud_help_requested)
 	hud.button_clicked.connect(func(): sfx.play("click"))
 
@@ -216,19 +224,23 @@ func _cell_at(pos: Vector2) -> Variant:
 	return cell
 
 
+# Pointer input. Mouse: left click digs, right click places a towel; a press that moves more than DRAG_PX is a
+# drag instead (left: move the map, right: rotate, middle: move). Touch: tap digs, hold places a towel, one finger
+# drags the map, two fingers pinch to zoom and twist to rotate. Clicks act on release, so a drag never digs.
+# Mouse events Godot emulates from touch (DEVICE_ID_EMULATION) are left to the GUI (tool buttons); the board
+# uses the real touch events.
+const DRAG_PX := 10.0
+const HOLD_S := 0.45
+var _press: Dictionary = {}      # mouse: button, start, last, dragging
+var _touches: Dictionary = {}    # touch index -> position
+var _tap: Dictionary = {}        # one-finger touch: start, t, moved, held
+var _pinch: Dictionary = {}      # two fingers: dist, angle
+
+
 func _unhandled_input(event: InputEvent) -> void:
-	if _finished or autopilot:
+	if _finished:
 		return
-
-	if event is InputEventMouseButton and event.pressed:
-		if _playing:
-			var pos: Vector2 = event.position
-			if event.button_index == MOUSE_BUTTON_LEFT:
-				_left_click(pos)
-			elif event.button_index == MOUSE_BUTTON_RIGHT:
-				_right_click(pos)
-
-	if event is InputEventKey and event.pressed:
+	if event is InputEventKey and event.pressed and not autopilot:
 		if event.keycode == KEY_ESCAPE:
 			if _playing:
 				menu.show_esc_menu()
@@ -237,6 +249,83 @@ func _unhandled_input(event: InputEvent) -> void:
 		elif event.keycode == KEY_H:
 			if _playing:
 				menu.show_help()   # its help_requested signal logs HELP_OPEN and pauses (_on_menu_help_requested)
+		return
+	if event is InputEventScreenTouch or event is InputEventScreenDrag:
+		_touch_input(event)
+		return
+	if event is InputEventMouse and event.device == InputEvent.DEVICE_ID_EMULATION:
+		return
+	if event is InputEventMouseButton:
+		var b: int = event.button_index
+		if b in [MOUSE_BUTTON_LEFT, MOUSE_BUTTON_RIGHT, MOUSE_BUTTON_MIDDLE]:
+			if event.pressed:
+				_press = {"button": b, "start": event.position, "last": event.position, "dragging": false}
+			elif not _press.is_empty() and _press.button == b:
+				if not _press.dragging and _playing and not autopilot:
+					if b == MOUSE_BUTTON_LEFT:
+						_left_click(event.position)
+					elif b == MOUSE_BUTTON_RIGHT:
+						_right_click(event.position)
+				_press = {}
+	elif event is InputEventMouseMotion and not _press.is_empty():
+		if not _press.dragging and (event.position - _press.start).length() > DRAG_PX:
+			_press.dragging = true
+		if _press.dragging:
+			var d: Vector2 = event.position - _press.last
+			if _press.button == MOUSE_BUTTON_RIGHT:
+				rig.rotate_by(d.x * 0.3)
+			else:
+				rig.pan_pixels(d)
+		_press.last = event.position
+
+
+func _touch_input(event: InputEvent) -> void:
+	if event is InputEventScreenTouch:
+		if event.pressed:
+			_touches[event.index] = event.position
+			if _touches.size() == 1:
+				_tap = {"start": event.position, "t": Time.get_ticks_msec() / 1000.0, "moved": false, "held": false}
+			else:
+				_tap = {}   # a second finger: a gesture, not a tap
+				_pinch = _pinch_state()
+		else:
+			if _touches.size() == 1 and not _tap.is_empty() and not _tap.moved and not _tap.held:
+				if _playing and not autopilot:
+					_left_click(_tap.start)
+			_touches.erase(event.index)
+			_tap = {}
+			_pinch = _pinch_state() if _touches.size() == 2 else {}
+	elif event is InputEventScreenDrag:
+		_touches[event.index] = event.position
+		if _touches.size() == 1 and not _tap.is_empty():
+			if not _tap.moved and (event.position - _tap.start).length() > DRAG_PX * 1.5:
+				_tap.moved = true
+			if _tap.moved:
+				rig.pan_pixels(event.relative)
+		elif _touches.size() == 2 and not _pinch.is_empty():
+			var now := _pinch_state()
+			if now.dist > 1.0:
+				rig.zoom_by(_pinch.dist / now.dist)
+			rig.rotate_by(rad_to_deg(angle_difference(_pinch.angle, now.angle)))
+			_pinch = now
+
+
+func _pinch_state() -> Dictionary:
+	var p: Array = _touches.values()
+	if p.size() < 2:
+		return {}
+	var v: Vector2 = p[1] - p[0]
+	return {"dist": v.length(), "angle": v.angle()}
+
+
+func _process_touch_hold() -> void:
+	# a finger held still for HOLD_S places a towel (the touch version of a right click)
+	if _tap.is_empty() or _tap.moved or _tap.held or _touches.size() != 1:
+		return
+	if Time.get_ticks_msec() / 1000.0 - _tap.t >= HOLD_S:
+		_tap.held = true
+		if _playing and not autopilot:
+			_right_click(_tap.start)
 
 
 func _left_click(pos: Vector2) -> void:
@@ -526,6 +615,7 @@ func _play_autopilot() -> void:
 # ---------------------------------------------------------------------------
 
 func _process(_delta: float) -> void:
+	_process_touch_hold()
 	if rig != null and rig.camera != null and view != null:
 		view.set_numbers_billboard(rig.distance > 12.0)
 		# highlight the hex a click would hit (players only)

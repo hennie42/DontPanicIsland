@@ -4,6 +4,7 @@ extends CanvasLayer
 signal tool_selected(tool: String)      # "detector", "parrot", "towel", or "" (back to digging)
 signal help_requested                 # button in bottom-left
 signal button_clicked                 # any button click
+signal camera_action(action: String)  # camera pad: "left", "right", "in", "out", "home"
 
 var selected_tool: String = ""
 
@@ -130,8 +131,33 @@ func _setup_ui() -> void:
 
 	_hint_label = Label.new()
 	_hint_label.name = "Hint"
-	_hint_label.text = "Left click: dig   Right click: towel   H: help   Esc: menu"
+	if DisplayServer.is_touchscreen_available():
+		_hint_label.text = "Tap: dig   Hold: towel   Drag: move   Pinch: zoom   Twist: turn"
+	else:
+		_hint_label.text = "Click: dig   Right click: towel   Drag: move   Right-drag, Q/E: turn   Wheel: zoom   H: help"
 	bottom_left_hbox.add_child(_hint_label)
+
+	# Camera pad on the right edge (mouse and touch): turn, zoom, back to the whole island
+	var cam_panel := PanelContainer.new()
+	cam_panel.name = "CameraPad"
+	cam_panel.add_theme_stylebox_override("panel", label_style)
+	_root.add_child(cam_panel)
+	cam_panel.set_anchors_and_offsets_preset(Control.PRESET_CENTER_RIGHT)
+	cam_panel.grow_horizontal = Control.GROW_DIRECTION_BEGIN
+	cam_panel.grow_vertical = Control.GROW_DIRECTION_BOTH
+	var cam_box := VBoxContainer.new()
+	cam_panel.add_child(cam_box)
+	for item in [["Turn left", "left"], ["Turn right", "right"], ["Zoom +", "in"], ["Zoom -", "out"], ["Centre", "home"]]:
+		var btn := Button.new()
+		btn.name = "Cam_" + item[1]
+		btn.text = item[0]
+		btn.custom_minimum_size = Vector2(230, 72)   # finger-sized
+		var action: String = item[1]
+		btn.pressed.connect(func():
+			camera_action.emit(action)
+			button_clicked.emit()
+		)
+		cam_box.add_child(btn)
 
 	# Apply theme and outline after all children are added
 	_apply_theme_to_all(_root, theme)
