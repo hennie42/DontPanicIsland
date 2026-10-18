@@ -83,7 +83,12 @@ func hidden_target(exclude: Array = []) -> Vector2i:
 func _ready() -> void:
 	main = load("res://scenes/main.tscn").instantiate()
 	add_child(main)
-	await get_tree().create_timer(16.5).timeout   # past the intro
+	# wait until the intro is gone (it takes ~13 s, longer on a busy machine: a fixed wait was flaky)
+	var waited := 0.0
+	while waited < 60.0 and (main.get_children().any(func(n): return n is Intro) or not main._playing):
+		await get_tree().create_timer(0.25).timeout
+		waited += 0.25
+	await get_tree().create_timer(0.5).timeout
 	var b = main.board
 	var rig = main.rig
 	var mid: Vector2 = get_viewport().get_visible_rect().size * 0.5

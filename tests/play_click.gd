@@ -5,7 +5,12 @@ extends Node
 func _ready() -> void:
 	var main = load("res://scenes/main.tscn").instantiate()
 	add_child(main)
-	await get_tree().create_timer(17.0).timeout   # the intro takes ~13 s
+	# wait until the intro is gone (it takes ~13 s, longer on a busy machine: a fixed wait was flaky)
+	var waited := 0.0
+	while waited < 60.0 and (main.get_children().any(func(n): return n is Intro) or not main._playing):
+		await get_tree().create_timer(0.25).timeout
+		waited += 0.25
+	await get_tree().create_timer(0.5).timeout
 	var b = main.board
 	var cam: Camera3D = main.rig.camera
 	var keys: Array = b.land.keys()
