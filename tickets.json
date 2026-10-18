@@ -230,6 +230,74 @@
    "attempts": 3,
    "timeout": 3000,
    "tests": []
+  },
+  {
+   "id": "T16",
+   "title": "Ambient life: palms sway, fog drifts, gulls, camp smoke",
+   "deps": [
+    "T15"
+   ],
+   "prompt": "tickets/T16.md",
+   "check": "tools/probe.sh tests/play_life.tscn 90 \"LIFE OK\" --skip-intro && tools/play.sh 150 \"LIFE START END FINISH\" --autopilot --skip-intro",
+   "tests": [
+    "play_life.gd",
+    "play_life.tscn"
+   ],
+   "check_pass": "CHECK OK",
+   "owner": "local",
+   "attempts": 3,
+   "timeout": 2400
+  },
+  {
+   "id": "T17",
+   "title": "Dig effects: ripple, pop, sand bursts",
+   "deps": [
+    "T16"
+   ],
+   "prompt": "tickets/T17.md",
+   "check": "tools/test.sh tests/test_view.gd && tools/probe.sh tests/play_dig.tscn 90 \"DIG OK\" --skip-intro && tools/probe.sh tests/play_input.tscn 120 \"INPUT OK\" && tools/play.sh 150 \"START END FINISH\" --autopilot --skip-intro",
+   "tests": [
+    "play_dig.gd",
+    "play_dig.tscn"
+   ],
+   "check_pass": "CHECK OK",
+   "owner": "local",
+   "attempts": 3,
+   "timeout": 2400
+  },
+  {
+   "id": "T18",
+   "title": "Mine and towel effects: flash, smoke, sparks, shake, towel bounce",
+   "deps": [
+    "T17"
+   ],
+   "prompt": "tickets/T18.md",
+   "check": "tools/probe.sh tests/play_fx.tscn 90 \"FX OK\" --skip-intro && tools/play.sh 90 \"FX END FINISH\" --autopilot --skip-intro --force-lose && tools/probe.sh tests/play_input.tscn 120 \"INPUT OK\"",
+   "tests": [
+    "play_fx.gd",
+    "play_fx.tscn"
+   ],
+   "check_pass": "CHECK OK",
+   "owner": "local",
+   "attempts": 3,
+   "timeout": 2400
+  },
+  {
+   "id": "T19",
+   "title": "Treasure effects: sparkle, flying coins, counting gold",
+   "deps": [
+    "T18"
+   ],
+   "prompt": "tickets/T19.md",
+   "check": "tools/test.sh tests/test_hud.gd && tools/probe.sh tests/play_treasure.tscn 90 \"TREASURE OK\" --skip-intro && tools/play.sh 150 \"TREASURE START END FINISH\" --autopilot --skip-intro",
+   "tests": [
+    "play_treasure.gd",
+    "play_treasure.tscn"
+   ],
+   "check_pass": "CHECK OK",
+   "owner": "local",
+   "attempts": 3,
+   "timeout": 2400
   }
  ]
 }
