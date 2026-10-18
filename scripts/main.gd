@@ -560,10 +560,9 @@ func _after_board_change(move: Dictionary) -> void:
 	# First reveal: drop the camp on the landing cell, then report the crew
 	# after every move (figures -> skeletons as crewmates are lost).
 	if not _camp_placed and action == "reveal":
-		var c := move.get("cell") as Vector2i
 		var opened: Array = move.get("opened", [])
-		if c == null:
-			c = opened[0] if not opened.is_empty() else Vector2i(0, 0)
+		var cell_v: Variant = move.get("cell")   # value types are never null: test the Variant, then convert
+		var c: Vector2i = cell_v if cell_v != null else (opened[0] if not opened.is_empty() else Vector2i(0, 0))
 		_camp_placed = true
 		if _landing_hint:
 			_landing_hint.queue_free()

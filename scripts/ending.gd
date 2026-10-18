@@ -77,6 +77,7 @@ func _play_win_sequence() -> void:
 	var label_container := Control.new()
 	_canvas.add_child(label_container)
 	label_container.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	label_container.mouse_filter = Control.MOUSE_FILTER_IGNORE   # a layout box: the end panel's buttons must get clicks
 	label_container.add_child(label)
 	label.set_anchors_and_offsets_preset(Control.PRESET_CENTER)
 	label.grow_horizontal = Control.GROW_DIRECTION_BOTH   # centre on the anchor, not hang from it
