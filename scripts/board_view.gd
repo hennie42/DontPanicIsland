@@ -61,6 +61,18 @@ func _greenify(tile: Node) -> void:
 		mi.material_override = _green_mat
 
 
+static var _towel_mat: StandardMaterial3D
+
+static func _towel_material() -> StandardMaterial3D:
+	if _towel_mat == null:
+		_towel_mat = StandardMaterial3D.new()
+		_towel_mat.albedo_texture = load("res://assets/generated/towel.png")
+		_towel_mat.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA_SCISSOR   # the rounded corners
+		_towel_mat.cull_mode = BaseMaterial3D.CULL_DISABLED                    # seen from both sides
+		_towel_mat.texture_filter = BaseMaterial3D.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
+	return _towel_mat
+
+
 ## Highlight the hex under the mouse, or none (null).
 func set_hover(c: Variant) -> void:
 	if c == null or not cells.has(c):
@@ -202,20 +214,17 @@ func build(b: Board) -> void:
 		var towel := Node3D.new()
 		towel.name = "Towel"
 		flag.add_child(towel)
-		var colors := [Color("#e94f37"), Color("#f6f7eb"), Color("#3f88c5")]
-		for i in 3:
-			var stripe := MeshInstance3D.new()
-			stripe.name = "Stripe_%d" % i
-			var box := BoxMesh.new()
-			box.size = Vector3(0.24, 0.045, 0.01)
-			stripe.mesh = box
-			var mat := StandardMaterial3D.new()
-			mat.albedo_color = colors[i]
-			stripe.set_surface_override_material(0, mat)
-			towel.add_child(stripe)
-			# relative to the towel, which already sits at the pole top: hang down from it, off to one side of the pole
-			# (it rotates about the pole when it flaps)
-			stripe.position = Vector3(0.12, -(i * 0.045) - 0.0225, 0)
+		# one towel with a smiley (assets/generated/towel.png, tools/make_towel.py): three red/white/blue
+		# stripes read as the Dutch flag. Hangs from the pole top, off to one side; flaps about the pole.
+		var cloth := MeshInstance3D.new()
+		cloth.name = "Cloth"
+		var quad := QuadMesh.new()
+		quad.size = Vector2(0.24, 0.15)
+		cloth.mesh = quad
+		cloth.material_override = _towel_material()
+		cloth.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_DOUBLE_SIDED
+		towel.add_child(cloth)
+		cloth.position = Vector3(0.12, -0.075, 0)
 		towel.position.y = 0.45
 
 		# Skeleton

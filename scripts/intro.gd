@@ -204,7 +204,8 @@ func _spawn_puff(pos: Vector3) -> void:
 	add_child(puff)
 	puff.global_position = pos
 	puff.emitting = true
-	get_tree().create_timer(1.0).timeout.connect(func(): puff.queue_free())
+	# the intro frees itself (and its puffs) when it ends: the puff may be gone when the timer fires
+	get_tree().create_timer(1.0).timeout.connect(func(): if is_instance_valid(puff): puff.queue_free())
 
 func _show_speech_bubble(ufo: Node3D) -> void:
 	# White text with a thick black outline, facing the camera: readable without a panel (a flat white quad
