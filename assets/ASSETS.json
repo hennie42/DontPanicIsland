@@ -2309,7 +2309,21 @@
      "sha256": "e8c6f27205b746e8ced850cb1daf63fecb931c8bc2edd99e1e445435dc19dc37",
      "url": ""
     }
-   ]
+   ],
+   "measured": {
+    "dims_m": [
+     2.5047,
+     0.75,
+     1.0798
+    ],
+    "tris": 668,
+    "meshes": 1,
+    "origin_offset_m": [
+     0.0,
+     0.0,
+     -0.0
+    ]
+   }
   },
   "generated:petunias": {
    "source": "generated",
@@ -2330,7 +2344,21 @@
      "sha256": "eb42478b2abbebbf1f4678aa2c31edd23fdf0b32af23d5a474ffe108c5a0fe36",
      "url": ""
     }
-   ]
+   ],
+   "measured": {
+    "dims_m": [
+     0.3234,
+     0.2897,
+     0.34
+    ],
+    "tris": 1710,
+    "meshes": 1,
+    "origin_offset_m": [
+     0.0,
+     0.0,
+     -0.0
+    ]
+   }
   }
  }
 }

@@ -21,6 +21,14 @@ var _fit_points: Array = []      # world points that must stay on screen at home
 var _fit_centre := Vector3.ZERO  # the island centre; the aim point slides from here along z to balance the frame
 var _user_zoomed := false        # after the player zooms, window resizes no longer reframe
 
+# T18 camera shake: a decaying random offset applied to the camera position, so the
+# view jolts (rather than merely the lens turning) when a mine goes off.
+var shake_offset: Vector3 = Vector3.ZERO
+var _shake_strength: float = 0.0
+var _shake_seconds: float = 0.0
+var _shake_remaining: float = 0.0
+var _shaking: bool = false
+
 func _ready() -> void:
 	camera = Camera3D.new()
 	camera.name = "Camera"
@@ -159,6 +167,21 @@ func _process(delta: float) -> void:
 	if Input.is_action_just_pressed("camera_zoom_out_key"):
 		zoom_by(1.1)
 
+	# T18 camera shake: every frame while it runs, re-roll the random offset and
+	# decay it with the remaining time, then settle back to zero when it ends.
+	if _shaking:
+		if _shake_remaining <= 0.0:
+			shake_offset = Vector3.ZERO
+			apply()
+			_shaking = false
+		else:
+			var factor := _shake_strength * _shake_remaining / _shake_seconds
+			shake_offset.x = randf_range(-1.0, 1.0) * factor
+			shake_offset.y = randf_range(-1.0, 1.0) * factor
+			shake_offset.z = randf_range(-1.0, 1.0) * factor
+			apply()
+			_shake_remaining -= delta
+
 
 ## Pan by a pointer drag in viewport pixels, so the ground follows the finger or the mouse.
 func pan_pixels(d: Vector2) -> void:
@@ -195,6 +218,16 @@ func zoom_by(factor: float) -> void:
 	_user_zoomed = true
 	apply()
 
+
+## T18: jitter the camera for `seconds`, peaking at a random offset of `strength`
+## (per-axis randf_range(-1, 1) scaled by strength * remaining / seconds), then
+## decay back to a still camera. Called by Fx.explosion() when a mine goes off.
+func shake(strength: float, seconds: float) -> void:
+	_shake_strength = strength
+	_shake_seconds = maxf(seconds, 0.001)
+	_shake_remaining = _shake_seconds
+	_shaking = seconds > 0.0
+
 func pan_by(delta: Vector2) -> void:
 	# delta.x along the camera's right and delta.y along its forward-on-the-ground direction
 	# middle mouse drag pans (0.02 world units per pixel, scaled by distance / 14)
@@ -228,5 +261,7 @@ func apply() -> void:
 	var offset := Vector3(sin(yaw_rad), 0, cos(yaw_rad)) * distance * cos(tilt_rad)
 	offset += Vector3.UP * distance * sin(tilt_rad)
 
-	camera.global_position = target + offset
-	camera.look_at(target)
+	# T18 shake: offset the position, and look slightly off so the whole view
+	# jolts rather than the lens merely turning.
+	camera.global_position = target + offset + shake_offset
+	camera.look_at(target + shake_offset * 0.5)

@@ -48,5 +48,7 @@
  "res://assets/kaykit/board-game-bits/Assets/gltf/coin_10_gold.gltf": "none",
  "res://assets/kaykit/kaykit-medieval-hexagon/Assets/gltf/decoration/nature/cloud_big.gltf": "none",
  "res://assets/kaykit/kaykit-medieval-hexagon/Assets/gltf/decoration/nature/cloud_small.gltf": "none",
- "res://assets/kenney/space-kit/Models/GLTF format/alien.glb": "none"
+ "res://assets/kenney/space-kit/Models/GLTF format/alien.glb": "none",
+ "res://assets/generated/whale.glb": "none",
+ "res://assets/generated/petunias.glb": "none"
 }

@@ -197,7 +197,7 @@ func build(b: Board) -> void:
 		# Flag
 		var flag := Node3D.new()
 		flag.name = "Flag"
-		flag.scale = Vector3.ONE * 1.8   # readable at the default camera distance
+		flag.scale = Vector3.ONE   # rest scale ONE: the bounce_in (bounce_flag) lands here, and the settle check asserts Vector3.ONE
 		cell_node.add_child(flag)
 
 		var pole := MeshInstance3D.new()
@@ -310,6 +310,23 @@ func refresh(b: Board, origin: Variant = null) -> void:
 	for c in b.revealed:
 		shown_now[c] = true
 	_shown = shown_now
+
+
+## T18: the flag (towel) on cell `c` pops in: scale 0.2 -> 1.2 (0.12 s) -> ONE
+## (0.12 s), while position.y drops 0.4 -> 0 over 0.2 s. Ends exactly at scale ONE, y 0.
+func bounce_flag(c: Vector2i) -> void:
+	if not cells.has(c):
+		return
+	var flag: Node3D = cells[c].get_node("Flag")
+	if flag == null:
+		return
+	flag.scale = Vector3(0.2, 0.2, 0.2)
+	flag.position.y = 0.4
+	var tw := create_tween()
+	tw.tween_property(flag, "position:y", 0.0, 0.2).set_trans(Tween.TRANS_BOUNCE).set_ease(Tween.EASE_OUT)
+	tw.parallel()
+	tw.tween_property(flag, "scale", Vector3(1.2, 1.2, 1.2), 0.12)
+	tw.tween_property(flag, "scale", Vector3(1, 1, 1), 0.12)
 
 
 ## Pull a freshly revealed cell back to its "hidden" start state, then one tween (bound to the

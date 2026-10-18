@@ -14,6 +14,7 @@ var menu: Menu
 var sfx: Sfx
 var decor: Decor
 var ambience: Ambience
+var fx: Fx
 var _camp_placed: bool = false
 
 var _last_gold: int = 0
@@ -27,6 +28,7 @@ var _finished: bool = false
 
 # Tip state
 var _tips_shown: Array[int] = []
+var _prev_exploded: Dictionary = {}   # mine cells already exploded, so each detonation fires the FX once
 var _tip_queue: Array = []
 var _landing_hint: Label = null   # until the first click lands the camp
 var _sun: DirectionalLight3D
@@ -80,6 +82,11 @@ func _ready() -> void:
 	)
 	hud.help_requested.connect(_on_hud_help_requested)
 	hud.button_clicked.connect(func(): sfx.play("click"))
+
+	# T18: one-shot mine/towel FX (flash, smoke, sparks, shake).
+	fx = Fx.new()
+	add_child(fx)
+	fx.setup(rig, hud)
 
 	menu = Menu.new()
 	add_child(menu)
@@ -429,6 +436,23 @@ func _after_board_change(move: Dictionary) -> void:
 	else:
 		view.refresh(board)
 	hud.update_from(board)
+
+	# T18 mine FX: a mine detonates when its cell is in board.exploded but was
+	# not exploded on the previous move. The difference also catches autopilot
+	# moves, which carry no "opened" list (the root cause of the missing marker).
+	for c in board.exploded.keys():
+		if not _prev_exploded.has(c):
+			fx.explosion(Hex.to_world(c) + Vector3(0, Art.TILE_TOP, 0))
+	_prev_exploded = board.exploded.duplicate()
+
+	# T18 towel FX: a flag just placed -> the towel bounces in + marker.
+	if action == "flag":
+		var cell: Variant = move.get("cell")
+		if cell != null:
+			var c: Vector2i = cell
+			if board.flagged.has(c):
+				view.bounce_flag(c)
+				GameEvent.marker("FX", "towel")
 
 	# First reveal: drop the camp on the landing cell, then report the crew
 	# after every move (figures -> skeletons as crewmates are lost).
