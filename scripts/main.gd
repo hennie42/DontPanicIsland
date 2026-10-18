@@ -26,6 +26,8 @@ var _finished: bool = false
 
 # Tip state
 var _tips_shown: Array[int] = []
+var _tip_queue: Array = []
+var _tip_showing: bool = false
 var _font: FontFile
 
 # ---------------------------------------------------------------------------
@@ -326,25 +328,43 @@ func _check_tips(move: Dictionary) -> void:
 
 
 func _show_tip(n: int, text: String) -> void:
-	GameEvent.marker("TIP", str(n))
+	# one tip at a time: two can trigger on the same move (first reveal shows a number), and drawn at the same spot
+	# they were unreadable
+	_tip_queue.append([n, text])
+	if not _tip_showing:
+		_next_tip()
+
+
+func _next_tip() -> void:
+	if _tip_queue.is_empty():
+		_tip_showing = false
+		return
+	_tip_showing = true
+	var item: Array = _tip_queue.pop_front()
+	GameEvent.marker("TIP", str(item[0]))
 	var label := Label.new()
-	label.text = text
+	label.text = item[1]
 	label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	label.vertical_alignment = VERTICAL_ALIGNMENT_TOP
+	label.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	if _font:
 		label.add_theme_font_override("font", _font)
 	label.add_theme_font_size_override("font_size", 32)
 	label.add_theme_color_override("font_outline_color", Color.BLACK)
-	label.add_theme_constant_override("outline_size", 4)
-
-	add_child(label)
-	label.position = Vector2(get_viewport().get_visible_rect().size.x / 2 - label.size.x / 2, 50)
+	label.add_theme_constant_override("outline_size", 8)
+	label.modulate.a = 0.0
+	hud.add_child(label)   # on the HUD layer, above the board
+	label.set_anchors_and_offsets_preset(Control.PRESET_TOP_WIDE)
+	label.offset_top = 60
 
 	var tween := create_tween()
 	tween.tween_property(label, "modulate:a", 1.0, 0.5)
 	tween.tween_interval(5.0)
 	tween.tween_property(label, "modulate:a", 0.0, 0.5)
-	tween.finished.connect(func(): label.queue_free())
+	tween.finished.connect(func():
+		label.queue_free()
+		_next_tip()
+	)
 
 
 func _end_game() -> void:

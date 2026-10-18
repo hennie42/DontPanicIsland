@@ -79,6 +79,8 @@ func _play_win_sequence() -> void:
 	label_container.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	label_container.add_child(label)
 	label.set_anchors_and_offsets_preset(Control.PRESET_CENTER)
+	label.grow_horizontal = Control.GROW_DIRECTION_BOTH   # centre on the anchor, not hang from it
+	label.grow_vertical = Control.GROW_DIRECTION_BOTH
 
 	await get_tree().create_timer(2.0).timeout
 	_show_panel()
@@ -125,8 +127,12 @@ func _play_lose_sequence() -> void:
 	var label_container := Control.new()
 	_canvas.add_child(label_container)
 	label_container.set_anchors_and_offsets_preset(Control.PRESET_CENTER)
+	label_container.grow_horizontal = Control.GROW_DIRECTION_BOTH   # centre on the anchor, not hang from it
+	label_container.grow_vertical = Control.GROW_DIRECTION_BOTH
 	label_container.add_child(label)
 	label.set_anchors_and_offsets_preset(Control.PRESET_CENTER)
+	label.grow_horizontal = Control.GROW_DIRECTION_BOTH   # centre on the anchor, not hang from it
+	label.grow_vertical = Control.GROW_DIRECTION_BOTH
 
 	await get_tree().create_timer(2.0).timeout
 	_show_panel()
@@ -136,6 +142,8 @@ func _show_panel() -> void:
 
 	var panel_container := PanelContainer.new()
 	panel_container.set_anchors_and_offsets_preset(Control.PRESET_CENTER)
+	panel_container.grow_horizontal = Control.GROW_DIRECTION_BOTH   # centre on the anchor, not hang from it
+	panel_container.grow_vertical = Control.GROW_DIRECTION_BOTH
 	_canvas.add_child(panel_container)
 
 	var label_style := StyleBoxFlat.new()

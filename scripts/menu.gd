@@ -33,6 +33,8 @@ func _setup_ui() -> void:
 	# HELP PANEL
 	_help_panel = PanelContainer.new()
 	_help_panel.set_anchors_and_offsets_preset(Control.PRESET_CENTER)
+	_help_panel.grow_horizontal = Control.GROW_DIRECTION_BOTH   # centre on the anchor, not hang from it
+	_help_panel.grow_vertical = Control.GROW_DIRECTION_BOTH
 	add_child(_help_panel)
 
 	var help_vbox := VBoxContainer.new()
@@ -66,6 +68,8 @@ func _setup_ui() -> void:
 	# ESC PANEL
 	_esc_panel = PanelContainer.new()
 	_esc_panel.set_anchors_and_offsets_preset(Control.PRESET_CENTER)
+	_esc_panel.grow_horizontal = Control.GROW_DIRECTION_BOTH   # centre on the anchor, not hang from it
+	_esc_panel.grow_vertical = Control.GROW_DIRECTION_BOTH
 	add_child(_esc_panel)
 
 	_esc_vbox = VBoxContainer.new()
