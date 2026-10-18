@@ -33,6 +33,7 @@ func _setup_ui() -> void:
 		push_error("HUD: Font not found at res://assets/kenney/kenney-fonts/Kenney Future.ttf")
 
 	theme.set_default_font(font)
+	theme.default_font_size = 28   # the viewport is 1920x1080: the 16 px default was unreadably small
 
 	# Style for labels and buttons
 	var label_style := StyleBoxFlat.new()
@@ -68,6 +69,10 @@ func _setup_ui() -> void:
 	# Bottom-centre panel
 	var bottom_centre_panel := PanelContainer.new()
 	bottom_centre_panel.set_anchors_and_offsets_preset(Control.PRESET_CENTER_BOTTOM)
+	# grow up and to both sides from the anchor: the default grows down, off the bottom of the screen
+	bottom_centre_panel.grow_vertical = Control.GROW_DIRECTION_BEGIN
+	bottom_centre_panel.grow_horizontal = Control.GROW_DIRECTION_BOTH
+	bottom_centre_panel.offset_bottom = -64   # one row above the bottom-left controls line
 	bottom_centre_panel.add_theme_stylebox_override("panel", label_style)
 	_root.add_child(bottom_centre_panel)
 
@@ -106,6 +111,7 @@ func _setup_ui() -> void:
 	# Bottom-left panel
 	var bottom_left_panel := PanelContainer.new()
 	bottom_left_panel.set_anchors_and_offsets_preset(Control.PRESET_BOTTOM_LEFT)
+	bottom_left_panel.grow_vertical = Control.GROW_DIRECTION_BEGIN
 	bottom_left_panel.add_theme_stylebox_override("panel", label_style)
 	_root.add_child(bottom_left_panel)
 

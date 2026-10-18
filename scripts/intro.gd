@@ -67,7 +67,9 @@ func _do_full_intro() -> void:
 	add_child(ufo)
 	var alien := Art.prop("alien")
 	ufo.add_child(alien)
-	alien.position = Vector3(0, 0.35, 0)
+	# the alien model's mesh sits off its origin (measured): this centres it on the dome; the dome is opaque, so it
+	# stands in a hatch at the top with head and shoulders out (dome top: 0.68 in UFO space, alien: 0.35 tall)
+	alien.position = Vector3(-0.83, 0.55, -0.64)
 	ufo.global_position = Vector3(-25, 6, 0)
 
 	# Setup Camera
@@ -117,7 +119,9 @@ func _do_short_intro() -> void:
 	add_child(ufo)
 	var alien := Art.prop("alien")
 	ufo.add_child(alien)
-	alien.position = Vector3(0, 0.35, 0)
+	# the alien model's mesh sits off its origin (measured): this centres it on the dome; the dome is opaque, so it
+	# stands in a hatch at the top with head and shoulders out (dome top: 0.68 in UFO space, alien: 0.35 tall)
+	alien.position = Vector3(-0.83, 0.55, -0.64)
 	ufo.global_position = Vector3(-25, 6, 0)
 
 	_tween_dist = 22.0
@@ -200,27 +204,21 @@ func _spawn_puff(pos: Vector3) -> void:
 	get_tree().create_timer(1.0).timeout.connect(func(): puff.queue_free())
 
 func _show_speech_bubble(ufo: Node3D) -> void:
+	# White text with a thick black outline, facing the camera: readable without a panel (a flat white quad
+	# behind it read as a big white square)
 	var label := Label3D.new()
 	label.text = "Galactic Planning Office notice: this island is scheduled for demolition. Have a nice day."
 	label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	label.vertical_alignment = VERTICAL_ALIGNMENT_BOTTOM
+	label.vertical_alignment = VERTICAL_ALIGNMENT_TOP   # hangs below the UFO: above it is off-screen
+	label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	label.width = 800
 	label.billboard = BaseMaterial3D.BILLBOARD_ENABLED
 	label.font = load("res://assets/kenney/kenney-fonts/Kenney Future.ttf")
-	label.font_size = 32
-	label.outline_modulate = Color.BLACK   # Label3D: no theme overrides
-	label.outline_size = 4
-
-	# White panel look
-	var bg := MeshInstance3D.new()
-	bg.mesh = QuadMesh.new()
-	bg.mesh.size = Vector2(8, 3)
-	var mat := StandardMaterial3D.new()
-	mat.shading_mode = StandardMaterial3D.SHADING_MODE_UNSHADED
-	mat.albedo_color = Color.WHITE
-	bg.material_override = mat
-	bg.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
-
-	bg.add_child(label)
-	ufo.add_child(bg)
-	bg.position = Vector3(0, 1.5, 0)
-	bg.rotation.x = deg_to_rad(-90)
+	label.font_size = 36
+	label.pixel_size = 0.004   # the UFO is scaled 3.2x: ~10 units wide, fits a tall window too
+	label.modulate = Color.WHITE
+	label.outline_modulate = Color.BLACK
+	label.outline_size = 10
+	label.no_depth_test = true
+	ufo.add_child(label)
+	label.position = Vector3(0, -0.3, 0)
