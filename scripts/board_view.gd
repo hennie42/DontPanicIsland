@@ -192,7 +192,9 @@ func build(b: Board) -> void:
 			mat.albedo_color = colors[i]
 			stripe.set_surface_override_material(0, mat)
 			towel.add_child(stripe)
-			stripe.position.y = 0.45 - (i * 0.045) - 0.0225
+			# relative to the towel, which already sits at the pole top: hang down from it, off to one side of the pole
+			# (it rotates about the pole when it flaps)
+			stripe.position = Vector3(0.12, -(i * 0.045) - 0.0225, 0)
 		towel.position.y = 0.45
 
 		# Skeleton
