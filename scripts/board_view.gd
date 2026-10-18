@@ -4,6 +4,8 @@ extends Node3D
 const HIDDEN_Y := 0.12          # hidden cells stand a bit higher than revealed ones (dug out)
 var cells: Dictionary = {}       # Vector2i -> Node3D, one per land cell
 var _hover: MeshInstance3D       # the ring under the mouse (set_hover)
+var _shown: Dictionary = {}      # Vector2i -> bool: the cells revealed at the previous refresh
+var _cell_tween: Dictionary = {}  # Vector2i -> Tween: each cell's running reveal tween (killed before a new one)
 
 const OUTLINE_COLOR := Color(0.06, 0.12, 0.2, 0.55)   # every hex: the grid reads even under trees
 const FLAG_RING_COLOR := Color("#ff5a1f")              # flagged hex
@@ -239,7 +241,8 @@ func build(b: Board) -> void:
 		chest.name = "Chest"
 		cell_node.add_child(chest)
 
-func refresh(b: Board) -> void:
+func refresh(b: Board, origin: Variant = null) -> void:
+	# --- instant final state, set at once (visibility, height, labels) ---
 	for c in b.land:
 		var node := cells[c] as Node3D
 		var revealed := b.revealed.has(c)
@@ -285,6 +288,108 @@ func refresh(b: Board) -> void:
 
 		# Chest
 		node.get_node("Chest").visible = revealed and b.chests.has(c)
+
+	# --- motion on top, only when a click origin is given ---
+	if origin != null and origin is Vector2i:
+		# newly revealed cells = revealed now but not at the previous refresh, nearest first
+		var new_cells: Array[Vector2i] = []
+		for c in b.revealed:
+			if not _shown.has(c):
+				new_cells.append(c as Vector2i)
+		new_cells.sort_custom(func(a: Vector2i, bb: Vector2i) -> bool:
+			return Hex.distance(origin, a) < Hex.distance(origin, bb))
+		for i in new_cells.size():
+			var c: Vector2i = new_cells[i]
+			var d: float = Hex.distance(origin, c) * 0.045
+			_animate_cell(c, d)
+			if i < 14:   # at most 14 sand bursts, on the nearest cells
+				_add_burst(cells[c] as Node3D, d)
+
+	# update _shown at the end of every refresh
+	var shown_now: Dictionary = {}
+	for c in b.revealed:
+		shown_now[c] = true
+	_shown = shown_now
+
+
+## Pull a freshly revealed cell back to its "hidden" start state, then one tween (bound to the
+## view) pops it down in a ripple: the delay grows with the distance from the click.
+func _animate_cell(c: Vector2i, d: float) -> void:
+	# kill the cell's running tween before starting a new one
+	var prev_tween := (_cell_tween.get(c, null)) as Tween
+	if prev_tween:
+		prev_tween.kill()
+
+	var node := cells[c] as Node3D
+	var num := node.get_node("Number") as Label3D
+	var show_num := num.visible
+
+	# the instant refresh just set the final state: restore the start state, so the tween (and
+	# the look during the delay) reads as a pop out of the sand
+	node.position.y = HIDDEN_Y
+	node.scale = Vector3(1.12, 0.75, 1.12)
+	if show_num:
+		num.scale = Vector3.ZERO
+
+	# one create_tween() per cell, bound to the view; the cell motion runs in parallel, the
+	# number pops in a touch after the cell starts
+	var tween := create_tween()
+	tween.tween_interval(d)   # ripple: the delay grows with distance from the click
+	tween.tween_property(node, "position:y", 0.0, 0.22).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+	tween.parallel()
+	tween.tween_property(node, "scale", Vector3.ONE, 0.3)
+	if show_num:
+		tween.parallel()
+		tween.tween_property(num, "scale", Vector3.ONE, 0.25).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT).set_delay(0.1)
+	_cell_tween[c] = tween
+
+
+## A one-shot burst of sand grains on the (up to) 14 nearest revealed cells: fired when the
+## cell's delay has passed, freed 1.0 s after it started.
+func _add_burst(cell_node: Node3D, d: float) -> void:
+	# replace any previous Burst for this cell
+	var old_burst := cell_node.get_node_or_null("Burst")
+	if old_burst != null:
+		old_burst.queue_free()
+
+	var burst := CPUParticles3D.new()
+	burst.name = "Burst"
+	burst.position.y = Art.TILE_TOP
+	burst.amount = 10
+	burst.lifetime = 0.6
+	burst.one_shot = true
+	burst.explosiveness = 1.0
+	burst.emitting = false
+	burst.direction = Vector3.UP
+	burst.spread = 60.0
+	burst.initial_velocity_min = 0.8
+	burst.initial_velocity_max = 1.6
+	burst.gravity = Vector3(0.0, -6.0, 0.0)
+	burst.scale_amount_min = 0.5
+	burst.scale_amount_max = 1.0
+	burst.color = Color("#e8c79a")
+
+	# a small cube per grain of sand, tinted by the vertex colour (like the smoke in ambience.gd)
+	var mesh := BoxMesh.new()
+	mesh.size = Vector3(0.04, 0.04, 0.04)
+	burst.mesh = mesh
+	var mat := StandardMaterial3D.new()
+	mat.vertex_color_use_as_albedo = true
+	burst.material_override = mat
+
+	cell_node.add_child(burst)
+
+	# start the burst when the cell's delay has passed; free it 1.0 s after it started
+	var start_t := get_tree().create_timer(d)
+	start_t.timeout.connect(func():
+		if is_instance_valid(burst):
+			burst.emitting = true
+			var free_t := get_tree().create_timer(1.0)
+			free_t.timeout.connect(func():
+				if is_instance_valid(burst):
+					burst.queue_free())
+	)
+
 
 func _process(_delta: float) -> void:
 	# Flapping flag

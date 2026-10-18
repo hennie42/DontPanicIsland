@@ -423,12 +423,16 @@ func _on_tool_selected(tool: String) -> void:
 # ---------------------------------------------------------------------------
 
 func _after_board_change(move: Dictionary) -> void:
-	view.refresh(board)
+	var action: String = move.get("action", "")
+	if action == "reveal" or action == "chord" or action == "detector":
+		view.refresh(board, move.get("cell"))
+	else:
+		view.refresh(board)
 	hud.update_from(board)
 
 	# First reveal: drop the camp on the landing cell, then report the crew
 	# after every move (figures -> skeletons as crewmates are lost).
-	if not _camp_placed and move.get("action") == "reveal":
+	if not _camp_placed and action == "reveal":
 		var c := move.get("cell") as Vector2i
 		var opened: Array = move.get("opened", [])
 		if c == null:
@@ -450,7 +454,6 @@ func _after_board_change(move: Dictionary) -> void:
 	_last_gold = board.gold
 
 	# SFX: action specific
-	var action: String = move.get("action", "")
 	if action == "reveal":
 		sfx.play("dig")
 		var opened = move.get("opened", []) as Array[Vector2i]
