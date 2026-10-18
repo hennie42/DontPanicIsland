@@ -28,6 +28,8 @@ var _finished: bool = false
 var _tips_shown: Array[int] = []
 var _tip_queue: Array = []
 var _landing_hint: Label = null   # until the first click lands the camp
+var _sun: DirectionalLight3D
+const SUN_YAW := 35.0             # sun direction relative to the camera: it turns with the camera (_process)
 var _tip_showing: bool = false
 var _font: FontFile
 
@@ -151,8 +153,9 @@ func _set_up_environment() -> void:
 	add_child(world_env)
 
 	var sun := DirectionalLight3D.new()
+	_sun = sun
 	sun.name = "Sun"
-	sun.rotation_degrees = Vector3(-52, 35, 0)
+	sun.rotation_degrees = Vector3(-52, SUN_YAW, 0)
 	sun.shadow_enabled = true
 	sun.light_color = Color("#fff2dc")   # warm
 	sun.light_energy = 1.35
@@ -616,6 +619,9 @@ func _play_autopilot() -> void:
 
 func _process(_delta: float) -> void:
 	_process_touch_hold()
+	if rig != null and _sun != null:
+		# the sun keeps its place relative to the camera, so shadows fall the same way on screen when rotating
+		_sun.rotation_degrees.y = SUN_YAW + rig.yaw
 	if rig != null and rig.camera != null and view != null:
 		view.set_numbers_billboard(rig.distance > 12.0)
 		# highlight the hex a click would hit (players only)

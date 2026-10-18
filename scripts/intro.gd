@@ -33,7 +33,11 @@ func play(full: bool, camera_rig: CameraRig, sfx: Sfx) -> void:
 		await _do_short_intro()
 
 	GameEvent.marker("INTRO_END", "t=%d" % (Time.get_ticks_msec() / 1000))
+	# hand the camera back: left alive, _process kept forcing rig.yaw and rig.distance every frame, so the
+	# player's turns and zooms snapped back (only a skipped intro freed itself)
+	set_process(false)
 	finished.emit()
+	queue_free()
 
 func _input(event: InputEvent) -> void:
 	if _is_skipping: return
