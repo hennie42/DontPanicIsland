@@ -473,6 +473,11 @@ func _play_autopilot() -> void:
 func _process(_delta: float) -> void:
 	if rig != null and rig.camera != null and view != null:
 		view.set_numbers_billboard(rig.distance > 12.0)
+		# highlight the hex a click would hit (players only)
+		if _playing and not _finished and not autopilot:
+			view.set_hover(_cell_at(get_viewport().get_mouse_position()))
+		else:
+			view.set_hover(null)
 
 
 # ---------------------------------------------------------------------------

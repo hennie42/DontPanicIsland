@@ -3,12 +3,67 @@ extends Node3D
 
 const HIDDEN_Y := 0.12          # hidden cells stand a bit higher than revealed ones (dug out)
 var cells: Dictionary = {}       # Vector2i -> Node3D, one per land cell
+var _hover: MeshInstance3D       # the ring under the mouse (set_hover)
+
+const OUTLINE_COLOR := Color(0.06, 0.12, 0.2, 0.55)   # every hex: the grid reads even under trees
+const FLAG_RING_COLOR := Color("#ff5a1f")              # flagged hex
+const HOVER_COLOR := Color("#ffe14d")                  # the hex a click would hit
+
+
+## A flat hexagonal ring (pointy-top, like Hex) lying in the xz plane: outer corner radius r, band width w.
+static func hex_ring(r: float, w: float) -> ArrayMesh:
+	var st := SurfaceTool.new()
+	st.begin(Mesh.PRIMITIVE_TRIANGLES)
+	st.set_normal(Vector3.UP)
+	for i in 6:
+		var a0 := deg_to_rad(60.0 * i - 30.0)
+		var a1 := deg_to_rad(60.0 * (i + 1) - 30.0)
+		var o0 := Vector3(cos(a0), 0, sin(a0)) * r
+		var o1 := Vector3(cos(a1), 0, sin(a1)) * r
+		var i0 := Vector3(cos(a0), 0, sin(a0)) * (r - w)
+		var i1 := Vector3(cos(a1), 0, sin(a1)) * (r - w)
+		for v in [o0, i1, o1, o0, i0, i1]:
+			st.add_vertex(v)
+	return st.commit()
+
+
+static func _ring_material(color: Color) -> StandardMaterial3D:
+	var m := StandardMaterial3D.new()
+	m.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
+	m.albedo_color = color
+	m.cull_mode = BaseMaterial3D.CULL_DISABLED
+	if color.a < 1.0:
+		m.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
+	return m
+
+
+func _ring(name: String, r: float, w: float, color: Color, lift: float) -> MeshInstance3D:
+	var mi := MeshInstance3D.new()
+	mi.name = name
+	mi.mesh = hex_ring(r, w)
+	mi.material_override = _ring_material(color)
+	mi.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+	mi.position.y = Art.TILE_TOP + lift
+	return mi
+
+
+## Highlight the hex under the mouse, or none (null).
+func set_hover(c: Variant) -> void:
+	if c == null or not cells.has(c):
+		_hover.visible = false
+		return
+	var node := cells[c] as Node3D
+	_hover.visible = true
+	_hover.global_position = node.global_position + Vector3(0, Art.TILE_TOP + 0.03, 0)
 
 func build(b: Board) -> void:
 	# Clear existing
 	for child in get_children():
 		child.queue_free()
 	cells.clear()
+	_hover = _ring("Hover", Hex.SIZE * 1.0, 0.09, HOVER_COLOR, 0.0)
+	_hover.visible = false
+	add_child(_hover)
 
 	# Water
 	for c in b.water:
@@ -36,6 +91,10 @@ func build(b: Board) -> void:
 		var tile := Art.tile(b.land[c]).instantiate() as Node3D
 		tile.name = "Tile"
 		cell_node.add_child(tile)
+
+		# Outline (all hexes) and flag ring (flagged hexes only)
+		cell_node.add_child(_ring("Outline", Hex.SIZE * 0.99, 0.035, OUTLINE_COLOR, 0.01))
+		cell_node.add_child(_ring("FlagRing", Hex.SIZE * 0.96, 0.08, FLAG_RING_COLOR, 0.02))
 
 		# Props
 		var props := Node3D.new()
@@ -103,6 +162,7 @@ func build(b: Board) -> void:
 		# Flag
 		var flag := Node3D.new()
 		flag.name = "Flag"
+		flag.scale = Vector3.ONE * 1.8   # readable at the default camera distance
 		cell_node.add_child(flag)
 
 		var pole := MeshInstance3D.new()
@@ -182,6 +242,8 @@ func refresh(b: Board) -> void:
 
 		# Flag
 		node.get_node("Flag").visible = b.flagged.has(c)
+		node.get_node("FlagRing").visible = b.flagged.has(c)
+		node.get_node("Outline").visible = b.is_visible(c)   # not under the fog clouds
 
 		# Skeleton
 		node.get_node("Skeleton").visible = b.exploded.has(c)
