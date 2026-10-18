@@ -111,6 +111,12 @@ func _ready() -> void:
 		_is_first_run = false
 
 	GameEvent.marker("START", "seed=%d" % seed_value)
+	if "--pixel-probe" in OS.get_cmdline_user_args():
+		_pixel_probe()
+	if "--render-matrix" in OS.get_cmdline_user_args():
+		_render_matrix()
+	if OS.has_feature("web"):
+		_check_3d_drawn()
 	if not autopilot:
 		_show_landing_hint()
 
@@ -136,6 +142,79 @@ func _frame_island() -> void:
 		points.append(w + Vector3(0, 1.1, 0))   # palm tops
 	centre /= maxf(board.land.size(), 1)
 	rig.fit_island(points, Vector3(centre.x, 0, centre.z))
+
+
+## Diagnostics for renderers we can't see (e.g. a phone browser): the average colour in the middle of the screen,
+## as a marker. A blank 3D view shows up as one flat colour.
+## Some browsers draw no 3D at all (DuckDuckGo on a Pixel 10 / GrapheneOS: only the background colour, nothing
+## else; Vanadium and Firefox on the same phone are fine). Then say so instead of showing a grey screen.
+func _check_3d_drawn() -> void:
+	await get_tree().create_timer(2.0).timeout
+	await RenderingServer.frame_post_draw
+	var img := get_viewport().get_texture().get_image()
+	var first := img.get_pixel(img.get_width() / 2, img.get_height() / 2)
+	var spread := 0.0
+	var n := 0
+	for y in range(img.get_height() * 3 / 10, img.get_height() * 7 / 10, 16):
+		for x in range(img.get_width() * 3 / 10, img.get_width() * 7 / 10, 16):
+			var p := img.get_pixel(x, y)
+			spread += absf(p.r - first.r) + absf(p.g - first.g) + absf(p.b - first.b)
+			n += 1
+	if spread / maxf(n, 1) > 0.002:
+		return
+	GameEvent.marker("NO_3D", "the browser drew one flat colour")
+	var panel := PanelContainer.new()
+	var label := Label.new()
+	label.text = "Your browser is blocking 3D graphics.\nPlease open this page in Firefox, Chrome or Vanadium."
+	label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	label.custom_minimum_size = Vector2(900, 0)
+	label.add_theme_font_size_override("font_size", 44)
+	panel.add_child(label)
+	hud.add_child(panel)
+	panel.set_anchors_and_offsets_preset(Control.PRESET_CENTER)
+	panel.grow_horizontal = Control.GROW_DIRECTION_BOTH
+	panel.grow_vertical = Control.GROW_DIRECTION_BOTH
+
+
+## Diagnostics: render with one feature off at a time and probe each, to find what blanks the 3D view on a device.
+func _render_matrix() -> void:
+	var wenv := find_children("*", "WorldEnvironment", true, false)[0] as WorldEnvironment
+	var env := wenv.environment
+	var steps := [
+		["baseline", func(): pass],
+		["no_glow", func(): env.glow_enabled = false],
+		["no_msaa", func(): get_viewport().msaa_3d = Viewport.MSAA_DISABLED],
+		["no_shadows", func(): _sun.shadow_enabled = false],
+		["no_adjust", func(): env.adjustment_enabled = false],
+		["no_dof", func(): wenv.camera_attributes = null],
+		["linear_tonemap", func(): env.tonemap_mode = Environment.TONE_MAPPER_LINEAR],
+	]
+	await get_tree().create_timer(2.0).timeout
+	for st in steps:   # cumulative: each step keeps the previous ones off
+		(st[1] as Callable).call()
+		await get_tree().create_timer(1.0).timeout
+		await _pixel_probe(st[0])
+
+
+func _pixel_probe(label: String = "") -> void:
+	if label == "":
+		await get_tree().create_timer(2.0).timeout
+	await RenderingServer.frame_post_draw
+	var img := get_viewport().get_texture().get_image()
+	var c := Vector3.ZERO
+	var spread := 0.0
+	var n := 0
+	var first := img.get_pixel(img.get_width() / 2, img.get_height() / 2)
+	for y in range(img.get_height() * 3 / 10, img.get_height() * 7 / 10, 8):
+		for x in range(img.get_width() * 3 / 10, img.get_width() * 7 / 10, 8):
+			var p := img.get_pixel(x, y)
+			c += Vector3(p.r, p.g, p.b)
+			spread += absf(p.r - first.r) + absf(p.g - first.g) + absf(p.b - first.b)
+			n += 1
+	c /= maxf(n, 1)
+	GameEvent.marker("PIXEL", "%s avg=%.2f,%.2f,%.2f variation=%.3f renderer=%s" % [label, c.x, c.y, c.z,
+		spread / maxf(n, 1), RenderingServer.get_current_rendering_method()])
 
 
 func _set_up_environment() -> void:

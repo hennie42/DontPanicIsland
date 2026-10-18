@@ -26,6 +26,10 @@ func build(view: BoardView) -> void:
 	mat.set_shader_parameter("shore_field", load("res://assets/generated/shore_field.png"))
 	mat.set_shader_parameter("field_rect", ShoreField.RECT)
 	mat.set_shader_parameter("noise", noise_tex)
+	if RenderingServer.get_current_rendering_method() == "gl_compatibility":
+		# phones in the browser: tiny sharp glints flickered (Pixel 10, Vanadium/Firefox): softer, steadier water
+		mat.set_shader_parameter("ripple", 0.08)
+		mat.set_shader_parameter("min_roughness", 0.22)
 	var plane := PlaneMesh.new()
 	plane.size = Vector2(EXTENT, EXTENT)
 	# dense where waves show (near the island), the whole plane at one density keeps it simple: ~48k vertices
