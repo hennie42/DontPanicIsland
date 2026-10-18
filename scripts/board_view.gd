@@ -102,18 +102,23 @@ func build(b: Board) -> void:
 		props.position.y = Art.TILE_TOP
 		cell_node.add_child(props)
 
+		# the terrain's own prop (palm, wreck, rocks) goes when the hex is dug: palms are chopped for wood and would
+		# cover the number; the camp and crew (decor) stay under Props
+		var terrain_prop := Node3D.new()
+		terrain_prop.name = "TerrainProp"
+		props.add_child(terrain_prop)
 		var terrain: String = b.land[c]
 		if terrain == "palm":
 			var palm_keys := ["palm_a", "palm_b", "palm_c", "palm_d"]
 			var idx: int = abs(c.x * 7 + c.y * 13) % 4
 			var p := Art.prop(palm_keys[idx])
-			props.add_child(p)
+			terrain_prop.add_child(p)
 			p.rotation_degrees.y = float((c.x * 37 + c.y * 91) % 360)
 		elif terrain == "wreck":
-			props.add_child(Art.prop("wreck"))
+			terrain_prop.add_child(Art.prop("wreck"))
 		elif terrain == "desert":
 			if abs(c.x + 2 * c.y) % 3 == 0:
-				props.add_child(Art.prop("rocks_a"))
+				terrain_prop.add_child(Art.prop("rocks_a"))
 
 		# Fog
 		var fog := Node3D.new()
@@ -222,6 +227,7 @@ func refresh(b: Board) -> void:
 		# Tile / Dug
 		node.get_node("Tile").visible = not revealed
 		node.get_node("Dug").visible = revealed
+		node.get_node("Props/TerrainProp").visible = not revealed
 
 		# Number
 		var num := node.get_node("Number") as Label3D
@@ -284,11 +290,13 @@ func set_numbers_billboard(on: bool) -> void:
 				lbl.billboard = BaseMaterial3D.BILLBOARD_ENABLED if on else BaseMaterial3D.BILLBOARD_DISABLED
 
 func _get_number_color(n: int) -> Color:
+	# six distinct hues on the warm sand of the "tropical punch" scheme (the old navy 4 read like the blue 1, the
+	# teal 6 like the grass)
 	match n:
-		1: return Color("#1e5bd8")
-		2: return Color("#2e8b3a")
-		3: return Color("#d63a2f")
-		4: return Color("#1a2a6c")
-		5: return Color("#7a1f1f")
-		6: return Color("#138a8a")
+		1: return Color("#1560f0")
+		2: return Color("#1f9a2e")
+		3: return Color("#e0301e")
+		4: return Color("#7b2fd6")
+		5: return Color("#8a3a12")
+		6: return Color("#00707a")
 		_: return Color.WHITE

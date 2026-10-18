@@ -26,6 +26,7 @@ func _ready() -> void:
 		push_error("Menu: Font not found at res://assets/kenney/kenney-fonts/Kenney Future.ttf")
 
 	_setup_ui()
+	_style_buttons(self)
 	_hide_all()
 	update_sliders()
 
@@ -52,7 +53,7 @@ func _setup_ui() -> void:
 
 	var rules_label := Label.new()
 	rules_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	rules_label.text = "dig (left click)\ntowel flag (right click)\nnumbers count mines around a tile (0-6)\nclick a number whose flags are all placed to open the rest\nyou can only dig next to your land or a flag\npalms give wood\nchests and wrecks give gold\n\nTools:\nMetal detector (3 wood)\nParrot scout (2 wood)\nTowel of safety (5 wood)\n\n3 crew | Win by digging every safe tile"
+	rules_label.text = "Your first click lands the camp\nDig: left click\nTowel: right click, on a tile you think hides a mine\nNumbers count the mines around a tile (0-6)\nClick a number whose towels are all placed to open the rest\nYou can only dig next to your land or a towel\nPalms give wood, chests and wrecks give gold\n\nTools (wood):\nMetal detector (3): tests one tile, no risk\nParrot scout (2): shows a hidden number\nTowel of safety (5): the next mine costs no crewmate\n\n3 crew | Win by digging every safe tile"
 	rules_label.add_theme_font_override("font", _font)
 	rules_label.add_theme_font_size_override("font_size", 32)
 	rules_label.add_theme_color_override("font_outline_color", Color.BLACK)
@@ -218,3 +219,12 @@ func _unhandled_input(event: InputEvent) -> void:
 				_on_help_close_pressed()
 			else:
 				show_help()
+
+
+## Menu buttons at a readable size (the theme default was tiny at 1920 wide).
+func _style_buttons(node: Node) -> void:
+	for b in node.find_children("*", "Button", true, false):
+		var btn := b as Button
+		btn.add_theme_font_size_override("font_size", 40)
+		btn.custom_minimum_size = Vector2(maxf(btn.custom_minimum_size.x, 260), maxf(btn.custom_minimum_size.y, 64))
+		btn.size_flags_horizontal = Control.SIZE_SHRINK_CENTER

@@ -130,7 +130,7 @@ func _setup_ui() -> void:
 
 	_hint_label = Label.new()
 	_hint_label.name = "Hint"
-	_hint_label.text = "Left click: dig   Right click: towel flag   H: help   Esc: menu"
+	_hint_label.text = "Left click: dig   Right click: towel   H: help   Esc: menu"
 	bottom_left_hbox.add_child(_hint_label)
 
 	# Apply theme and outline after all children are added

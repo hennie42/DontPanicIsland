@@ -27,6 +27,7 @@ var _finished: bool = false
 # Tip state
 var _tips_shown: Array[int] = []
 var _tip_queue: Array = []
+var _landing_hint: Label = null   # until the first click lands the camp
 var _tip_showing: bool = false
 var _font: FontFile
 
@@ -82,6 +83,8 @@ func _ready() -> void:
 		_is_first_run = false
 
 	GameEvent.marker("START", "seed=%d" % seed_value)
+	if not autopilot:
+		_show_landing_hint()
 
 	if autopilot:
 		solver = Solver.new()
@@ -273,6 +276,9 @@ func _after_board_change(move: Dictionary) -> void:
 		if c == null:
 			c = opened[0] if not opened.is_empty() else Vector2i(0, 0)
 		_camp_placed = true
+		if _landing_hint:
+			_landing_hint.queue_free()
+			_landing_hint = null
 		decor.place_camp(board, c)
 	decor.update_crew(board)
 
@@ -335,6 +341,28 @@ func _check_tips(move: Dictionary) -> void:
 	if (action == "detector" or action == "parrot" or action == "towel") and not _tips_shown.has(3):
 		_show_tip(3, "Tools cost wood: chop palms by digging them up.")
 		_tips_shown.append(3)
+
+
+func _show_landing_hint() -> void:
+	# before the first click the whole island is clear of fog by design (you pick where to land), which reads as
+	# "nothing to do" without a prompt
+	var label := Label.new()
+	label.text = "Click a tile to land your camp"
+	label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	label.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	if _font:
+		label.add_theme_font_override("font", _font)
+	label.add_theme_font_size_override("font_size", 48)
+	label.add_theme_color_override("font_color", Color("#ffe14d"))
+	label.add_theme_color_override("font_outline_color", Color.BLACK)
+	label.add_theme_constant_override("outline_size", 12)
+	hud.add_child(label)
+	label.set_anchors_and_offsets_preset(Control.PRESET_TOP_WIDE)
+	label.offset_top = 140
+	_landing_hint = label
+	var pulse := label.create_tween().set_loops()
+	pulse.tween_property(label, "modulate:a", 0.55, 0.8)
+	pulse.tween_property(label, "modulate:a", 1.0, 0.8)
 
 
 func _show_tip(n: int, text: String) -> void:
