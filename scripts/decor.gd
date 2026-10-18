@@ -12,6 +12,7 @@ const CREW_KEYS := ["crew_a", "crew_b", "crew_c"]
 const SKELETON_KEY := "skeleton_a"
 const FLAG_BASE_SCALE := 0.3577   # uniform scale of Art.PROPS["camp_flag"]
 
+var _campfire: Node3D
 var _camp_flag: Node3D
 var _crew_holders: Array[Node3D] = []
 var _crew_figs: Array[Node3D] = []
@@ -75,6 +76,7 @@ func place_camp(b: Board, first: Vector2i) -> void:
 	fire.name = "CampFire"
 	fire.position = FIRE_POS
 	props.add_child(fire)
+	_campfire = fire
 
 	# camp flag (scales down a third per lost crewmate)
 	var flag := Art.prop("camp_flag")
@@ -151,14 +153,12 @@ func _rebuild_crew(crew: int) -> void:
 			_crew_figs[i] = null
 
 
-## offsets from the campfire (around the fire) for the three crew figures
 func _crew_spot(i: int) -> Vector3:
 	const ANGLES := [210.0, 90.0, 330.0]
 	var a := rad_to_deg(deg_to_rad(ANGLES[i]))
 	return Vector3(cos(a) * 0.2, 0.0, sin(a) * 0.2)
 
 
-## deterministic pseudo-random offset within a tile (max 0.25 from the centre)
 func _cell_offset(c: Vector2i) -> Vector3:
 	var h: int = abs(c.x * 31 + c.y * 17)
 	var ox: float = (h % 17) / 16.0 * 0.5 - 0.25
@@ -283,6 +283,12 @@ func _place_rowboat(b: Board, view: BoardView) -> void:
 				add_child(boat)   # Decor is at the scene origin -> world position
 				_boat = boat
 				return
+
+
+func fire_position() -> Vector3:
+	if _campfire:
+		return _campfire.global_position
+	return Vector3.INF
 
 
 func _process(_delta: float) -> void:

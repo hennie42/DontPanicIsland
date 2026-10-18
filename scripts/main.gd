@@ -13,6 +13,7 @@ var solver: Solver
 var menu: Menu
 var sfx: Sfx
 var decor: Decor
+var ambience: Ambience
 var _camp_placed: bool = false
 
 var _last_gold: int = 0
@@ -56,6 +57,10 @@ func _ready() -> void:
 	decor = Decor.new()
 	add_child(decor)
 	decor.build(board, view)
+
+	ambience = Ambience.new()
+	add_child(ambience)
+	ambience.build(board, view)
 
 	rig = CameraRig.new()
 	add_child(rig)
@@ -433,6 +438,7 @@ func _after_board_change(move: Dictionary) -> void:
 			_landing_hint.queue_free()
 			_landing_hint = null
 		decor.place_camp(board, c)
+		ambience.add_smoke(decor.fire_position())
 	decor.update_crew(board)
 
 	GameEvent.marker("MOVE", _move_data(move))
