@@ -29,6 +29,7 @@ var _finished: bool = false
 # Tip state
 var _tips_shown: Array[int] = []
 var _prev_exploded: Dictionary = {}   # mine cells already exploded, so each detonation fires the FX once
+var _prev_revealed: Dictionary = {}   # revealed cells after the previous move, for the treasure FX
 var _tip_queue: Array = []
 var _landing_hint: Label = null   # until the first click lands the camp
 var _sun: DirectionalLight3D
@@ -436,6 +437,26 @@ func _after_board_change(move: Dictionary) -> void:
 	else:
 		view.refresh(board)
 	hud.update_from(board)
+
+	# T19 treasure FX: the gold counter ticks up (before _last_gold is updated so
+	# the range is the delta from the previous state) and every freshly opened
+	# chest sparkles and throws coins at the counter.
+	if board.gold > _last_gold:
+		hud.count_gold(_last_gold, board.gold, 0.8)
+	var opened_cells = move.get("opened", []) as Array[Vector2i]
+	if opened_cells.is_empty():
+		# Solver moves (and chords/detectors) carry no "opened" list, so recover
+		# the cells revealed by this move from the previous state (the T18
+		# mine-FX pattern) instead of trusting the move dict.
+		var newly: Array = []
+		for c in board.revealed.keys():
+			if not _prev_revealed.has(c):
+				newly.append(c)
+		opened_cells = newly as Array[Vector2i]
+	for c in opened_cells:
+		if board.chests.has(c):
+			fx.treasure(Hex.to_world(c) + Vector3(0, Art.TILE_TOP, 0), board.chests[c])
+	_prev_revealed = board.revealed.duplicate()
 
 	# T18 mine FX: a mine detonates when its cell is in board.exploded but was
 	# not exploded on the previous move. The difference also catches autopilot

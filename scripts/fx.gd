@@ -98,3 +98,41 @@ func explosion(pos: Vector3) -> void:
 	if _rig != null:
 		_rig.shake(0.18, 0.4)
 	GameEvent.marker("FX", "boom")
+
+
+func treasure(pos: Vector3, gold: int) -> void:
+	# --- Chest sparkle: a one-shot burst of tiny gold sparks that fly up and
+	# fall, thrown from a chest tile top.
+	var sparkle := CPUParticles3D.new()
+	sparkle.name = "Sparkle"
+	sparkle.position = pos + Vector3(0, 0.25, 0)
+	sparkle.amount = 24
+	sparkle.lifetime = 0.8
+	sparkle.one_shot = true
+	sparkle.explosiveness = 0.8
+	sparkle.direction = Vector3.UP
+	sparkle.spread = 70.0
+	sparkle.initial_velocity_min = 0.6
+	sparkle.initial_velocity_max = 1.4
+	sparkle.gravity = Vector3(0, -1.5, 0)
+	sparkle.color = Color("#ffd23f")
+	sparkle.emitting = false
+
+	var sparkle_mesh := SphereMesh.new()
+	sparkle_mesh.radius = 0.025
+	sparkle.mesh = sparkle_mesh
+
+	var sparkle_mat := StandardMaterial3D.new()
+	sparkle_mat.shading_mode = StandardMaterial3D.SHADING_MODE_UNSHADED
+	sparkle_mat.vertex_color_use_as_albedo = true
+	sparkle.material_override = sparkle_mat
+
+	add_child(sparkle)
+	sparkle.emitting = true
+	get_tree().create_timer(1.2).timeout.connect(func():
+		if is_instance_valid(sparkle):
+			sparkle.queue_free())
+
+	# --- Coins fly to the counter, and the FX marker ---
+	_hud.fly_coins(_rig.camera.unproject_position(pos), clampi(gold / 10, 3, 8))
+	GameEvent.marker("TREASURE", str(gold))

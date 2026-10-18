@@ -18,6 +18,7 @@ var _parrot_button: Button
 var _towel_button: Button
 var _hint_label: Label
 var _help_button: Button
+var _gold_count_tw: Tween   # the active gold count-up; killed by the next count_gold
 
 func _ready() -> void:
 	_setup_ui()
@@ -226,6 +227,59 @@ func toast(text: String, color: Color = Color.WHITE) -> void:
 	tw.tween_interval(1.6)
 	tw.tween_property(label, "modulate:a", 0.0, 0.6)
 	tw.finished.connect(label.queue_free)
+
+## Gold coins fly from `from` (viewport pixels) to the centre of the gold label.
+## Coin i starts with a random offset (up to 24 px), waits i * 0.06 s, then
+## tweens its position to the gold label over 0.55 s and frees itself.
+func fly_coins(from: Vector2, n: int) -> void:
+	for i in n:
+		var coin := Panel.new()
+		coin.name = "Coin_%d" % i
+		coin.size = Vector2(28, 28)
+		coin.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		var coin_box := StyleBoxFlat.new()
+		coin_box.bg_color = Color("#ffd23f")
+		coin_box.border_color = Color("#b8860b")
+		coin_box.set_border_width_all(3)
+		coin_box.set_corner_radius_all(14)
+		coin.add_theme_stylebox_override("panel", coin_box)
+		_root.add_child(coin, true)
+		var off: Vector2 = Vector2(randf_range(-24.0, 24.0), randf_range(-24.0, 24.0))
+		coin.position = from + off
+		# A fresh coin variable per iteration (captured by the lambda below).
+		get_tree().create_timer(float(i) * 0.06).timeout.connect(func():
+			if not is_instance_valid(coin):
+				return
+			var target: Vector2 = _gold_label.get_global_rect().get_center() - Vector2(14.0, 14.0)
+			var fly_tw := coin.create_tween()
+			fly_tw.set_trans(Tween.TRANS_QUAD)
+			fly_tw.set_ease(Tween.EASE_IN)
+			fly_tw.tween_property(coin, "position", target, 0.55)
+			fly_tw.finished.connect(func():
+				if is_instance_valid(coin):
+					coin.queue_free())
+		)
+
+
+## Count the gold label up from `from` to `to` over `seconds`. A new call
+## kills the previous count; the label always ends exactly on "Gold %d" % to.
+func count_gold(from: int, to: int, seconds: float) -> void:
+	if _gold_count_tw != null and is_instance_valid(_gold_count_tw):
+		_gold_count_tw.kill()
+	var gold_tw := create_tween()
+	_gold_count_tw = gold_tw
+	gold_tw.set_trans(Tween.TRANS_QUAD)
+	gold_tw.set_ease(Tween.EASE_IN)
+	# tween_method calls the callable each frame with the interpolated, eased
+	# value between `from` and `to` (see the MethodTweener reference).
+	gold_tw.tween_method(func(v: float) -> void:
+		var step: int = int(round(v))
+		_gold_label.text = "Gold %d" % step
+		, from, to, seconds)
+	gold_tw.finished.connect(func():
+		_gold_label.text = "Gold %d" % to
+		)
+
 
 func _deselect_tools() -> void:
 	selected_tool = ""
