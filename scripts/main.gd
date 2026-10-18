@@ -29,6 +29,7 @@ var _tips_shown: Array[int] = []
 var _tip_queue: Array = []
 var _landing_hint: Label = null   # until the first click lands the camp
 var _sun: DirectionalLight3D
+var _cam_attr: CameraAttributesPractical
 const SUN_YAW := 35.0             # sun direction relative to the camera: it turns with the camera (_process)
 var _tip_showing: bool = false
 var _font: FontFile
@@ -147,10 +148,41 @@ func _set_up_environment() -> void:
 	# Ambient light from the sky (sunny), a little lower so the shadows read.
 	env.ambient_light_source = Environment.AMBIENT_SOURCE_SKY
 	env.ambient_light_energy = 0.75
+	# "Diorama" polish (Forward+; the web build's Compatibility renderer skips what it lacks): contact shadows,
+	# a little bounce light from the warm sand, a soft glow on highlights
+	env.ssao_enabled = true
+	env.ssao_radius = 0.6
+	env.ssao_intensity = 1.8
+	env.ssao_power = 1.4
+	env.ssil_enabled = true
+	env.ssil_radius = 2.5
+	env.ssil_intensity = 0.35
+	env.glow_enabled = true
+	env.glow_intensity = 0.25
+	env.glow_bloom = 0.04
+	env.glow_hdr_threshold = 1.15   # highlights only: a lower threshold hazed the whole picture
+	env.glow_blend_mode = Environment.GLOW_BLEND_MODE_ADDITIVE
 
 	var world_env := WorldEnvironment.new()
 	world_env.environment = env
+	# tilt-shift: blur before and beyond the board so the island reads as a miniature; distances follow the zoom
+	_cam_attr = CameraAttributesPractical.new()
+	_cam_attr.dof_blur_far_enabled = true
+	_cam_attr.dof_blur_near_enabled = true
+	_cam_attr.dof_blur_amount = 0.045
+	world_env.camera_attributes = _cam_attr
 	add_child(world_env)
+	# vignette under the HUD (layer 0; the HUD is layer 1); never catches the mouse
+	var vignette_layer := CanvasLayer.new()
+	vignette_layer.layer = 0
+	add_child(vignette_layer)
+	var vignette := ColorRect.new()
+	vignette.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	vignette.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	var vmat := ShaderMaterial.new()
+	vmat.shader = load("res://shaders/vignette.gdshader")
+	vignette.material = vmat
+	vignette_layer.add_child(vignette)
 
 	var sun := DirectionalLight3D.new()
 	_sun = sun
@@ -159,6 +191,8 @@ func _set_up_environment() -> void:
 	sun.shadow_enabled = true
 	sun.light_color = Color("#fff2dc")   # warm
 	sun.light_energy = 1.35
+	sun.shadow_blur = 1.6                          # soft edges
+	sun.directional_shadow_max_distance = 45.0     # the island only: the shadow map's detail goes where it shows
 	add_child(sun)
 
 
@@ -622,6 +656,12 @@ func _process(_delta: float) -> void:
 	if rig != null and _sun != null:
 		# the sun keeps its place relative to the camera, so shadows fall the same way on screen when rotating
 		_sun.rotation_degrees.y = SUN_YAW + rig.yaw
+	if rig != null and _cam_attr != null:
+		var d: float = rig.distance
+		_cam_attr.dof_blur_near_distance = d * 0.5
+		_cam_attr.dof_blur_near_transition = d * 0.25
+		_cam_attr.dof_blur_far_distance = d * 1.6    # the far rows of the board stay sharp (1.22 blurred them)
+		_cam_attr.dof_blur_far_transition = d * 0.8
 	if rig != null and rig.camera != null and view != null:
 		view.set_numbers_billboard(rig.distance > 12.0)
 		# highlight the hex a click would hit (players only)
