@@ -207,9 +207,10 @@ func _unhandled_input(event: InputEvent) -> void:
 
 
 func _left_click(pos: Vector2) -> void:
-	var cell: Vector2i = _cell_at(pos) as Vector2i
-	if cell == null:
+	var hit: Variant = _cell_at(pos)
+	if hit == null:   # water or sky ("null as Vector2i" is an error, so test before converting)
 		return
+	var cell: Vector2i = hit
 	if hud.selected_tool == "detector":
 		if board.use_detector(cell) >= 0:
 			_after_board_change({"action": "detector", "cell": cell})
@@ -229,9 +230,10 @@ func _left_click(pos: Vector2) -> void:
 
 
 func _right_click(pos: Vector2) -> void:
-	var cell: Vector2i = _cell_at(pos) as Vector2i
-	if cell == null:
+	var hit: Variant = _cell_at(pos)
+	if hit == null:   # water or sky ("null as Vector2i" is an error, so test before converting)
 		return
+	var cell: Vector2i = hit
 	if board.toggle_flag(cell):
 		_after_board_change({"action": "flag", "cell": cell})
 

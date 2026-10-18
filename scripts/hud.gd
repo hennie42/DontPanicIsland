@@ -24,6 +24,7 @@ func _ready() -> void:
 func _setup_ui() -> void:
 	_root = Control.new()
 	_root.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	_root.mouse_filter = Control.MOUSE_FILTER_IGNORE   # the full-screen root must not swallow clicks on the board
 	add_child(_root)
 
 	var theme := Theme.new()

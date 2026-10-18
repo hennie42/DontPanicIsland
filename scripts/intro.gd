@@ -207,8 +207,8 @@ func _show_speech_bubble(ufo: Node3D) -> void:
 	label.billboard = BaseMaterial3D.BILLBOARD_ENABLED
 	label.font = load("res://assets/kenney/kenney-fonts/Kenney Future.ttf")
 	label.font_size = 32
-	label.add_theme_color_override("font_outline_color", Color.BLACK)
-	label.add_theme_constant_override("outline_size", 4)
+	label.outline_modulate = Color.BLACK   # Label3D: no theme overrides
+	label.outline_size = 4
 
 	# White panel look
 	var bg := MeshInstance3D.new()
