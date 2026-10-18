@@ -16,21 +16,17 @@ func run() -> void:
 	for i in 3:
 		gulls.append(amb.find_child("Gull_%d" % i, true, false))
 	check(gulls.all(func(g): return g is Node3D), "Gull_0, Gull_1, Gull_2 exist")
-	# palms and fog: global transforms of their meshes, now and in 0.6 s
+	# palms: global transforms of their meshes, now and in 0.6 s (the fog is checked after landing: before the first
+	# click the whole island is clear of fog by design)
 	var palms: Array = []
-	var fogs: Array = []
 	for c in main.board.land:
 		var cell: Node3D = view.cells[c]
 		var tp: Node = cell.get_node_or_null("Props/TerrainProp")
 		if main.board.land[c] == "palm" and tp != null and tp.get_child_count() > 0 and palms.size() < 6:
 			palms.append(tp.get_child(0))
-		var fog: Node = cell.get_node_or_null("Fog")
-		if fog != null and fog.visible and fog.get_child_count() > 0 and fogs.size() < 6:
-			fogs.append(fog.get_child(0))
-	check(palms.size() >= 3 and fogs.size() >= 3, "found palms (%d) and fog clouds (%d)" % [palms.size(), fogs.size()])
+	check(palms.size() >= 3, "found palms (%d)" % palms.size())
 	var g0: Array = gulls.map(func(g): return g.global_position if g is Node3D else Vector3.ZERO)
 	var p0: Array = palms.map(func(p): return (p as Node3D).global_transform.basis)
-	var f0: Array = fogs.map(func(f): return (f as Node3D).global_position)
 	await wait(0.6)
 	var moved := 0
 	for i in 3:
@@ -45,11 +41,6 @@ func run() -> void:
 		if not b1.is_equal_approx(p0[i]):
 			swayed += 1
 	check(swayed == palms.size(), "palms sway (%d of %d)" % [swayed, palms.size()])
-	var bobbed := 0
-	for i in fogs.size():
-		if (fogs[i] as Node3D).global_position.distance_to(f0[i]) > 0.002:
-			bobbed += 1
-	check(bobbed == fogs.size(), "fog clouds drift (%d of %d)" % [bobbed, fogs.size()])
 
 	# smoke from the camp fire once the camp is there
 	check(amb.find_child("Smoke", true, false) == null, "no smoke before the camp")
@@ -57,6 +48,20 @@ func run() -> void:
 	await wait(0.5)
 	var smoke := amb.find_child("Smoke", true, false) as CPUParticles3D
 	check(smoke != null and smoke.emitting, "smoke rises after landing")
+	# the fog covers the island now: its clouds drift
+	var fogs: Array = []
+	for c in main.board.land:
+		var fog: Node = (view.cells[c] as Node3D).get_node_or_null("Fog")
+		if fog != null and fog.visible and fog.get_child_count() > 0 and fogs.size() < 6:
+			fogs.append(fog.get_child(0))
+	check(fogs.size() >= 3, "found fog clouds after landing (%d)" % fogs.size())
+	var f0: Array = fogs.map(func(f): return (f as Node3D).global_position)
+	await wait(0.6)
+	var bobbed := 0
+	for i in fogs.size():
+		if (fogs[i] as Node3D).global_position.distance_to(f0[i]) > 0.002:
+			bobbed += 1
+	check(fogs.size() > 0 and bobbed == fogs.size(), "fog clouds drift (%d of %d)" % [bobbed, fogs.size()])
 	var fire: Vector3 = main.decor.fire_position()
 	check(smoke != null and fire != Vector3.INF and smoke.global_position.distance_to(fire) < 0.5,
 		"smoke is at the camp fire")
