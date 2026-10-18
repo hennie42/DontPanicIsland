@@ -89,12 +89,15 @@ func _ready() -> void:
 
 
 func _set_up_environment() -> void:
+	# Colour scheme "tropical punch" (user's pick of three, 2026-10-18): the Kenney textures are pale pastels and
+	# AgX mutes bright colours, so the pop comes from saturation and contrast with a slightly lower exposure (more
+	# brightness blew the sand to white and the forest to neon).
 	var sky_material := ProceduralSkyMaterial.new()
-	sky_material.sky_top_color = Color("#4aa8ff")
-	sky_material.sky_horizon_color = Color("#bfe6ff")
+	sky_material.sky_top_color = Color("#1679e8")
+	sky_material.sky_horizon_color = Color("#7fc9f2")
 	# Sea-blue ground colours so the water reads as an endless ocean.
-	sky_material.ground_horizon_color = Color("#7fc8f0")
-	sky_material.ground_bottom_color = Color("#4a9fd8")
+	sky_material.ground_horizon_color = Color("#2a9fd6")
+	sky_material.ground_bottom_color = Color("#0a5aa8")
 
 	var sky := Sky.new()
 	sky.sky_material = sky_material
@@ -103,8 +106,14 @@ func _set_up_environment() -> void:
 	env.background_mode = Environment.BG_SKY
 	env.sky = sky
 	env.tonemap_mode = Environment.TONE_MAPPER_AGX
-	# Ambient light from the sky (sunny).
+	env.tonemap_exposure = 0.92
+	env.adjustment_enabled = true
+	env.adjustment_saturation = 1.32
+	env.adjustment_contrast = 1.16
+	env.adjustment_brightness = 0.97
+	# Ambient light from the sky (sunny), a little lower so the shadows read.
 	env.ambient_light_source = Environment.AMBIENT_SOURCE_SKY
+	env.ambient_light_energy = 0.75
 
 	var world_env := WorldEnvironment.new()
 	world_env.environment = env
@@ -112,9 +121,10 @@ func _set_up_environment() -> void:
 
 	var sun := DirectionalLight3D.new()
 	sun.name = "Sun"
-	sun.rotation_degrees = Vector3(-55, 35, 0)
+	sun.rotation_degrees = Vector3(-52, 35, 0)
 	sun.shadow_enabled = true
-	sun.light_energy = 1.2
+	sun.light_color = Color("#fff2dc")   # warm
+	sun.light_energy = 1.35
 	add_child(sun)
 
 
