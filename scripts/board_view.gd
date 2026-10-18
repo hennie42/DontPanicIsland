@@ -47,6 +47,20 @@ func _ring(name: String, r: float, w: float, color: Color, lift: float) -> MeshI
 	return mi
 
 
+## Grass and forest in green instead of the kit's teal: the same tile material with a recoloured copy of the
+## colour atlas (assets/generated/colormap_green.png, tools/make_green_colormap.py). Sand, rock and water keep
+## the original.
+static var _green_mat: StandardMaterial3D
+
+func _greenify(tile: Node) -> void:
+	for m in tile.find_children("*", "MeshInstance3D", true, false):
+		var mi := m as MeshInstance3D
+		if _green_mat == null:
+			_green_mat = (mi.mesh.surface_get_material(0) as StandardMaterial3D).duplicate()
+			_green_mat.albedo_texture = load("res://assets/generated/colormap_green.png")
+		mi.material_override = _green_mat
+
+
 ## Highlight the hex under the mouse, or none (null).
 func set_hover(c: Variant) -> void:
 	if c == null or not cells.has(c):
@@ -90,6 +104,8 @@ func build(b: Board) -> void:
 		# Tile
 		var tile := Art.tile(b.land[c]).instantiate() as Node3D
 		tile.name = "Tile"
+		if b.land[c] in ["grass", "jungle"]:
+			_greenify(tile)
 		cell_node.add_child(tile)
 
 		# Outline (all hexes) and flag ring (flagged hexes only)

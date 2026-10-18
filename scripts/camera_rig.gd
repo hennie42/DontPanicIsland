@@ -3,13 +3,23 @@ extends Node3D
 
 const TILT := 50.0               # degrees above the horizon, fixed
 const MIN_DIST := 4.0
-const MAX_DIST := 22.0
+const MAX_DIST := 22.0           # zoom-out limit; raised to fit the island when a window needs more (fit_island)
+# screen kept free around the island (fractions of width / height): the HUD covers the bottom (tool bar and
+# controls line) and the top-left corner
+const FIT_SIDE := 0.04
+const FIT_TOP := 0.07
+const FIT_BOTTOM := 0.12
 const PAN_LIMIT := 9.0           # the target stays within this distance of the island centre (0, 0, 0)
 
 var camera: Camera3D             # created in _ready() as a child (current = true, fov 50)
 var yaw: float = 0.0             # degrees, around the y axis
 var distance: float = 14.0
 var target: Vector3 = Vector3.ZERO
+var home_distance: float = 14.0  # the distance that shows the whole island in this window (fit_island)
+var max_dist: float = MAX_DIST
+var _fit_points: Array = []      # world points that must stay on screen at home_distance
+var _fit_centre := Vector3.ZERO  # the island centre; the aim point slides from here along z to balance the frame
+var _user_zoomed := false        # after the player zooms, window resizes no longer reframe
 
 func _ready() -> void:
 	camera = Camera3D.new()
@@ -19,7 +29,81 @@ func _ready() -> void:
 	add_child(camera)
 
 	_setup_input_actions()
+	get_viewport().size_changed.connect(_on_viewport_resized)
 	apply()
+
+
+## Frame the island: the smallest distance at which every point (hex corners, prop tops) is on screen with a
+## margin, for the current window shape. Wide windows fix the vertical field of view, tall ones the horizontal one,
+## so the island fits either way (a fixed 14 cropped it in 16:9 and wasted space in tall windows).
+func fit_island(points: Array, centre: Vector3) -> void:
+	_fit_points = points
+	_fit_centre = centre
+	_refit()
+	distance = home_distance
+	apply()
+
+
+func _on_viewport_resized() -> void:
+	if _fit_points.is_empty():
+		return
+	_refit()
+	if not _user_zoomed:
+		distance = home_distance
+		apply()
+
+
+func _refit() -> void:
+	var size := get_viewport().get_visible_rect().size
+	var aspect := size.x / maxf(size.y, 1.0)
+	camera.keep_aspect = Camera3D.KEEP_HEIGHT if aspect >= 1.0 else Camera3D.KEEP_WIDTH
+	# perspective makes the near side of the island look bigger, so aiming at its centre leaves empty sea at the
+	# top: try aim points along z and keep the one that lets the camera come closest
+	var best_d := INF
+	var best_z := 0.0
+	for i in 17:
+		var dz := -4.0 + i * 0.5
+		target = _fit_centre + Vector3(0, 0, dz)
+		var d := fit_distance(_fit_points, aspect)
+		if d < best_d:
+			best_d = d
+			best_z = dz
+	target = _fit_centre + Vector3(0, 0, best_z)
+	home_distance = best_d
+	max_dist = maxf(MAX_DIST, home_distance * 1.25)
+
+
+## Smallest distance (binary search) at which all points fit a window of this aspect (width / height).
+func fit_distance(points: Array, aspect: float) -> float:
+	var lo := MIN_DIST
+	var hi := 80.0
+	for i in 30:
+		var mid := (lo + hi) * 0.5
+		if _fits(points, mid, aspect):
+			hi = mid
+		else:
+			lo = mid
+	return hi
+
+
+func _fits(points: Array, d: float, aspect: float) -> bool:
+	# measured for the play view (yaw 0): the intro spins the camera, and the result must not depend on when the
+	# window was resized
+	var tilt_rad := deg_to_rad(TILT)
+	var pos := target + Vector3(0, 0, 1) * d * cos(tilt_rad) + Vector3.UP * d * sin(tilt_rad)
+	var inv := Basis.looking_at(target - pos).inverse()
+	var half := tan(deg_to_rad(camera.fov) * 0.5)
+	var tan_h := half * aspect if aspect >= 1.0 else half
+	var tan_v := half if aspect >= 1.0 else half / aspect
+	for p in points:
+		var l: Vector3 = inv * ((p as Vector3) - pos)
+		if l.z >= -0.01:
+			return false
+		var nx := (l.x / -l.z) / tan_h   # -1..1 across the screen
+		var ny := (l.y / -l.z) / tan_v   # -1 bottom .. 1 top
+		if absf(nx) > 1.0 - 2.0 * FIT_SIDE or ny > 1.0 - 2.0 * FIT_TOP or ny < -1.0 + 2.0 * FIT_BOTTOM:
+			return false
+	return true
 
 func _setup_input_actions() -> void:
 	var actions := {
@@ -73,7 +157,8 @@ func rotate_by(degrees: float) -> void:
 
 func zoom_by(factor: float) -> void:
 	distance *= factor
-	distance = clamp(distance, MIN_DIST, MAX_DIST)
+	distance = clamp(distance, MIN_DIST, max_dist)
+	_user_zoomed = true
 	apply()
 
 func pan_by(delta: Vector2) -> void:

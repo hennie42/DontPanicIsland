@@ -56,6 +56,7 @@ func _ready() -> void:
 
 	rig = CameraRig.new()
 	add_child(rig)
+	_frame_island()
 
 	hud = Hud.new()
 	add_child(hud)
@@ -89,6 +90,25 @@ func _ready() -> void:
 	if autopilot:
 		solver = Solver.new()
 		_play_autopilot()
+
+
+## Centre the camera on the island and fit it to the window: every land hex (its corners, and the tops of palms)
+## stays on screen.
+func _frame_island() -> void:
+	var centre := Vector3.ZERO
+	var points: Array = []
+	for c in board.land:
+		var w := Hex.to_world(c)
+		centre += w
+		# only the island's edge can leave the screen: skip hexes with land all around
+		if Hex.neighbors(c).all(func(nb): return board.is_land(nb)):
+			continue
+		for k in 6:
+			var a := deg_to_rad(60.0 * k - 30.0)
+			points.append(w + Vector3(cos(a) * Hex.SIZE, Art.TILE_TOP, sin(a) * Hex.SIZE))
+		points.append(w + Vector3(0, 1.1, 0))   # palm tops
+	centre /= maxf(board.land.size(), 1)
+	rig.fit_island(points, Vector3(centre.x, 0, centre.z))
 
 
 func _set_up_environment() -> void:
@@ -216,9 +236,7 @@ func _unhandled_input(event: InputEvent) -> void:
 				_playing = false
 		elif event.keycode == KEY_H:
 			if _playing:
-				menu.show_help()
-				GameEvent.marker("HELP_OPEN")
-				_playing = false
+				menu.show_help()   # its help_requested signal logs HELP_OPEN and pauses (_on_menu_help_requested)
 
 
 func _left_click(pos: Vector2) -> void:
@@ -513,9 +531,7 @@ func _process(_delta: float) -> void:
 # ---------------------------------------------------------------------------
 
 func _on_hud_help_requested() -> void:
-	menu.show_help()
-	_playing = false
-	GameEvent.marker("HELP_OPEN")
+	menu.show_help()   # logs and pauses through menu.help_requested
 
 func _on_menu_help_requested() -> void:
 	_playing = false

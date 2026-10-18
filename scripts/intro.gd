@@ -4,6 +4,8 @@ class_name Intro
 
 signal finished
 
+const UFO_Y := 4.5   # flight height: at 6 it flew above the top of a 16:9 frame
+
 var rig: CameraRig
 var board: Board
 var _sfx: Sfx
@@ -12,7 +14,7 @@ var _tween: Tween
 
 # For driving rig.yaw and rig.distance via Intro's _process
 var _tween_yaw: float = 0.0
-var _tween_dist: float = 14.0
+var _tween_dist: float = 14.0   # set from rig.home_distance when the intro starts
 
 func _ready() -> void:
 	pass
@@ -45,7 +47,7 @@ func _skip() -> void:
 		_tween.kill()
 
 	# Skip to the end: camera at play view, nodes freed
-	rig.distance = 14.0
+	rig.distance = rig.home_distance
 	rig.yaw = 0.0
 	rig.apply()
 
@@ -70,22 +72,22 @@ func _do_full_intro() -> void:
 	# the alien model's mesh sits off its origin (measured): this centres it on the dome; the dome is opaque, so it
 	# stands in a hatch at the top with head and shoulders out (dome top: 0.68 in UFO space, alien: 0.35 tall)
 	alien.position = Vector3(-0.83, 0.55, -0.64)
-	ufo.global_position = Vector3(-25, 6, 0)
+	ufo.global_position = Vector3(-25, UFO_Y, 0)
 
 	# Setup Camera
-	_tween_dist = 22.0
+	_tween_dist = rig.home_distance * 1.5
 	_tween_yaw = 0.0
 
 	# 0-3s: Camera starts far and rotating
 	_tween.set_parallel(true)
 	_tween.tween_property(self, "_tween_yaw", 360.0, 12.0)
-	_tween.tween_property(self, "_tween_dist", 22.0, 12.0)
-	_tween.tween_property(ufo, "global_position", Vector3(25, 6, 0), 12.0)
+	_tween.tween_property(self, "_tween_dist", rig.home_distance * 1.5, 12.0)
+	_tween.tween_property(ufo, "global_position", Vector3(25, UFO_Y, 0), 12.0)
 
 	# Bobbing and tilting
 	var bob_tween := create_tween()
 	bob_tween.tween_method(func(t: float):
-		ufo.position.y = 6.0 + sin(t * 2.0) * 0.5
+		ufo.position.y = UFO_Y + sin(t * 2.0) * 0.5
 		ufo.rotation.z = sin(t * 2.0) * 0.2
 	, 0.0, 12.0, 12.0)
 
@@ -93,7 +95,8 @@ func _do_full_intro() -> void:
 	get_tree().create_timer(3.0).timeout.connect(func(): _drop_bombs(ufo))
 
 	# 3-8s: Speech bubble
-	get_tree().create_timer(3.0).timeout.connect(func(): _show_speech_bubble(ufo))
+	# once the UFO is well into the picture (at 3 s it was at the left edge and the text was clipped)
+	get_tree().create_timer(4.5).timeout.connect(func(): _show_speech_bubble(ufo))
 
 	# 3-8s: Whale and Petunias
 	get_tree().create_timer(6.0).timeout.connect(func(): _drop_gag(ufo))
@@ -104,7 +107,7 @@ func _do_full_intro() -> void:
 		zip_tween.tween_property(ufo, "global_position", Vector3(40, 10, 0), 3.0)
 
 		var cam_swoop := create_tween()
-		cam_swoop.tween_property(self, "_tween_dist", 14.0, 3.0)
+		cam_swoop.tween_property(self, "_tween_dist", rig.home_distance, 3.0)
 		cam_swoop.parallel().tween_property(self, "_tween_yaw", 0.0, 3.0)
 	)
 
@@ -122,15 +125,15 @@ func _do_short_intro() -> void:
 	# the alien model's mesh sits off its origin (measured): this centres it on the dome; the dome is opaque, so it
 	# stands in a hatch at the top with head and shoulders out (dome top: 0.68 in UFO space, alien: 0.35 tall)
 	alien.position = Vector3(-0.83, 0.55, -0.64)
-	ufo.global_position = Vector3(-25, 6, 0)
+	ufo.global_position = Vector3(-25, UFO_Y, 0)
 
-	_tween_dist = 22.0
+	_tween_dist = rig.home_distance * 1.5
 	_tween_yaw = 0.0
 
 	_tween.set_parallel(true)
 	_tween.tween_property(self, "_tween_yaw", 360.0, 3.0)
-	_tween.tween_property(self, "_tween_dist", 22.0, 3.0)
-	_tween.tween_property(ufo, "global_position", Vector3(25, 6, 0), 3.0)
+	_tween.tween_property(self, "_tween_dist", rig.home_distance * 1.5, 3.0)
+	_tween.tween_property(ufo, "global_position", Vector3(25, UFO_Y, 0), 3.0)
 
 	# 3 bombs
 	get_tree().create_timer(0.5).timeout.connect(func(): _drop_bombs_short(ufo))
