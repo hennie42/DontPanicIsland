@@ -59,7 +59,7 @@ func _play_win_sequence() -> void:
 			tween.tween_property(coin, "global_position:y", 0.0, 0.5).set_trans(Tween.TRANS_BOUNCE).set_ease(Tween.EASE_OUT)
 
 	# 3. UFO flees upwards
-	var ufo := Art.prop("ufo")
+	var ufo := Ufo.make()
 	add_child(ufo)
 	ufo.global_position = Vector3(0, 5, 5)
 	var ufo_tween := create_tween()
@@ -100,17 +100,13 @@ func _play_lose_sequence() -> void:
 		delay += 0.05
 
 	# 2. UFOs swoop back
-	var ufo1 := Art.prop("ufo")
-	var ufo2 := Art.prop("ufo")
+	var ufo1 := Ufo.make()          # the alien rides in this one
+	var ufo2 := Ufo.make(false)
 	add_child(ufo1)
 	add_child(ufo2)
 	ufo1.global_position = Vector3(-8, 10, 0)
 	ufo2.global_position = Vector3(8, 10, 0)
 
-	# Add alien to ufo1
-	var alien := Art.prop("alien")
-	ufo1.add_child(alien)
-	alien.position = Vector3(0, 0, 0) # Adjust if needed
 
 	var ufo_tween := create_tween().set_parallel(true)
 	ufo_tween.tween_property(ufo1, "global_position", Vector3(-3, 2, 2), 2.0).set_trans(Tween.TRANS_SINE)

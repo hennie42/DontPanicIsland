@@ -68,14 +68,9 @@ func _do_full_intro() -> void:
 	_tween = create_tween()
 
 	# Setup UFO
-	var ufo := Art.prop("ufo")
+	var ufo := Ufo.make()   # glass dome, the alien inside
 	ufo.scale *= 2.0
 	add_child(ufo)
-	var alien := Art.prop("alien")
-	ufo.add_child(alien)
-	# the alien model's mesh sits off its origin (measured): this centres it on the dome; the dome is opaque, so it
-	# stands in a hatch at the top with head and shoulders out (dome top: 0.68 in UFO space, alien: 0.35 tall)
-	alien.position = Vector3(-0.83, 0.55, -0.64)
 	ufo.global_position = Vector3(-25, UFO_Y, 0)
 
 	# Setup Camera
@@ -121,14 +116,9 @@ func _do_short_intro() -> void:
 	_tween = create_tween()
 
 	# Setup UFO
-	var ufo := Art.prop("ufo")
+	var ufo := Ufo.make()   # glass dome, the alien inside
 	ufo.scale *= 2.0
 	add_child(ufo)
-	var alien := Art.prop("alien")
-	ufo.add_child(alien)
-	# the alien model's mesh sits off its origin (measured): this centres it on the dome; the dome is opaque, so it
-	# stands in a hatch at the top with head and shoulders out (dome top: 0.68 in UFO space, alien: 0.35 tall)
-	alien.position = Vector3(-0.83, 0.55, -0.64)
 	ufo.global_position = Vector3(-25, UFO_Y, 0)
 
 	_tween_dist = rig.home_distance * 1.5
