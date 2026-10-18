@@ -55,6 +55,9 @@ func _ready() -> void:
 	view = BoardView.new()
 	add_child(view)
 	view.build(board)
+	var ocean := Ocean.new()   # the sea replaces the flat water tiles
+	add_child(ocean)
+	ocean.build(view)
 	view.refresh(board)
 
 	decor = Decor.new()
