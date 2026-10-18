@@ -50,14 +50,16 @@ func _ready() -> void:
 	sfx = Sfx.new()
 	add_child(sfx)
 
-	board = Board.new()
+	var island := _pick_island()
+	board = Board.new(island["file"])
+	GameEvent.marker("ISLAND", "id=%d land=%d mines=%d" % [int(island["id"]), board.land.size(), board.mine_count])
 
 	view = BoardView.new()
 	add_child(view)
 	view.build(board)
 	var ocean := Ocean.new()   # the sea replaces the flat water tiles
 	add_child(ocean)
-	ocean.build(view)
+	ocean.build(view, island["shore"], island["rect"])
 	view.refresh(board)
 
 	decor = Decor.new()
@@ -215,6 +217,34 @@ func _pixel_probe(label: String = "") -> void:
 	c /= maxf(n, 1)
 	GameEvent.marker("PIXEL", "%s avg=%.2f,%.2f,%.2f variation=%.3f renderer=%s" % [label, c.x, c.y, c.z,
 		spread / maxf(n, 1), RenderingServer.get_current_rendering_method()])
+
+
+## Which island: --island=N; the autopilot (and so the checks) plays the original island 0; a game with --seed=N
+## always gets the same island; otherwise a random one of the pool (data/islands/index.json, made and checked by
+## tools/make_islands.py + tests/check_islands.gd).
+func _pick_island() -> Dictionary:
+	var original := {"id": 0, "file": "res://data/island.json", "shore": "res://assets/generated/shore_field.png",
+		"rect": ShoreField.RECT}
+	var pool: Array = [original]
+	var idx: Variant = JSON.parse_string(FileAccess.get_file_as_string("res://data/islands/index.json"))
+	if idx is Dictionary:
+		for e in idx["islands"]:
+			var r: Array = e["rect"]
+			pool.append({"id": int(e["id"]), "file": e["file"], "shore": e["shore"],
+				"rect": Vector4(r[0], r[1], r[2], r[3])})
+	var args := OS.get_cmdline_user_args()
+	for a in args:
+		if a.begins_with("--island="):
+			var want := int(a.substr(9))
+			for e in pool:
+				if int(e["id"]) == want:
+					return e
+	if "--autopilot" in args:
+		return original
+	for a in args:
+		if a.begins_with("--seed="):
+			return pool[absi(int(a.substr(7))) % pool.size()]
+	return pool[randi() % pool.size()]
 
 
 func _set_up_environment() -> void:

@@ -55,11 +55,18 @@ func run() -> void:
 		if fog != null and fog.visible and fog.get_child_count() > 0 and fogs.size() < 6:
 			fogs.append(fog.get_child(0))
 	check(fogs.size() >= 3, "found fog clouds after landing (%d)" % fogs.size())
-	var f0: Array = fogs.map(func(f): return (f as Node3D).global_position)
-	await wait(0.6)
+	# three samples over 1.2 s: two samples that straddle the peak of a bob are at the same height
+	var samples: Array = [fogs.map(func(f): return (f as Node3D).global_position)]
+	for k in 2:
+		await wait(0.6)
+		samples.append(fogs.map(func(f): return (f as Node3D).global_position))
 	var bobbed := 0
 	for i in fogs.size():
-		if (fogs[i] as Node3D).global_position.distance_to(f0[i]) > 0.002:
+		var drift := 0.0
+		for a in 3:
+			for b in 3:
+				drift = maxf(drift, (samples[a][i] as Vector3).distance_to(samples[b][i]))
+		if drift > 0.002:
 			bobbed += 1
 	check(fogs.size() > 0 and bobbed == fogs.size(), "fog clouds drift (%d of %d)" % [bobbed, fogs.size()])
 	var fire: Vector3 = main.decor.fire_position()

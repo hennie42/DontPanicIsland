@@ -23,7 +23,7 @@ func explosion(pos: Vector3) -> void:
 	flash.light_color = Color("#ffb347")
 	flash.omni_range = 4.0
 	flash.light_energy = 6.0
-	add_child(flash)
+	add_child(flash, true)   # readable unique names (Sparkle, Sparkle2, ...): effects overlap
 	var flash_tw := create_tween()
 	flash_tw.tween_property(flash, "light_energy", 0.0, 0.35)
 	flash_tw.finished.connect(func():
@@ -57,7 +57,7 @@ func explosion(pos: Vector3) -> void:
 	smoke_mat.vertex_color_use_as_albedo = true
 	smoke.material_override = smoke_mat
 
-	add_child(smoke)
+	add_child(smoke, true)   # readable unique names (Sparkle, Sparkle2, ...): effects overlap
 	smoke.emitting = true
 	get_tree().create_timer(1.6).timeout.connect(func():
 		if is_instance_valid(smoke):
@@ -88,7 +88,7 @@ func explosion(pos: Vector3) -> void:
 	spark_mat.vertex_color_use_as_albedo = true
 	sparks.material_override = spark_mat
 
-	add_child(sparks)
+	add_child(sparks, true)   # readable unique names (Sparkle, Sparkle2, ...): effects overlap
 	sparks.emitting = true
 	get_tree().create_timer(1.0).timeout.connect(func():
 		if is_instance_valid(sparks):
@@ -127,7 +127,7 @@ func treasure(pos: Vector3, gold: int) -> void:
 	sparkle_mat.vertex_color_use_as_albedo = true
 	sparkle.material_override = sparkle_mat
 
-	add_child(sparkle)
+	add_child(sparkle, true)   # readable unique names (Sparkle, Sparkle2, ...): effects overlap
 	sparkle.emitting = true
 	get_tree().create_timer(1.2).timeout.connect(func():
 		if is_instance_valid(sparkle):

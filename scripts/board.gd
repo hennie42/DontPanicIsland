@@ -1,7 +1,9 @@
 class_name Board
 extends RefCounted
 
-const MINES := 42
+const MINES := 42                # on the original island (209 land tiles): ~20 % of the land
+const MINE_DENSITY := 42.0 / 209.0
+var mine_count: int = MINES      # scaled to the island's size in _init (other islands are 180-230 tiles)
 const CHESTS := 12
 
 var land: Dictionary = {}        # Vector2i -> String terrain
@@ -38,6 +40,7 @@ func _init(island_path: String = "res://data/island.json") -> void:
 
 	for entry in json_data["water"]:
 		water.append(Vector2i(entry["q"], entry["r"]))
+	mine_count = roundi(land.size() * MINE_DENSITY)   # 42 on the original island
 
 func is_land(c: Vector2i) -> bool:
 	return land.has(c)
@@ -71,8 +74,8 @@ func place(first: Vector2i, seed_value: int) -> void:
 		available_for_mines[i] = available_for_mines[j]
 		available_for_mines[j] = tmp
 
-	# Pick MINES
-	for i in range(MINES):
+	# Pick the mines (MINES on the original island; the same density on the others)
+	for i in range(mine_count):
 		var m := available_for_mines[i]
 		mines[m] = true
 

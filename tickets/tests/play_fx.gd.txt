@@ -35,10 +35,11 @@ func run() -> void:
 	var crew: int = b.crew
 	await click(screen_of(m))
 	check(b.exploded.has(m) and b.crew == crew - 1, "the click set off the mine")
-	var flash := fx.find_child("Flash", true, false) as OmniLight3D
+	var flashes: Array = fx.find_children("Flash*", "OmniLight3D", true, false)
+	var flash: OmniLight3D = flashes[0] if flashes.size() > 0 else null
 	check(flash != null and flash.light_energy > 0.5, "a flash of light")
-	check(fx.find_child("Smoke", true, false) is CPUParticles3D, "smoke")
-	check(fx.find_child("Sparks", true, false) is CPUParticles3D, "sparks")
+	check(fx.find_children("Smoke*", "CPUParticles3D", true, false).size() > 0, "smoke")
+	check(fx.find_children("Sparks*", "CPUParticles3D", true, false).size() > 0, "sparks")
 	var shook := false
 	for i in 8:
 		if (rig.shake_offset as Vector3).length() > 0.01:
@@ -47,7 +48,7 @@ func run() -> void:
 	check(shook, "the camera shakes")
 	await wait(1.5)
 	check((rig.shake_offset as Vector3).length() < 0.0001, "the shake ends")
-	check(fx.find_child("Flash", true, false) == null, "the flash is gone")
+	check(fx.find_children("Flash*", "OmniLight3D", true, false).is_empty(), "the flash is gone")
 	var expected: Vector3 = rig.target + Vector3(sin(deg_to_rad(rig.yaw)), 0, cos(deg_to_rad(rig.yaw))) \
 		* rig.distance * cos(deg_to_rad(rig.TILT)) + Vector3.UP * rig.distance * sin(deg_to_rad(rig.TILT))
 	check(rig.camera.global_position.distance_to(expected) < 0.01, "the camera is back where the rig puts it")

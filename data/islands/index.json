@@ -1,0 +1,292 @@
+{
+ "islands": [
+  {
+   "id": 1,
+   "file": "res://data/islands/island_01.json",
+   "land": 228,
+   "shore": "res://assets/generated/islands/shore_01.png",
+   "rect": [
+    -17.5,
+    -17.6603,
+    34.4545,
+    6.0
+   ]
+  },
+  {
+   "id": 2,
+   "file": "res://data/islands/island_02.json",
+   "land": 194,
+   "shore": "res://assets/generated/islands/shore_02.png",
+   "rect": [
+    -16.5,
+    -15.0622,
+    35.0,
+    6.0
+   ]
+  },
+  {
+   "id": 3,
+   "file": "res://data/islands/island_03.json",
+   "land": 217,
+   "shore": "res://assets/generated/islands/shore_03.png",
+   "rect": [
+    -17.5,
+    -15.9282,
+    34.5,
+    6.0
+   ]
+  },
+  {
+   "id": 4,
+   "file": "res://data/islands/island_04.json",
+   "land": 237,
+   "shore": "res://assets/generated/islands/shore_04.png",
+   "rect": [
+    -18.5,
+    -17.6603,
+    36.1865,
+    6.0
+   ]
+  },
+  {
+   "id": 5,
+   "file": "res://data/islands/island_05.json",
+   "land": 223,
+   "shore": "res://assets/generated/islands/shore_05.png",
+   "rect": [
+    -17.0,
+    -15.9282,
+    35.0,
+    6.0
+   ]
+  },
+  {
+   "id": 6,
+   "file": "res://data/islands/island_06.json",
+   "land": 200,
+   "shore": "res://assets/generated/islands/shore_06.png",
+   "rect": [
+    -16.0,
+    -15.9282,
+    35.5,
+    6.0
+   ]
+  },
+  {
+   "id": 7,
+   "file": "res://data/islands/island_07.json",
+   "land": 189,
+   "shore": "res://assets/generated/islands/shore_07.png",
+   "rect": [
+    -15.5,
+    -15.9282,
+    33.5885,
+    6.0
+   ]
+  },
+  {
+   "id": 8,
+   "file": "res://data/islands/island_08.json",
+   "land": 231,
+   "shore": "res://assets/generated/islands/shore_08.png",
+   "rect": [
+    -17.0,
+    -15.9282,
+    35.0,
+    6.0
+   ]
+  },
+  {
+   "id": 9,
+   "file": "res://data/islands/island_09.json",
+   "land": 236,
+   "shore": "res://assets/generated/islands/shore_09.png",
+   "rect": [
+    -17.5,
+    -17.6603,
+    35.0,
+    6.0
+   ]
+  },
+  {
+   "id": 10,
+   "file": "res://data/islands/island_10.json",
+   "land": 228,
+   "shore": "res://assets/generated/islands/shore_10.png",
+   "rect": [
+    -16.5,
+    -17.6603,
+    35.3205,
+    6.0
+   ]
+  },
+  {
+   "id": 11,
+   "file": "res://data/islands/island_11.json",
+   "land": 236,
+   "shore": "res://assets/generated/islands/shore_11.png",
+   "rect": [
+    -16.5,
+    -15.9282,
+    35.3205,
+    6.0
+   ]
+  },
+  {
+   "id": 12,
+   "file": "res://data/islands/island_12.json",
+   "land": 191,
+   "shore": "res://assets/generated/islands/shore_12.png",
+   "rect": [
+    -16.5,
+    -15.0622,
+    34.0,
+    6.0
+   ]
+  },
+  {
+   "id": 13,
+   "file": "res://data/islands/island_13.json",
+   "land": 228,
+   "shore": "res://assets/generated/islands/shore_13.png",
+   "rect": [
+    -18.0,
+    -16.7942,
+    35.5,
+    6.0
+   ]
+  },
+  {
+   "id": 14,
+   "file": "res://data/islands/island_14.json",
+   "land": 219,
+   "shore": "res://assets/generated/islands/shore_14.png",
+   "rect": [
+    -17.5,
+    -18.5263,
+    34.0,
+    6.0
+   ]
+  },
+  {
+   "id": 15,
+   "file": "res://data/islands/island_15.json",
+   "land": 200,
+   "shore": "res://assets/generated/islands/shore_15.png",
+   "rect": [
+    -18.5,
+    -15.9282,
+    36.5,
+    6.0
+   ]
+  },
+  {
+   "id": 16,
+   "file": "res://data/islands/island_16.json",
+   "land": 236,
+   "shore": "res://assets/generated/islands/shore_16.png",
+   "rect": [
+    -17.0,
+    -15.9282,
+    34.4545,
+    6.0
+   ]
+  },
+  {
+   "id": 17,
+   "file": "res://data/islands/island_17.json",
+   "land": 230,
+   "shore": "res://assets/generated/islands/shore_17.png",
+   "rect": [
+    -19.0,
+    -17.6603,
+    35.0,
+    6.0
+   ]
+  },
+  {
+   "id": 18,
+   "file": "res://data/islands/island_18.json",
+   "land": 221,
+   "shore": "res://assets/generated/islands/shore_18.png",
+   "rect": [
+    -17.0,
+    -15.9282,
+    36.0,
+    6.0
+   ]
+  },
+  {
+   "id": 19,
+   "file": "res://data/islands/island_19.json",
+   "land": 208,
+   "shore": "res://assets/generated/islands/shore_19.png",
+   "rect": [
+    -16.5,
+    -15.9282,
+    35.5,
+    6.0
+   ]
+  },
+  {
+   "id": 20,
+   "file": "res://data/islands/island_20.json",
+   "land": 198,
+   "shore": "res://assets/generated/islands/shore_20.png",
+   "rect": [
+    -18.0,
+    -16.7942,
+    33.5885,
+    6.0
+   ]
+  },
+  {
+   "id": 21,
+   "file": "res://data/islands/island_21.json",
+   "land": 218,
+   "shore": "res://assets/generated/islands/shore_21.png",
+   "rect": [
+    -16.5,
+    -15.9282,
+    34.5,
+    6.0
+   ]
+  },
+  {
+   "id": 22,
+   "file": "res://data/islands/island_22.json",
+   "land": 192,
+   "shore": "res://assets/generated/islands/shore_22.png",
+   "rect": [
+    -15.5,
+    -16.7942,
+    33.5885,
+    6.0
+   ]
+  },
+  {
+   "id": 23,
+   "file": "res://data/islands/island_23.json",
+   "land": 230,
+   "shore": "res://assets/generated/islands/shore_23.png",
+   "rect": [
+    -17.5,
+    -18.5263,
+    36.1865,
+    6.0
+   ]
+  },
+  {
+   "id": 24,
+   "file": "res://data/islands/island_24.json",
+   "land": 200,
+   "shore": "res://assets/generated/islands/shore_24.png",
+   "rect": [
+    -18.0,
+    -15.9282,
+    35.5,
+    6.0
+   ]
+  }
+ ]
+}

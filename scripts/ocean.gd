@@ -8,7 +8,8 @@ const WATER_Y := 0.13      # the tiles stand 0.2 tall: only a low lip of their (
 const EXTENT := 160.0      # the plane reaches past the view in every direction
 
 
-func build(view: BoardView) -> void:
+func build(view: BoardView, shore_png: String = "res://assets/generated/shore_field.png",
+		rect: Vector4 = ShoreField.RECT) -> void:
 	for n in view.get_children():
 		if String(n.name).begins_with("Water_"):
 			(n as Node3D).visible = false
@@ -23,8 +24,8 @@ func build(view: BoardView) -> void:
 	noise_tex.noise = fnl
 	var mat := ShaderMaterial.new()
 	mat.shader = load("res://shaders/ocean.gdshader")
-	mat.set_shader_parameter("shore_field", load("res://assets/generated/shore_field.png"))
-	mat.set_shader_parameter("field_rect", ShoreField.RECT)
+	mat.set_shader_parameter("shore_field", load(shore_png))   # each island has its own (tools/make_islands.py)
+	mat.set_shader_parameter("field_rect", rect)
 	mat.set_shader_parameter("noise", noise_tex)
 	if RenderingServer.get_current_rendering_method() == "gl_compatibility":
 		# phones in the browser: tiny sharp glints flickered (Pixel 10, Vanadium/Firefox): softer, steadier water
@@ -40,6 +41,6 @@ func build(view: BoardView) -> void:
 	sea.mesh = plane
 	sea.material_override = mat
 	sea.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
-	var r: Vector4 = ShoreField.RECT
+	var r: Vector4 = rect
 	sea.position = Vector3(r.x + r.z * 0.5, WATER_Y, r.y + r.z * 0.5)
 	add_child(sea)
