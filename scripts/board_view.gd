@@ -240,6 +240,31 @@ func build(b: Board) -> void:
 		var chest := Art.prop("chest")
 		chest.name = "Chest"
 		cell_node.add_child(chest)
+	_cache_nodes()
+
+
+## Per-frame work touches cached nodes only (F43: the game spent ~47 ms of script time per frame on node lookups by
+## name and on re-setting every label's billboard mode every frame).
+var _flags: Array = []            # [flag Node3D, towel Node3D, phase] per land cell
+var _labels: Array = []           # every Number / Peek Label3D
+var _billboard_on := false
+var _last_cam_rot := Vector3.INF
+
+
+func _cache_nodes() -> void:
+	_flags.clear()
+	_labels.clear()
+	for c in cells:
+		var node := cells[c] as Node3D
+		var flag := node.get_node("Flag") as Node3D
+		_flags.append([flag, flag.get_node("Towel"), float(c.x)])
+		for part in ["Number", "Peek"]:
+			var lbl := node.get_node_or_null(part) as Label3D
+			if lbl:
+				_labels.append(lbl)
+	_billboard_on = false
+	_last_cam_rot = Vector3.INF
+
 
 func refresh(b: Board, origin: Variant = null) -> void:
 	# --- instant final state, set at once (visibility, height, labels) ---
@@ -409,34 +434,29 @@ func _add_burst(cell_node: Node3D, d: float) -> void:
 
 
 func _process(_delta: float) -> void:
-	# Flapping flag
+	# Flapping flags
 	var time := Time.get_ticks_msec() / 1000.0
-	for c in cells:
-		var node := cells[c] as Node3D
-		var flag := node.get_node("Flag") as Node3D
-		if flag.visible:
-			var towel := flag.get_node("Towel") as Node3D
-			towel.rotation_degrees.y = sin(time * 3.0 + float(c.x)) * 12.0
+	for f in _flags:
+		if (f[0] as Node3D).visible:
+			(f[1] as Node3D).rotation_degrees.y = sin(time * 3.0 + float(f[2])) * 12.0
 
-	# Billboard numbers
+	# Numbers face the camera's yaw and pitch (flat labels are foreshortened into unreadable shapes at the low camera
+	# angle); zoomed out they billboard by themselves. Only when the camera has turned.
 	var cam := get_viewport().get_camera_3d()
-	if cam:
-		# face the camera's yaw and pitch: flat labels are foreshortened into unreadable shapes at the low camera angle
+	if cam and not _billboard_on:
 		var cam_rot := Vector3(cam.global_rotation_degrees.x, cam.global_rotation_degrees.y, 0.0)
-		for c in cells:
-			var node := cells[c] as Node3D
-			for part in ["Number", "Peek"]:
-				var lbl := node.get_node(part) as Label3D
-				if lbl.visible:
-					lbl.rotation_degrees = cam_rot
+		if not cam_rot.is_equal_approx(_last_cam_rot):
+			_last_cam_rot = cam_rot
+			for lbl in _labels:          # hidden ones too: a number revealed later must already face the camera
+				(lbl as Label3D).rotation_degrees = cam_rot
 
 func set_numbers_billboard(on: bool) -> void:
-	for c in cells:
-		var node := cells[c] as Node3D
-		for part in ["Number", "Peek"]:
-			var lbl := node.get_node(part) as Label3D
-			if lbl:
-				lbl.billboard = BaseMaterial3D.BILLBOARD_ENABLED if on else BaseMaterial3D.BILLBOARD_DISABLED
+	if on == _billboard_on:
+		return                    # called every frame by main: only a change costs anything
+	_billboard_on = on
+	_last_cam_rot = Vector3.INF   # back to manual facing: turn the labels on the next frame
+	for lbl in _labels:
+		(lbl as Label3D).billboard = BaseMaterial3D.BILLBOARD_ENABLED if on else BaseMaterial3D.BILLBOARD_DISABLED
 
 func _get_number_color(n: int) -> Color:
 	# six distinct hues on the warm sand of the "tropical punch" scheme (the old navy 4 read like the blue 1, the
