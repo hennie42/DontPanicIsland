@@ -22,6 +22,9 @@ var seed_value: int = 0
 var autopilot: bool = false
 var force_lose: bool = false
 var skip_intro: bool = false
+# tilt-shift depth of field, as factors of the camera distance: (blur distance, transition); tests/look.gd tunes them
+var dof_near := Vector2(0.5, 0.25)
+var dof_far := Vector2(1.6, 0.8)    # the far rows of the board stay sharp (1.22 blurred them)
 
 var _playing: bool = true
 var _finished: bool = false
@@ -823,10 +826,10 @@ func _process(_delta: float) -> void:
 		_sun.rotation_degrees.y = SUN_YAW + rig.yaw
 	if rig != null and _cam_attr != null:
 		var d: float = rig.distance
-		_cam_attr.dof_blur_near_distance = d * 0.5
-		_cam_attr.dof_blur_near_transition = d * 0.25
-		_cam_attr.dof_blur_far_distance = d * 1.6    # the far rows of the board stay sharp (1.22 blurred them)
-		_cam_attr.dof_blur_far_transition = d * 0.8
+		_cam_attr.dof_blur_near_distance = d * dof_near.x
+		_cam_attr.dof_blur_near_transition = d * dof_near.y
+		_cam_attr.dof_blur_far_distance = d * dof_far.x
+		_cam_attr.dof_blur_far_transition = d * dof_far.y
 	if rig != null and rig.camera != null and view != null:
 		view.set_numbers_billboard(rig.distance > 12.0)
 		# highlight the hex a click would hit (players only)
