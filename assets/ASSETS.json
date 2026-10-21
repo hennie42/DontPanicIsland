@@ -39,6 +39,19 @@
      0.0,
      -0.0
     ]
+   },
+   "measured_godot": {
+    "dims_m": [
+     1.0,
+     0.2,
+     1.1547
+    ],
+    "meshes": 1,
+    "origin_offset_m": [
+     0.0,
+     0.0,
+     0.0
+    ]
    }
   },
   "kenney:hexagon-kit/Models/GLB format/sand-desert.glb": {
@@ -78,6 +91,19 @@
      0.0,
      0.0,
      -0.0
+    ]
+   },
+   "measured_godot": {
+    "dims_m": [
+     1.0,
+     0.51,
+     1.1547
+    ],
+    "meshes": 1,
+    "origin_offset_m": [
+     0.0,
+     0.0,
+     0.0
     ]
    }
   },
@@ -119,6 +145,19 @@
      0.0,
      -0.0
     ]
+   },
+   "measured_godot": {
+    "dims_m": [
+     1.0,
+     0.2435,
+     1.1547
+    ],
+    "meshes": 1,
+    "origin_offset_m": [
+     0.0,
+     0.0,
+     0.0
+    ]
    }
   },
   "kenney:hexagon-kit/Models/GLB format/grass.glb": {
@@ -158,6 +197,19 @@
      0.0,
      0.0,
      -0.0
+    ]
+   },
+   "measured_godot": {
+    "dims_m": [
+     1.0,
+     0.2,
+     1.1547
+    ],
+    "meshes": 1,
+    "origin_offset_m": [
+     0.0,
+     0.0,
+     0.0
     ]
    }
   },
@@ -199,6 +251,19 @@
      0.0,
      -0.0
     ]
+   },
+   "measured_godot": {
+    "dims_m": [
+     1.0,
+     0.675,
+     1.1547
+    ],
+    "meshes": 1,
+    "origin_offset_m": [
+     0.0,
+     0.0,
+     0.0
+    ]
    }
   },
   "kenney:hexagon-kit/Models/GLB format/grass-hill.glb": {
@@ -238,6 +303,19 @@
      0.0,
      0.0,
      -0.0
+    ]
+   },
+   "measured_godot": {
+    "dims_m": [
+     1.0,
+     0.8032,
+     1.1547
+    ],
+    "meshes": 1,
+    "origin_offset_m": [
+     0.0,
+     0.0,
+     0.0
     ]
    }
   },
@@ -279,6 +357,19 @@
      0.0,
      -0.0
     ]
+   },
+   "measured_godot": {
+    "dims_m": [
+     1.0,
+     0.4061,
+     1.1547
+    ],
+    "meshes": 1,
+    "origin_offset_m": [
+     0.0,
+     0.0,
+     0.0
+    ]
    }
   },
   "kenney:hexagon-kit/Models/GLB format/dirt.glb": {
@@ -318,6 +409,19 @@
      0.0,
      0.0,
      -0.0
+    ]
+   },
+   "measured_godot": {
+    "dims_m": [
+     1.0,
+     0.1,
+     1.1547
+    ],
+    "meshes": 1,
+    "origin_offset_m": [
+     0.0,
+     0.0,
+     0.0
     ]
    }
   },
@@ -359,6 +463,19 @@
      0.0,
      -0.0
     ]
+   },
+   "measured_godot": {
+    "dims_m": [
+     1.0,
+     0.1,
+     1.1547
+    ],
+    "meshes": 1,
+    "origin_offset_m": [
+     0.0,
+     0.0,
+     0.0
+    ]
    }
   },
   "kenney:hexagon-kit/Models/GLB format/water-rocks.glb": {
@@ -398,6 +515,19 @@
      0.0,
      0.0,
      -0.0
+    ]
+   },
+   "measured_godot": {
+    "dims_m": [
+     1.0,
+     0.2593,
+     1.1547
+    ],
+    "meshes": 1,
+    "origin_offset_m": [
+     0.0,
+     0.0,
+     0.0
     ]
    }
   },
@@ -439,6 +569,19 @@
      0.0,
      -0.0
     ]
+   },
+   "measured_godot": {
+    "dims_m": [
+     1.0,
+     0.2435,
+     1.1547
+    ],
+    "meshes": 1,
+    "origin_offset_m": [
+     0.0,
+     0.0,
+     0.0
+    ]
    }
   },
   "kenney:pirate-kit/Models/GLB format/palm-bend.glb": {
@@ -478,6 +621,19 @@
      -0.7334,
      0.0,
      -0.0
+    ]
+   },
+   "measured_godot": {
+    "dims_m": [
+     2.8804,
+     4.2513,
+     3.216
+    ],
+    "meshes": 1,
+    "origin_offset_m": [
+     -0.7334,
+     0.0,
+     0.0
     ]
    }
   },
@@ -519,6 +675,19 @@
      0.0,
      -0.0
     ]
+   },
+   "measured_godot": {
+    "dims_m": [
+     2.4886,
+     4.2129,
+     2.4886
+    ],
+    "meshes": 1,
+    "origin_offset_m": [
+     0.0,
+     0.0,
+     0.0
+    ]
    }
   },
   "kenney:pirate-kit/Models/GLB format/palm-detailed-bend.glb": {
@@ -558,6 +727,19 @@
      -0.7334,
      0.0,
      -0.0
+    ]
+   },
+   "measured_godot": {
+    "dims_m": [
+     2.8804,
+     4.2513,
+     3.216
+    ],
+    "meshes": 1,
+    "origin_offset_m": [
+     -0.7334,
+     0.0,
+     0.0
     ]
    }
   },
@@ -599,6 +781,19 @@
      0.0,
      -0.0
     ]
+   },
+   "measured_godot": {
+    "dims_m": [
+     3.216,
+     4.2129,
+     3.216
+    ],
+    "meshes": 1,
+    "origin_offset_m": [
+     0.0,
+     0.0,
+     0.0
+    ]
    }
   },
   "kenney:pirate-kit/Models/GLB format/ship-wreck.glb": {
@@ -638,6 +833,19 @@
      0.0,
      0.0,
      -0.0
+    ]
+   },
+   "measured_godot": {
+    "dims_m": [
+     4.8,
+     9.9635,
+     10.6
+    ],
+    "meshes": 16,
+    "origin_offset_m": [
+     0.0,
+     0.0,
+     0.0
     ]
    }
   },
@@ -679,6 +887,19 @@
      0.0,
      -0.0194
     ]
+   },
+   "measured_godot": {
+    "dims_m": [
+     1.275,
+     1.1475,
+     1.275
+    ],
+    "meshes": 2,
+    "origin_offset_m": [
+     0.0,
+     0.0,
+     0.0
+    ]
    }
   },
   "kenney:pirate-kit/Models/GLB format/barrel.glb": {
@@ -718,6 +939,19 @@
      0.0,
      0.0,
      -0.0
+    ]
+   },
+   "measured_godot": {
+    "dims_m": [
+     1.3361,
+     1.2291,
+     1.3361
+    ],
+    "meshes": 1,
+    "origin_offset_m": [
+     0.0,
+     0.0,
+     0.0
     ]
    }
   },
@@ -759,6 +993,19 @@
      0.0,
      -0.0
     ]
+   },
+   "measured_godot": {
+    "dims_m": [
+     1.078,
+     0.77,
+     1.309
+    ],
+    "meshes": 1,
+    "origin_offset_m": [
+     0.0,
+     0.0,
+     0.0
+    ]
    }
   },
   "kenney:pirate-kit/Models/GLB format/hole.glb": {
@@ -793,6 +1040,19 @@
      2.704
     ],
     "tris": 286,
+    "meshes": 1,
+    "origin_offset_m": [
+     -0.0082,
+     0.0,
+     0.009
+    ]
+   },
+   "measured_godot": {
+    "dims_m": [
+     2.8608,
+     0.354,
+     2.704
+    ],
     "meshes": 1,
     "origin_offset_m": [
      -0.0082,
@@ -839,6 +1099,19 @@
      0.0,
      0.0
     ]
+   },
+   "measured_godot": {
+    "dims_m": [
+     1.3368,
+     2.0968,
+     0.3989
+    ],
+    "meshes": 1,
+    "origin_offset_m": [
+     0.4689,
+     0.0,
+     0.0
+    ]
    }
   },
   "kenney:pirate-kit/Models/GLB format/tool-shovel.glb": {
@@ -879,6 +1152,19 @@
      0.0,
      -0.0
     ]
+   },
+   "measured_godot": {
+    "dims_m": [
+     0.6578,
+     2.3491,
+     0.2829
+    ],
+    "meshes": 1,
+    "origin_offset_m": [
+     0.0,
+     0.0,
+     0.0
+    ]
    }
   },
   "kenney:pirate-kit/Models/GLB format/rocks-sand-a.glb": {
@@ -913,6 +1199,19 @@
      4.3864
     ],
     "tris": 552,
+    "meshes": 1,
+    "origin_offset_m": [
+     -0.1393,
+     0.0,
+     -0.0598
+    ]
+   },
+   "measured_godot": {
+    "dims_m": [
+     5.1126,
+     3.2119,
+     4.3864
+    ],
     "meshes": 1,
     "origin_offset_m": [
      -0.1393,
@@ -959,6 +1258,19 @@
      0.0,
      -0.112
     ]
+   },
+   "measured_godot": {
+    "dims_m": [
+     4.379,
+     3.7144,
+     4.7098
+    ],
+    "meshes": 1,
+    "origin_offset_m": [
+     -0.1527,
+     0.0,
+     -0.112
+    ]
    }
   },
   "kenney:pirate-kit/Models/GLB format/patch-sand-foliage.glb": {
@@ -999,6 +1311,19 @@
      0.0,
      -0.0
     ]
+   },
+   "measured_godot": {
+    "dims_m": [
+     7.7363,
+     0.5639,
+     6.0361
+    ],
+    "meshes": 1,
+    "origin_offset_m": [
+     0.0,
+     0.0,
+     0.0
+    ]
    }
   },
   "kenney:pirate-kit/Models/GLB format/grass-plant.glb": {
@@ -1033,6 +1358,19 @@
      1.237
     ],
     "tris": 144,
+    "meshes": 1,
+    "origin_offset_m": [
+     0.0228,
+     0.0,
+     -0.0366
+    ]
+   },
+   "measured_godot": {
+    "dims_m": [
+     1.1142,
+     0.5196,
+     1.237
+    ],
     "meshes": 1,
     "origin_offset_m": [
      0.0228,
@@ -1079,6 +1417,19 @@
      -0.0,
      -0.0
     ]
+   },
+   "measured_godot": {
+    "dims_m": [
+     2.7485,
+     0.8477,
+     2.3721
+    ],
+    "meshes": 2,
+    "origin_offset_m": [
+     0.0,
+     0.0,
+     0.0
+    ]
    }
   },
   "kenney:nature-kit/Models/GLTF format/campfire_logs.glb": {
@@ -1113,6 +1464,19 @@
      0.0,
      -0.05,
      -0.0
+    ]
+   },
+   "measured_godot": {
+    "dims_m": [
+     0.2919,
+     0.0626,
+     0.2919
+    ],
+    "meshes": 1,
+    "origin_offset_m": [
+     0.0,
+     -0.05,
+     0.0
     ]
    }
   },
@@ -1149,6 +1513,19 @@
      -1.0,
      -0.0
     ]
+   },
+   "measured_godot": {
+    "dims_m": [
+     1.9447,
+     2.1804,
+     1.1439
+    ],
+    "meshes": 7,
+    "origin_offset_m": [
+     0.0,
+     -0.002,
+     -0.0087
+    ]
    }
   },
   "kaykit:kaykit-adventurers/Characters/gltf/Rogue_Hooded.glb": {
@@ -1183,6 +1560,19 @@
      0.0,
      -1.0,
      -0.0
+    ]
+   },
+   "measured_godot": {
+    "dims_m": [
+     1.9447,
+     2.173,
+     1.0992
+    ],
+    "meshes": 8,
+    "origin_offset_m": [
+     0.0,
+     -0.002,
+     0.0081
     ]
    }
   },
@@ -1219,6 +1609,19 @@
      -1.0,
      -0.0
     ]
+   },
+   "measured_godot": {
+    "dims_m": [
+     1.9425,
+     2.3978,
+     1.2639
+    ],
+    "meshes": 7,
+    "origin_offset_m": [
+     0.0,
+     0.0,
+     0.1066
+    ]
    }
   },
   "kaykit:kaykit-adventurers/Animations/gltf/Rig_Medium/Rig_Medium_General.glb": {
@@ -1253,6 +1656,19 @@
      0.0,
      -1.0,
      -0.0
+    ]
+   },
+   "measured_godot": {
+    "dims_m": [
+     1.9785,
+     2.2037,
+     1.0056
+    ],
+    "meshes": 6,
+    "origin_offset_m": [
+     0.0,
+     0.0,
+     0.0331
     ]
    }
   },
@@ -1289,6 +1705,19 @@
      -1.0,
      -0.0
     ]
+   },
+   "measured_godot": {
+    "dims_m": [
+     1.9785,
+     2.2037,
+     1.0056
+    ],
+    "meshes": 6,
+    "origin_offset_m": [
+     0.0,
+     0.0,
+     0.0331
+    ]
    }
   },
   "kaykit:kaykit-skeletons/characters/gltf/Skeleton_Minion.glb": {
@@ -1324,6 +1753,19 @@
      -1.0,
      -0.0
     ]
+   },
+   "measured_godot": {
+    "dims_m": [
+     1.9382,
+     2.1661,
+     0.9122
+    ],
+    "meshes": 9,
+    "origin_offset_m": [
+     0.0,
+     0.0,
+     -0.0023
+    ]
    }
   },
   "kaykit:kaykit-skeletons/characters/gltf/Skeleton_Rogue.glb": {
@@ -1358,6 +1800,19 @@
      0.0,
      -1.0,
      -0.0
+    ]
+   },
+   "measured_godot": {
+    "dims_m": [
+     1.9425,
+     2.3079,
+     1.1528
+    ],
+    "meshes": 10,
+    "origin_offset_m": [
+     0.0,
+     0.0,
+     -0.0052
     ]
    }
   },
@@ -1399,6 +1854,19 @@
      0.0,
      -0.0
     ]
+   },
+   "measured_godot": {
+    "dims_m": [
+     1.0,
+     0.6779,
+     1.0
+    ],
+    "meshes": 1,
+    "origin_offset_m": [
+     0.0,
+     0.0,
+     0.0
+    ]
    }
   },
   "kenney:tower-defense-kit/Models/GLB format/enemy-ufo-c.glb": {
@@ -1438,6 +1906,19 @@
      0.0,
      0.0,
      -0.0
+    ]
+   },
+   "measured_godot": {
+    "dims_m": [
+     1.0043,
+     0.5254,
+     1.0
+    ],
+    "meshes": 1,
+    "origin_offset_m": [
+     0.0,
+     0.0,
+     0.0
     ]
    }
   },
@@ -1479,6 +1960,19 @@
      0.0,
      -0.0
     ]
+   },
+   "measured_godot": {
+    "dims_m": [
+     0.8,
+     1.0,
+     0.8
+    ],
+    "meshes": 1,
+    "origin_offset_m": [
+     0.0,
+     0.0,
+     0.0
+    ]
    }
   },
   "kaykit:kaykit-platformer/Assets/gltf/neutral/bomb.gltf": {
@@ -1518,6 +2012,19 @@
      0.8
     ],
     "tris": 688,
+    "meshes": 1,
+    "origin_offset_m": [
+     0.0,
+     -0.4,
+     0.0
+    ]
+   },
+   "measured_godot": {
+    "dims_m": [
+     0.8,
+     1.0089,
+     0.8
+    ],
     "meshes": 1,
     "origin_offset_m": [
      0.0,
@@ -1569,6 +2076,19 @@
      -0.4,
      0.0
     ]
+   },
+   "measured_godot": {
+    "dims_m": [
+     0.8,
+     1.0089,
+     0.8
+    ],
+    "meshes": 1,
+    "origin_offset_m": [
+     0.0,
+     -0.4,
+     0.0
+    ]
    }
   },
   "kaykit:kaykit-platformer/Assets/gltf/red/ball_red.gltf": {
@@ -1608,6 +2128,19 @@
      2.0
     ],
     "tris": 528,
+    "meshes": 1,
+    "origin_offset_m": [
+     0.0,
+     -1.0,
+     0.0
+    ]
+   },
+   "measured_godot": {
+    "dims_m": [
+     2.0,
+     2.0,
+     2.0
+    ],
     "meshes": 1,
     "origin_offset_m": [
      0.0,
@@ -1659,6 +2192,19 @@
      -1.0,
      0.0
     ]
+   },
+   "measured_godot": {
+    "dims_m": [
+     2.0,
+     2.0,
+     2.0
+    ],
+    "meshes": 1,
+    "origin_offset_m": [
+     0.0,
+     -1.0,
+     0.0
+    ]
    }
   },
   "kenney:survival-kit/Models/GLB format/bucket.glb": {
@@ -1699,6 +2245,19 @@
      0.0,
      -0.0
     ]
+   },
+   "measured_godot": {
+    "dims_m": [
+     0.1441,
+     0.1921,
+     0.1441
+    ],
+    "meshes": 1,
+    "origin_offset_m": [
+     0.0,
+     0.0,
+     0.0
+    ]
    }
   },
   "kenney:cube-pets/Models/GLB format/animal-parrot.glb": {
@@ -1733,6 +2292,19 @@
      1.9023
     ],
     "tris": 530,
+    "meshes": 7,
+    "origin_offset_m": [
+     0.0,
+     0.0,
+     -0.1428
+    ]
+   },
+   "measured_godot": {
+    "dims_m": [
+     2.196,
+     1.6812,
+     1.9023
+    ],
     "meshes": 7,
     "origin_offset_m": [
      0.0,
@@ -1779,6 +2351,19 @@
      0.0,
      -0.0
     ]
+   },
+   "measured_godot": {
+    "dims_m": [
+     2.3358,
+     1.4312,
+     1.3474
+    ],
+    "meshes": 6,
+    "origin_offset_m": [
+     0.0,
+     0.0,
+     0.0
+    ]
    }
   },
   "kaykit:board-game-bits/Assets/gltf/coin_gold.gltf": {
@@ -1823,6 +2408,19 @@
      0.0,
      0.0,
      -0.0
+    ]
+   },
+   "measured_godot": {
+    "dims_m": [
+     1.0397,
+     0.2,
+     1.0397
+    ],
+    "meshes": 1,
+    "origin_offset_m": [
+     0.0,
+     0.0,
+     0.0
     ]
    }
   },
@@ -1869,6 +2467,19 @@
      0.0,
      -0.0
     ]
+   },
+   "measured_godot": {
+    "dims_m": [
+     1.0397,
+     0.2,
+     1.0397
+    ],
+    "meshes": 1,
+    "origin_offset_m": [
+     0.0,
+     0.0,
+     0.0
+    ]
    }
   },
   "kaykit:kaykit-medieval-hexagon/Assets/gltf/decoration/nature/cloud_big.gltf": {
@@ -1914,6 +2525,19 @@
      -0.8838,
      0.0273
     ]
+   },
+   "measured_godot": {
+    "dims_m": [
+     3.6072,
+     1.9458,
+     2.2422
+    ],
+    "meshes": 1,
+    "origin_offset_m": [
+     0.0062,
+     -0.8838,
+     0.0273
+    ]
    }
   },
   "kaykit:kaykit-medieval-hexagon/Assets/gltf/decoration/nature/cloud_small.gltf": {
@@ -1953,6 +2577,19 @@
      1.7917
     ],
     "tris": 366,
+    "meshes": 1,
+    "origin_offset_m": [
+     0.006,
+     -0.9079,
+     -0.0671
+    ]
+   },
+   "measured_godot": {
+    "dims_m": [
+     2.3378,
+     1.8397,
+     1.7917
+    ],
     "meshes": 1,
     "origin_offset_m": [
      0.006,
@@ -2225,6 +2862,19 @@
      0.0,
      1.535
     ]
+   },
+   "measured_godot": {
+    "dims_m": [
+     0.4832,
+     0.8432,
+     0.33
+    ],
+    "meshes": 6,
+    "origin_offset_m": [
+     2.0,
+     0.0,
+     1.535
+    ]
    }
   },
   "kenney:kenney-fonts/Fonts/Kenney Future.ttf": {
@@ -2323,6 +2973,19 @@
      0.0,
      -0.0
     ]
+   },
+   "measured_godot": {
+    "dims_m": [
+     2.5047,
+     0.75,
+     1.0798
+    ],
+    "meshes": 1,
+    "origin_offset_m": [
+     0.0,
+     0.0,
+     0.0
+    ]
    }
   },
   "generated:petunias": {
@@ -2357,6 +3020,19 @@
      0.0,
      0.0,
      -0.0
+    ]
+   },
+   "measured_godot": {
+    "dims_m": [
+     0.3234,
+     0.2897,
+     0.34
+    ],
+    "meshes": 1,
+    "origin_offset_m": [
+     0.0,
+     0.0,
+     0.0
     ]
    }
   }
