@@ -1,0 +1,432 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<meta name="referrer" content="no-referrer">
+<title>Island Stats</title>
+<!-- The owner's stats page for Don't Panic Island. Reads the private counters through the admin_stats(key) database
+     function (supabase/migrations/*_admin_stats.sql). Open once with #k=<key> to store the key on this device. -->
+<style>
+:root {
+  color-scheme: light;
+  --surface-0: #f4f3f0;
+  --surface-1: #fcfcfb;
+  --border: #e3e2dd;
+  --grid: #ecebe7;
+  --text-primary: #0b0b0b;
+  --text-secondary: #52514e;
+  --text-muted: #7a7974;
+  --accent: #2a78d6;
+  --series-1: #2a78d6;   /* won */
+  --series-2: #eb6834;   /* lost */
+  --series-3: #1baf7a;   /* abandoned */
+  --critical: #d03b3b;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --surface-0: #111110;
+    --surface-1: #1a1a19;
+    --border: #2e2e2b;
+    --grid: #262624;
+    --text-primary: #f0efec;
+    --text-secondary: #c3c2b7;
+    --text-muted: #8f8e86;
+    --accent: #3987e5;
+    --series-1: #3987e5;
+    --series-2: #d95926;
+    --series-3: #199e70;
+  }
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --surface-0: #111110;
+  --surface-1: #1a1a19;
+  --border: #2e2e2b;
+  --grid: #262624;
+  --text-primary: #f0efec;
+  --text-secondary: #c3c2b7;
+  --text-muted: #8f8e86;
+  --accent: #3987e5;
+  --series-1: #3987e5;
+  --series-2: #d95926;
+  --series-3: #199e70;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0; background: var(--surface-0); color: var(--text-primary);
+  font: 15px/1.4 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  -webkit-text-size-adjust: 100%;
+}
+main { max-width: 720px; margin: 0 auto; padding: 16px 16px calc(32px + env(safe-area-inset-bottom)); }
+header { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin-bottom: 12px; }
+h1 { font-size: 20px; margin: 0; letter-spacing: -0.01em; }
+h2 { font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-secondary); margin: 0 0 10px; }
+.muted { color: var(--text-muted); font-size: 13px; }
+button { font: inherit; color: inherit; cursor: pointer; }
+.refresh { background: none; border: 1px solid var(--border); border-radius: 8px; padding: 4px 10px; color: var(--text-secondary); }
+.seg { display: flex; background: var(--surface-1); border: 1px solid var(--border); border-radius: 10px; padding: 3px; margin-bottom: 14px; }
+.seg button { flex: 1; border: 0; background: none; padding: 8px 0; border-radius: 7px; color: var(--text-secondary); font-weight: 500; }
+.seg button[aria-pressed="true"] { background: var(--accent); color: #fff; }
+.card { background: var(--surface-1); border: 1px solid var(--border); border-radius: 12px; padding: 14px; margin-bottom: 12px; }
+.tiles { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 12px; }
+.tile { background: var(--surface-1); border: 1px solid var(--border); border-radius: 12px; padding: 10px 12px; min-width: 0; }
+.tile .v { font-size: 26px; font-weight: 650; font-variant-numeric: tabular-nums; letter-spacing: -0.02em; }
+.tile .l { font-size: 12px; color: var(--text-secondary); }
+.tile .s { font-size: 12px; color: var(--text-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.legend { display: flex; flex-wrap: wrap; gap: 14px; font-size: 13px; color: var(--text-secondary); margin-bottom: 8px; }
+.legend i { display: inline-block; width: 10px; height: 10px; border-radius: 3px; margin-right: 6px; vertical-align: -1px; }
+.readout { font-size: 13px; color: var(--text-secondary); min-height: 1.4em; margin-bottom: 4px; font-variant-numeric: tabular-nums; }
+svg.chart { display: block; width: 100%; height: 180px; overflow: visible; touch-action: pan-y; }
+svg.chart text { fill: var(--text-muted); font-size: 11px; }
+svg.chart .hit { fill: transparent; }
+svg.chart .sel { fill: var(--grid); }
+table { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; }
+th, td { text-align: right; padding: 6px 4px; border-bottom: 1px solid var(--grid); font-size: 14px; }
+th { color: var(--text-secondary); font-weight: 500; font-size: 12px; }
+th:first-child, td:first-child { text-align: left; }
+td.nick { text-align: left; font-weight: 600; letter-spacing: 0.04em; }
+tr:last-child td { border-bottom: 0; }
+details summary { color: var(--text-secondary); font-size: 13px; cursor: pointer; margin-top: 8px; }
+.empty { color: var(--text-muted); font-size: 14px; padding: 6px 0; }
+.err { color: var(--critical); font-size: 14px; }
+form.key { display: grid; gap: 10px; }
+form.key input { font: inherit; padding: 10px 12px; border-radius: 8px; border: 1px solid var(--border); background: var(--surface-0); color: var(--text-primary); }
+form.key button { padding: 10px; border-radius: 8px; border: 0; background: var(--accent); color: #fff; font-weight: 600; }
+.forget { background: none; border: 0; color: var(--text-muted); font-size: 12px; text-decoration: underline; padding: 0; }
+@media (max-width: 380px) { .tile .v { font-size: 22px; } }
+</style>
+</head>
+<body>
+<main>
+  <header>
+    <h1>Island stats</h1>
+    <button class="refresh" id="refresh" hidden>Refresh</button>
+  </header>
+
+  <section id="login" class="card" hidden>
+    <h2>Owner key</h2>
+    <form class="key" id="keyform">
+      <input id="keyinput" type="password" autocomplete="current-password" placeholder="Paste the key" aria-label="Owner key">
+      <button type="submit">Show stats</button>
+      <div class="err" id="keyerr" role="alert"></div>
+    </form>
+  </section>
+
+  <section id="stats" hidden>
+    <div class="seg" role="group" aria-label="Period">
+      <button data-days="1">Today</button>
+      <button data-days="7">7 days</button>
+      <button data-days="30">30 days</button>
+      <button data-days="90">90 days</button>
+    </div>
+
+    <div class="tiles" id="tiles"></div>
+
+    <div class="card" id="dailycard">
+      <h2>Games per day</h2>
+      <div class="legend">
+        <span><i style="background:var(--series-1)"></i>Won</span>
+        <span><i style="background:var(--series-2)"></i>Lost</span>
+        <span><i style="background:var(--series-3)"></i>Abandoned</span>
+      </div>
+      <div class="readout" id="readout" aria-live="polite"></div>
+      <svg class="chart" id="chart" role="img" aria-label="Games per day: won, lost and abandoned"></svg>
+      <details><summary>Show as table</summary><table id="dailytable"></table></details>
+    </div>
+
+    <div class="card">
+      <h2>Islands</h2>
+      <table id="islands"></table>
+    </div>
+
+    <div class="card">
+      <h2>Winners</h2>
+      <table id="winners"></table>
+    </div>
+
+    <div class="card">
+      <h2>All-time top 10</h2>
+      <table id="top"></table>
+    </div>
+
+    <p class="muted" id="footer"></p>
+    <button class="forget" id="forget">Forget the key on this device</button>
+  </section>
+
+  <p class="err" id="neterr" role="alert"></p>
+</main>
+
+<script>
+"use strict";
+const URL_ = "https://aspruukfevqvoefvgpbr.supabase.co/rest/v1/rpc/admin_stats";
+const PUBLIC_KEY = "sb_publishable_6A2OXGxpl9Dq7Vn01S6BgA_BMfINHoS";   // the game's public key (scripts/net.gd)
+const STORE = "dpi-stats-key";
+const $ = (id) => document.getElementById(id);
+
+const store = {
+  get(k) { try { return localStorage.getItem(k); } catch { return null; } },
+  set(k, v) { try { localStorage.setItem(k, v); } catch {} },
+  del(k) { try { localStorage.removeItem(k); } catch {} },
+};
+
+// a key in the link (#k=...) is stored on this device and removed from the address bar
+let key = null;
+const m = location.hash.match(/[#&]k=([^&]+)/);
+if (m) {
+  key = decodeURIComponent(m[1]);
+  store.set(STORE, key);
+  history.replaceState(null, "", location.pathname + location.search);
+}
+key = key || store.get(STORE);
+let days = Number(store.get("dpi-stats-days")) || 7;
+let data = null;
+let selected = -1;
+
+function el(tag, text, cls) {
+  const e = document.createElement(tag);
+  if (text !== undefined) e.textContent = text;
+  if (cls) e.className = cls;
+  return e;
+}
+function fmt(n) { return Number(n).toLocaleString("en-GB"); }
+function pct(a, b) { return b > 0 ? Math.round((100 * a) / b) + " %" : "–"; }
+function dayLabel(d) { return new Date(d + "T00:00:00Z").toLocaleDateString("en-GB", { day: "numeric", month: "short", timeZone: "UTC" }); }
+function when(t) {
+  const d = new Date(t);
+  return d.toLocaleDateString("en-GB", { day: "numeric", month: "short" }) + " " +
+    d.toLocaleTimeString("en-GB", { hour: "2-digit", minute: "2-digit" });
+}
+
+async function load() {
+  $("neterr").textContent = "";
+  try {
+    const res = await fetch(URL_, {
+      method: "POST",
+      headers: { "Content-Type": "application/json", apikey: PUBLIC_KEY },
+      body: JSON.stringify({ p_key: key, p_days: 90 }),
+    });
+    const body = await res.json().catch(() => null);
+    if (!res.ok) {
+      if (body && body.message === "denied") return showLogin("That key was not accepted.");
+      throw new Error(body && body.message ? body.message : "HTTP " + res.status);
+    }
+    data = body;
+    $("login").hidden = true;
+    $("stats").hidden = false;
+    $("refresh").hidden = false;
+    render();
+  } catch (e) {
+    $("neterr").textContent = "Could not load the stats (" + e.message + ").";
+  }
+}
+
+function showLogin(msg) {
+  store.del(STORE);
+  key = null;
+  $("stats").hidden = true;
+  $("refresh").hidden = true;
+  $("login").hidden = false;
+  $("keyerr").textContent = msg || "";
+}
+
+// the UTC days of the chosen period, oldest first
+function periodDays() {
+  const end = new Date(String(data.now).slice(0, 10) + "T00:00:00Z");
+  const out = [];
+  for (let i = days - 1; i >= 0; i--) out.push(new Date(end - i * 86400000).toISOString().slice(0, 10));
+  return out;
+}
+
+function render() {
+  for (const b of document.querySelectorAll(".seg button")) b.setAttribute("aria-pressed", String(Number(b.dataset.days) === days));
+  const span = periodDays();
+  const first = span[0];
+  const perDay = new Map(span.map((d) => [d, { loaded: 0, played: 0, won: 0, lost: 0 }]));
+  const perIsland = new Map();
+  for (const [day, island, ev, n] of data.counts) {
+    if (day < first || !perDay.has(day)) continue;
+    perDay.get(day)[ev] += Number(n);
+    if (!perIsland.has(island)) perIsland.set(island, { played: 0, won: 0, lost: 0, loaded: 0 });
+    perIsland.get(island)[ev] += Number(n);
+  }
+  const t = { loaded: 0, played: 0, won: 0, lost: 0 };
+  for (const v of perDay.values()) for (const k in t) t[k] += v[k];
+  const abandoned = Math.max(0, t.played - t.won - t.lost);
+  const runs = data.runs.filter((r) => String(r.created_at).slice(0, 10) >= first);
+  const best = runs.reduce((a, r) => (!a || r.score > a.score ? r : a), null);
+
+  // tiles
+  const tiles = $("tiles");
+  tiles.replaceChildren();
+  const tile = (v, l, s) => {
+    const d = el("div", undefined, "tile");
+    d.append(el("div", v, "v"), el("div", l, "l"), el("div", s || " ", "s"));
+    tiles.append(d);
+  };
+  tile(fmt(t.loaded), "Visits", "page loads");
+  tile(fmt(t.played), "Games", pct(t.played, t.loaded) + " of visits");
+  tile(pct(t.won, t.won + t.lost), "Win rate", fmt(t.won + t.lost) + " finished");
+  tile(fmt(t.won), "Won", "");
+  tile(fmt(t.lost), "Lost", "");
+  tile(fmt(abandoned), "Abandoned", pct(abandoned, t.played) + " of games");
+  tile(fmt(runs.length), "On the board", "new names");
+  tile(best ? fmt(best.score) : "–", "Best score", best ? best.nick : "");
+  tile(fmt(data.runs_total), "Board total", "all time");
+
+  // daily chart and its table
+  $("dailycard").hidden = days === 1;
+  drawChart(span.map((d) => {
+    const v = perDay.get(d);
+    return { day: d, won: v.won, lost: v.lost, ab: Math.max(0, v.played - v.won - v.lost) };
+  }));
+
+  // islands, busiest first
+  const it = $("islands");
+  it.replaceChildren();
+  const isl = [...perIsland.entries()].filter(([, v]) => v.played > 0).sort((a, b) => b[1].played - a[1].played || a[0] - b[0]);
+  if (!isl.length) it.append(row(["No games in this period"], "td", true));
+  else {
+    it.append(row(["Island", "Games", "Won", "Lost", "Win rate"], "th"));
+    for (const [i, v] of isl.slice(0, 12)) it.append(row([i === 0 ? "0 (original)" : String(i), fmt(v.played), fmt(v.won), fmt(v.lost), pct(v.won, v.won + v.lost)]));
+  }
+
+  // winners in the period, newest first
+  const wt = $("winners");
+  wt.replaceChildren();
+  if (!runs.length) wt.append(row(["No names entered in this period"], "td", true));
+  else {
+    wt.append(row(["When", "Name", "Score", "Turns", "Island"], "th"));
+    for (const r of runs.slice(0, 15)) wt.append(row([when(r.created_at), r.nick, fmt(r.score), fmt(r.turns), String(r.island)], "td", false, 1));
+  }
+
+  // all-time top 10
+  const tt = $("top");
+  tt.replaceChildren();
+  if (!data.top.length) tt.append(row(["The board is empty"], "td", true));
+  else {
+    tt.append(row(["#", "Name", "Score", "Turns", "Island"], "th"));
+    data.top.forEach((r, i) => tt.append(row([String(i + 1), r.nick, fmt(r.score), fmt(r.turns), String(r.island)], "td", false, 1)));
+  }
+
+  const tot = data.totals;
+  $("footer").textContent = "All time: " + fmt(tot.loaded) + " visits, " + fmt(tot.played) + " games, " + fmt(tot.won) +
+    " won, " + fmt(tot.lost) + " lost" + (tot.first_day ? " since " + dayLabel(tot.first_day) : "") +
+    ". Days are UTC. Updated " + new Date().toLocaleTimeString("en-GB", { hour: "2-digit", minute: "2-digit" }) + ".";
+}
+
+function row(cells, tag = "td", empty = false, nickCol = -1) {
+  const tr = el("tr");
+  cells.forEach((c, i) => {
+    const cell = el(tag, c, i === nickCol ? "nick" : (empty ? "empty" : undefined));
+    if (empty) cell.colSpan = 5;
+    tr.append(cell);
+  });
+  return tr;
+}
+
+function drawChart(rows) {
+  const svg = $("chart");
+  const NS = "http://www.w3.org/2000/svg";
+  const W = svg.clientWidth || 320, H = 180, padL = 26, padB = 20, padT = 4;
+  svg.setAttribute("viewBox", `0 0 ${W} ${H}`);
+  svg.replaceChildren();
+  const mk = (tag, attrs, text) => {
+    const e = document.createElementNS(NS, tag);
+    for (const k in attrs) e.setAttribute(k, attrs[k]);
+    if (text !== undefined) e.textContent = text;
+    svg.append(e);
+    return e;
+  };
+  const max = Math.max(1, ...rows.map((r) => r.won + r.lost + r.ab));
+  const step = niceStep(max);
+  const top = Math.ceil(max / step) * step;
+  const y = (v) => H - padB - ((H - padB - padT) * v) / top;
+  for (let v = 0; v <= top; v += step) {
+    mk("line", { x1: padL, x2: W, y1: y(v), y2: y(v), stroke: "var(--grid)", "stroke-width": 1 });
+    mk("text", { x: padL - 6, y: y(v) + 4, "text-anchor": "end" }, String(v));
+  }
+  const slot = (W - padL) / rows.length;
+  const bw = Math.max(2, Math.min(28, slot - 2));
+  rows.forEach((r, i) => {
+    const x = padL + i * slot + (slot - bw) / 2;
+    if (i === selected) mk("rect", { x: padL + i * slot, y: padT, width: slot, height: H - padB - padT, class: "sel" });
+    let base = 0;
+    const segs = [["won", "var(--series-1)"], ["lost", "var(--series-2)"], ["ab", "var(--series-3)"]].filter(([k]) => r[k] > 0);
+    segs.forEach(([k, color], j) => {
+      const yb = y(base) - (j > 0 ? 2 : 0);   // a 2px surface gap between stacked segments
+      const yt = Math.min(y(base + r[k]), yb - 1);
+      base += r[k];
+      const rad = Math.min(4, bw / 2, yb - yt);
+      // square at the baseline, 4px rounded at the top of the stack
+      const d = j === segs.length - 1
+        ? `M${x},${yb} V${yt + rad} Q${x},${yt} ${x + rad},${yt} H${x + bw - rad} Q${x + bw},${yt} ${x + bw},${yt + rad} V${yb} Z`
+        : `M${x},${yt} H${x + bw} V${yb} H${x} Z`;
+      mk("path", { d, fill: color });
+    });
+    // x labels: first, last and a few between
+    const every = Math.ceil(rows.length / 6);
+    if (i === 0 || i === rows.length - 1 || (i % every === 0 && rows.length - 1 - i >= every / 2))
+      mk("text", { x: padL + i * slot + slot / 2, y: H - 4, "text-anchor": "middle" }, dayLabel(r.day));
+    const hit = mk("rect", { x: padL + i * slot, y: 0, width: slot, height: H, class: "hit" });
+    hit.addEventListener("pointerenter", () => select(i, rows));
+    hit.addEventListener("click", () => select(i, rows));
+  });
+  readout(rows);
+
+  const tbl = $("dailytable");
+  tbl.replaceChildren(row(["Day", "Won", "Lost", "Abandoned"], "th"));
+  [...rows].reverse().forEach((r) => tbl.append(row([dayLabel(r.day), fmt(r.won), fmt(r.lost), fmt(r.ab)])));
+}
+
+function select(i, rows) {
+  if (selected === i) return;
+  selected = i;
+  drawChart(rows);
+}
+
+function readout(rows) {
+  const r = rows[selected] || null;
+  const sum = (k) => rows.reduce((a, x) => a + x[k], 0);
+  $("readout").textContent = r
+    ? `${dayLabel(r.day)}: ${r.won} won · ${r.lost} lost · ${r.ab} abandoned`
+    : `${rows.length} days: ${sum("won")} won · ${sum("lost")} lost · ${sum("ab")} abandoned (tap a day)`;
+}
+
+function niceStep(max) {
+  const raw = max / 4;
+  const p = Math.pow(10, Math.floor(Math.log10(raw)));
+  const n = raw / p;
+  return Math.max(1, (n <= 1 ? 1 : n <= 2 ? 2 : n <= 5 ? 5 : 10) * p);
+}
+
+for (const b of document.querySelectorAll(".seg button")) {
+  b.addEventListener("click", () => {
+    days = Number(b.dataset.days);
+    store.set("dpi-stats-days", String(days));
+    selected = -1;
+    render();
+  });
+}
+$("refresh").addEventListener("click", load);
+$("forget").addEventListener("click", () => showLogin(""));
+$("keyform").addEventListener("submit", (e) => {
+  e.preventDefault();
+  const v = $("keyinput").value.trim();
+  if (!v) return;
+  key = v;
+  store.set(STORE, key);
+  $("keyinput").value = "";
+  $("keyerr").textContent = "";
+  load();
+});
+addEventListener("resize", () => { if (data) render(); });
+document.addEventListener("visibilitychange", () => { if (!document.hidden && key) load(); });
+setInterval(() => { if (!document.hidden && key) load(); }, 60000);
+
+if (key) load(); else showLogin("");
+</script>
+</body>
+</html>
