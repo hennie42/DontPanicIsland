@@ -1,0 +1,33 @@
+# Keeps the leaderboard's Supabase project awake: the free plan pauses a project after about a week without
+# activity, and the game then shows "Leaderboard offline". Every three days this reads the top 10 through the same
+# public function the game uses (read-only: nothing is written). URL and key come from scripts/net.gd, so the
+# workflow follows the game if the project or key changes.
+name: Supabase keep-alive
+
+on:
+  schedule:
+    - cron: "17 6 */3 * *"   # 06:17 UTC on every third day of the month
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: scripts/net.gd
+          sparse-checkout-cone-mode: false
+      - name: Read the leaderboard
+        run: |
+          url=$(sed -n 's/^const URL := "\(.*\)".*/\1/p' scripts/net.gd)
+          key=$(sed -n 's/^const KEY := "\([^"]*\)".*/\1/p' scripts/net.gd)
+          [ -n "$url" ] && [ -n "$key" ] || { echo "URL or KEY not found in scripts/net.gd"; exit 1; }
+          code=$(curl -s -o body.json -w '%{http_code}' --retry 3 --retry-delay 20 -m 30 \
+            -X POST "$url/rest/v1/rpc/top_runs" -H "apikey: $key" -H "Content-Type: application/json" \
+            -d '{"p_period":"all"}') || true   # curl's own failure (DNS, timeout) reports 000 below
+          echo "HTTP $code: $(head -c 300 body.json)"
+          [ "$code" = 200 ] || { echo "::error::The leaderboard did not answer (HTTP $code). If the project is paused, restore it in the Supabase dashboard."; exit 1; }
