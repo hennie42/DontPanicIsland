@@ -11,6 +11,7 @@ run/flush_stdout_on_print=true
 [autoload]
 
 GameEvent="*res://scripts/game_event.gd"
+Net="*res://scripts/net.gd"
 
 [display]
 

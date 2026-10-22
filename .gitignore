@@ -11,3 +11,10 @@ shots/
 __pycache__/
 *.blend1
 .studio/
+supabase/.temp/
+supabase/.branches/
+out/pages/
+out/parity_tool/
+out/nick_parity.json
+node_modules/
+out/play_check*.log

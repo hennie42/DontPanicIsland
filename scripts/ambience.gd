@@ -68,8 +68,7 @@ func _create_gull(i: int) -> Node3D:
 	for side in [-1, 1]:
 		var hinge := Node3D.new()
 		hinge.name = "Hinge_%s" % ("L" if side == -1 else "R")
-		# offset by half its width. BoxMesh width is 0.22. Half is 0.11.
-		hinge.position.x = 0.11 * side
+		hinge.position.x = bm.radius * side
 		gull.add_child(hinge)
 
 		var wing_mesh := MeshInstance3D.new()
@@ -78,16 +77,9 @@ func _create_gull(i: int) -> Node3D:
 		wing_mesh.mesh = wm
 		wing_mesh.set_surface_override_material(0, mat)
 
-		# pivoting at the body side.
-		# hinge is at x=0.11. Mesh center at 0.0.
-		# We want mesh's edge to be at hinge.
-		# If we put mesh as child of hinge, and mesh's center is 0.0,
-		# then hinge at 0.11 means mesh is at 0.11 to 0.33.
-		# We want mesh to be from 0.0 to 0.22 relative to hinge.
-		# So offset mesh by -0.11 in x.
-		wing_mesh.position.x = -0.11
+		# pivot at the wing root: the hinge sits at the body's side, the wing reaches outwards from it
+		wing_mesh.position.x = 0.11 * side
 		hinge.add_child(wing_mesh)
-		hinge.set_name("Wing_%s" % ("L" if side == -1 else "R"))
 
 	return gull
 

@@ -1,6 +1,7 @@
 extends Node3D
 
 static var _is_first_run: bool = true
+static var _load_counted: bool = false   # "loaded" is counted once per page load / process, not on Play again
 ## Game controller (T09). Builds the environment, the board, the board view,
 ## the camera rig and the HUD in code. Handles player mouse input and drives
 ## the --autopilot play loop.
@@ -19,6 +20,7 @@ var _camp_placed: bool = false
 
 var _last_gold: int = 0
 var seed_value: int = 0
+var island_id: int = 0
 var autopilot: bool = false
 var force_lose: bool = false
 var skip_intro: bool = false
@@ -55,6 +57,7 @@ func _ready() -> void:
 
 	var island := _pick_island()
 	board = Board.new(island["file"])
+	island_id = int(island["id"])
 	GameEvent.marker("ISLAND", "id=%d land=%d mines=%d" % [int(island["id"]), board.land.size(), board.mine_count])
 
 	view = BoardView.new()
@@ -108,6 +111,9 @@ func _ready() -> void:
 	menu.menu_closed.connect(func(): sfx.play("click"); _on_menu_menu_closed())
 
 	_parse_flags()
+	if not _load_counted and not autopilot:
+		_load_counted = true
+		Net.count("loaded", island_id)
 
 	if not skip_intro:
 		var intro := Intro.new()
@@ -520,7 +526,7 @@ func _left_click(pos: Vector2) -> void:
 			if not cells.is_empty():
 				_after_board_change({"action": "chord", "cell": cell})
 		else:
-			var opened: Array[Vector2i] = board.reveal(cell)
+			var opened: Array[Vector2i] = board.reveal(cell, seed_value)   # the seed places the mines on the first dig
 			if not opened.is_empty():
 				_after_board_change({"action": "reveal", "cell": cell, "opened": opened})
 
@@ -597,6 +603,8 @@ func _after_board_change(move: Dictionary) -> void:
 		var cell_v: Variant = move.get("cell")   # value types are never null: test the Variant, then convert
 		var c: Vector2i = cell_v if cell_v != null else (opened[0] if not opened.is_empty() else Vector2i(0, 0))
 		_camp_placed = true
+		if not autopilot:
+			Net.count("played", island_id)
 		if _landing_hint:
 			_landing_hint.queue_free()
 			_landing_hint = null
@@ -733,7 +741,10 @@ func _end_game() -> void:
 	_playing = false
 	var result: String = "win" if board.won else "lose"
 	GameEvent.marker("END", "result=%s score=%d turns=%d" % [result, board.score(), board.turns])
-	Board.save_best(board.score())
+	if not autopilot:
+		Net.count("won" if result == "win" else "lost", island_id)
+	if result == "win":   # the local best follows the leaderboard: wins only
+		Board.save_best(board.score())
 
 	if result == "win":
 		sfx.play("win")
@@ -742,12 +753,13 @@ func _end_game() -> void:
 
 	var ending := Ending.new()
 	add_child(ending)
-	ending.show_ending(board, result)
+	ending.show_ending(board, result, island_id, seed_value)
 
 	await ending.panel_shown
-	await get_tree().create_timer(1.0).timeout
 	GameEvent.marker("FINISH")
-	GameEvent.quit(0)
+	if autopilot:   # a player stays on the end panel (nickname, leaderboard, Play again)
+		await get_tree().create_timer(1.0).timeout
+		GameEvent.quit(0)
 
 
 # ---------------------------------------------------------------------------

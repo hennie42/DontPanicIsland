@@ -14,6 +14,8 @@ var _help_panel: PanelContainer
 var _esc_panel: PanelContainer
 var _help_label: Label
 var _esc_vbox: VBoxContainer
+var _board_panel: PanelContainer
+var _board: LeaderboardPanel
 var _music_slider: HSlider
 var _sfx_slider: HSlider
 
@@ -94,6 +96,12 @@ func _setup_ui() -> void:
 	help_btn.pressed.connect(_on_help_requested)
 	_esc_vbox.add_child(help_btn)
 
+	var board_btn := Button.new()
+	board_btn.text = "Leaderboard"
+	board_btn.add_theme_font_override("font", _font)
+	board_btn.pressed.connect(show_leaderboard)
+	_esc_vbox.add_child(board_btn)
+
 	var music_label := Label.new()
 	music_label.text = "Music"
 	music_label.add_theme_font_override("font", _font)
@@ -126,12 +134,43 @@ func _setup_ui() -> void:
 	quit_btn.pressed.connect(_on_quit_pressed)
 	_esc_vbox.add_child(quit_btn)
 
+	# LEADERBOARD PANEL (from the Esc menu; Close goes back to it)
+	_board_panel = PanelContainer.new()
+	_board_panel.set_anchors_and_offsets_preset(Control.PRESET_CENTER)
+	_board_panel.grow_horizontal = Control.GROW_DIRECTION_BOTH   # centre on the anchor, not hang from it
+	_board_panel.grow_vertical = Control.GROW_DIRECTION_BOTH
+	add_child(_board_panel)
+	var board_style := StyleBoxFlat.new()   # opaque enough to read the rows over the island
+	board_style.bg_color = Color(0, 0, 0, 0.8)
+	board_style.set_corner_radius_all(10)
+	board_style.set_content_margin_all(24)
+	_board_panel.add_theme_stylebox_override("panel", board_style)
+	var board_vbox := VBoxContainer.new()
+	_board_panel.add_child(board_vbox)
+	var board_title := Label.new()
+	board_title.text = "TOP PLAYERS"
+	board_title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	board_title.add_theme_font_override("font", _font)
+	board_title.add_theme_font_size_override("font_size", 56)
+	board_title.add_theme_color_override("font_color", Color("#ffd23f"))
+	board_title.add_theme_color_override("font_outline_color", Color.BLACK)
+	board_title.add_theme_constant_override("outline_size", 6)
+	board_vbox.add_child(board_title)
+	_board = LeaderboardPanel.new()
+	board_vbox.add_child(_board)
+	var board_close_btn := Button.new()
+	board_close_btn.text = "Close"
+	board_close_btn.add_theme_font_override("font", _font)
+	board_close_btn.pressed.connect(_on_board_close_pressed)
+	board_vbox.add_child(board_close_btn)
+
 	# Apply theme to all
 	var theme := Theme.new()
 	theme.set_default_font(_font)
 	_apply_theme_to_all(_help_panel, theme)
 	_apply_theme_to_all(_esc_panel, theme)
 	_apply_theme_to_all(_esc_vbox, theme)
+	_apply_theme_to_all(_board_panel, theme)
 
 func _apply_theme_to_all(node: Node, theme: Theme) -> void:
 	if node is Control:
@@ -142,6 +181,7 @@ func _apply_theme_to_all(node: Node, theme: Theme) -> void:
 func _hide_all() -> void:
 	_help_panel.visible = false
 	_esc_panel.visible = false
+	_board_panel.visible = false
 
 func show_help() -> void:
 	_hide_all()
@@ -152,6 +192,16 @@ func show_esc_menu() -> void:
 	_hide_all()
 	_esc_panel.visible = true
 	menu_requested.emit()
+
+func show_leaderboard() -> void:
+	_hide_all()
+	_board_panel.visible = true
+	GameEvent.marker("LEADERBOARD_OPEN")
+	_board.load_board()
+
+func _on_board_close_pressed() -> void:
+	_board_panel.visible = false
+	_esc_panel.visible = true
 
 func _on_help_close_pressed() -> void:
 	_help_panel.visible = false
@@ -205,13 +255,15 @@ func db_to_linear(db: float) -> float:
 	return pow(10.0, db / 20.0)
 
 func _unhandled_input(event: InputEvent) -> void:
-	if not _help_panel.visible and not _esc_panel.visible:
+	if not _help_panel.visible and not _esc_panel.visible and not _board_panel.visible:
 		return
 
 	if event is InputEventKey and event.pressed:
 		if event.keycode == KEY_ESCAPE:
 			if _help_panel.visible:
 				_on_help_close_pressed()
+			elif _board_panel.visible:
+				_on_board_close_pressed()
 			elif _esc_panel.visible:
 				_on_resume_pressed()
 		elif event.keycode == KEY_H:
