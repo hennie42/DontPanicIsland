@@ -78,14 +78,19 @@ look, the sea shader, the 24 generated islands, the web build and the leaderboar
 well-specified tickets with a clear test, and still needed a human and a stronger model for "does this feel right?".
 
 ## Building it yourself
+- **Clone with Git LFS:** the models, textures and sounds are stored with [Git LFS](https://git-lfs.com). Run
+  `git lfs install` once before cloning (or `git lfs pull` in a clone made without it); otherwise `assets/` holds
+  small pointer files and the project won't open properly.
 - **Engine:** Godot 4.7. Open `project.godot`; the main scene is `scenes/main.tscn`.
 - **Web build:** uses the Compatibility renderer without threads, so it runs on plain static hosting.
   `tools/deploy_pages.sh` exports it and publishes it to the `gh-pages` branch.
 - **Leaderboard:** the schema is in `supabase/migrations/` (deploy with `npx supabase db push`), and
   `supabase/tests/db_test.mjs` tests it locally. Without network the game simply shows "Leaderboard offline".
-- **Tests:** unit tests with `tools/test.sh tests/test_*.gd`, and probes (scenes that drive the real game with
-  real input events) with `tools/probe.sh tests/<probe>.tscn ...`. Every game also has an `--autopilot` mode that
-  plays itself to the end.
+- **Tests:** unit tests run with plain Godot: `godot --headless --path . --import` once, then
+  `godot --headless --path . --script res://tests/test_board_rules.gd` (each prints `ALL TESTS PASSED`). The game
+  plays itself to the end with `godot --headless --path . -- --autopilot --skip-intro`. `tools/test.sh` and
+  `tools/probe.sh` (probes: scenes that drive the real game with real input events) run the same through
+  [local-studio](https://github.com/hennie42/local-studio)'s broker and need it installed.
 - **The process:** `BRIEF.md` is the design brief, `tickets/` holds the ticket prompts the local models worked
   from, and `AGENTS.md` is the guide every AI agent read first.
 
