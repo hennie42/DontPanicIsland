@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
-# tools/deploy_pages.sh [--no-export]: export the web build (studio godot-export web) and publish build/web to the
+# tools/deploy_pages.sh [--no-export]: export the web build (studio godot-export web) and publish build/web (plus
+# pages/*.html) to the
 # gh-pages branch of origin (GitHub Pages serves it at https://hennie42.github.io/DontPanicIsland/).
 # The branch is worked on in a separate worktree under out/pages; the main branch never contains the build.
 set -euo pipefail
@@ -23,6 +24,7 @@ if [[ ! -d $wt/.git && ! -f $wt/.git ]]; then
 fi
 find "$wt" -mindepth 1 -maxdepth 1 ! -name .git -exec rm -rf {} +
 cp -r build/web/. "$wt"/
+cp pages/*.html "$wt"/   # extra pages next to the game (stats.html)
 touch "$wt/.nojekyll"
 git -C "$wt" add -A
 if git -C "$wt" diff --cached --quiet; then

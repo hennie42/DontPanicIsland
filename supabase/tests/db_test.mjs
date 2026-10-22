@@ -127,6 +127,20 @@ const stats = (await db.query("select * from public.stats")).rows[0];
 check(Number(stats.loaded) === 1 && Number(stats.played) === 2 && Number(stats.won) === 1 &&
       Number(stats.lost) === 1 && Number(stats.abandoned) === 0, `stats view (${JSON.stringify(stats)})`);
 
+// the owner's stats page: admin_stats(key) answers only with a stored key
+const KEY = "test-key-0123456789abcdefghij";
+await db.query("insert into public.admin_keys (hash, note) values (sha256(convert_to($1, 'UTF8')), 'test')", [KEY]);
+for (const [k, what] of [["wrong-key-0123456789abcdefghij", "a wrong key"], ["short", "a short key"], [null, "no key"]]) {
+  const x = await asAnon("select public.admin_stats($1) as s", [k]);
+  check(x.error === "denied", `admin_stats denies ${what}: ${x.error}`);
+}
+r = await asAnon("select public.admin_stats($1, 30) as s", [KEY]);
+const s = r.rows?.[0].s;
+check(!r.error && s.totals.loaded === 1 && s.totals.played === 2 && s.totals.won === 1 && s.totals.lost === 1,
+  `admin_stats totals (${r.error ?? JSON.stringify(s?.totals)})`);
+check(s?.counts.length === 4 && s.counts[0][1] === 3, `admin_stats counts per day and island (${JSON.stringify(s?.counts)})`);
+check(s?.top.length === 10 && s.runs_total === 14 && s.runs.length === 14, "admin_stats runs and top 10");
+
 // what the public role may not do
 for (const [sql, what] of [
   ["insert into public.runs (nick, score, gold, crew, turns, island, seed) values ('X', 9999, 400, 3, 50, 0, 1)", "insert runs"],
@@ -138,6 +152,8 @@ for (const [sql, what] of [
   ["select * from public.blocked_words", "read blocked_words"],
   ["delete from public.blocked_words", "delete blocked_words"],
   ["select public.nick_ok('A')", "call nick_ok"],
+  ["select * from public.admin_keys", "read admin_keys"],
+  ["insert into public.admin_keys (hash) values (sha256('x'::bytea))", "add an admin key"],
 ]) {
   const x = await asAnon(sql);
   const blocked = !!x.error;
