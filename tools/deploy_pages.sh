@@ -30,7 +30,9 @@ git -C "$wt" add -A
 if git -C "$wt" diff --cached --quiet; then
   echo "gh-pages already up to date"
 else
-  git -C "$wt" commit -qm "Web build of $src"
+  # no git identity is configured in this repo: commit as the author of the build's source commit
+  git -C "$wt" -c user.name="$(git log -1 --format=%an)" -c user.email="$(git log -1 --format=%ae)" \
+    commit -qm "Web build of $src"
 fi
 git -C "$wt" push origin gh-pages
 echo "published $src -> https://hennie42.github.io/DontPanicIsland/"

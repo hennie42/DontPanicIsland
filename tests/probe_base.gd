@@ -50,6 +50,12 @@ func screen_of(c: Vector2i) -> Vector2:
 
 func click(pos: Vector2, button: MouseButton = MOUSE_BUTTON_LEFT) -> void:
 	for pressed in [true, false]:
+		# a motion to the target first, press and release alike: the real mouse over the window sends motion too, and
+		# a Button whose press saw a motion off it never emits `pressed` (play_leaderboard flaked on that, F53)
+		var mm := InputEventMouseMotion.new()
+		mm.position = win(pos)
+		mm.global_position = mm.position
+		Input.parse_input_event(mm)
 		var ev := InputEventMouseButton.new()
 		ev.button_index = button
 		ev.pressed = pressed
@@ -57,6 +63,34 @@ func click(pos: Vector2, button: MouseButton = MOUSE_BUTTON_LEFT) -> void:
 		ev.global_position = ev.position
 		Input.parse_input_event(ev)
 		await frames(1)
+	await frames(2)
+
+
+## A key event as the OS sends it: physical_keycode for actions bound to physical keys, unicode for what a text
+## field types.
+func key(code: Key, pressed: bool) -> void:
+	var ev := InputEventKey.new()
+	ev.pressed = pressed
+	ev.keycode = code
+	ev.physical_keycode = code
+	if pressed and code >= KEY_A and code <= KEY_Z:
+		ev.unicode = code
+	Input.parse_input_event(ev)
+
+
+## Tap a key (menus: every key should close what it opened, and nothing else should see it).
+func press(code: Key) -> void:
+	key(code, true)
+	await frames(1)
+	key(code, false)
+	await frames(3)
+
+
+## Hold a key (camera and movement actions).
+func hold(code: Key, seconds: float) -> void:
+	key(code, true)
+	await wait(seconds)
+	key(code, false)
 	await frames(2)
 
 

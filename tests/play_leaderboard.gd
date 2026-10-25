@@ -33,7 +33,7 @@ func run() -> void:
 
 	# Esc menu > Leaderboard, mid-game
 	var menu: Menu = main.menu
-	await _press(KEY_ESCAPE)
+	await press(KEY_ESCAPE)
 	check(menu._esc_panel.visible and not main._playing, "Esc opens the menu and pauses")
 	var board_btn := _button(menu._esc_vbox, "Leaderboard")
 	check(board_btn != null, "Esc menu has a Leaderboard button")
@@ -117,7 +117,7 @@ func _check_win_panel(ending: Ending) -> void:
 	check(edit.get_selected_text() == "FUCK", "refused name selected, typing replaces it")
 	await _type("probe42")
 	check(edit.text == "PROBE", "max 5 chars (%s)" % edit.text)
-	await _press(KEY_ENTER)   # Enter submits like the button
+	await press(KEY_ENTER)   # Enter submits like the button
 	await wait(0.8)
 	check(_count("submit_run", "") == 1, "submitted once")
 	var body := _last("submit_run", "")
@@ -182,16 +182,6 @@ func _type(s: String) -> void:
 			ev.keycode = OS.find_keycode_from_string(ch.to_upper()) if ch != " " else KEY_SPACE
 			Input.parse_input_event(ev)
 			await frames(1)
-	await frames(2)
-
-
-func _press(key: Key) -> void:
-	for pressed in [true, false]:
-		var ev := InputEventKey.new()
-		ev.pressed = pressed
-		ev.keycode = key
-		Input.parse_input_event(ev)
-		await frames(1)
 	await frames(2)
 
 

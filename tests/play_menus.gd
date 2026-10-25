@@ -61,30 +61,6 @@ func run() -> void:
 	print("MENUS OK" if fails == 0 else "MENUS FAILED: %d" % fails)
 
 
-func _key(key: Key, pressed: bool) -> void:
-	var ev := InputEventKey.new()
-	ev.pressed = pressed
-	ev.keycode = key
-	ev.physical_keycode = key   # the camera actions are bound to physical keys
-	if pressed and key >= KEY_A and key <= KEY_Z:
-		ev.unicode = key        # what a text field types
-	Input.parse_input_event(ev)
-
-
-func press(key: Key) -> void:
-	_key(key, true)
-	await frames(1)
-	_key(key, false)
-	await frames(3)
-
-
-func hold(key: Key, seconds: float) -> void:
-	_key(key, true)
-	await wait(seconds)
-	_key(key, false)
-	await frames(2)
-
-
 func _button(root: Node, text: String) -> Button:
 	for b in root.find_children("*", "Button", true, false):
 		if (b as Button).text == text:
