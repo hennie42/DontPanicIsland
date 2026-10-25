@@ -29,10 +29,11 @@ func _init(island_path: String = "res://data/island.json") -> void:
 	var file := FileAccess.open(island_path, FileAccess.READ)
 	if not file:
 		return
-	var json_string: String = file.get_as_text()
-	var json_data: Dictionary = JSON.parse_string(json_string)
-	if not json_data:
+	var parsed: Variant = JSON.parse_string(file.get_as_text())
+	if not parsed is Dictionary:
+		push_error("Board: %s is not a valid island file" % island_path)
 		return
+	var json_data: Dictionary = parsed
 
 	for entry in json_data["land"]:
 		var c := Vector2i(entry["q"], entry["r"])
@@ -163,6 +164,9 @@ func chord(c: Vector2i) -> Array[Vector2i]:
 	if n > 0 and flags_around(c) == n:
 		var newly_revealed: Array[Vector2i] = []
 		for nb in Hex.neighbors(c):
+			if lost or won:
+				break   # the game ended mid-chord (the last crewmate on a wrong towel): the rest stays shut, so the
+				        # crew never goes below 0 and a game is never both won and lost
 			if is_land(nb) and not revealed.has(nb) and not flagged.has(nb):
 				newly_revealed.append_array(_open(nb))
 
@@ -217,8 +221,10 @@ func _apply_gains(c: Vector2i) -> void:
 	if chests.has(c):
 		gold += chests[c]
 
+## Every safe cell revealed. `revealed` also holds the mines that went off (skulls), so count those out: comparing
+## revealed.size() alone declared a win one tile early after a crew loss, or never when the last move opened two.
 func _check_win() -> void:
-	if revealed.size() == (land.size() - mines.size()):
+	if not lost and revealed.size() - exploded.size() == land.size() - mines.size():
 		won = true
 
 func reveal(c: Vector2i, seed_value: int = 0) -> Array[Vector2i]:
@@ -276,17 +282,19 @@ static func load_best(path: String = "user://best.json") -> int:
 	if not FileAccess.file_exists(path):
 		return 0
 	var file := FileAccess.open(path, FileAccess.READ)
-	var json_string := file.get_as_text()
-	var json_data: Variant = JSON.parse_string(json_string)
-	if json_data and json_data.has("best"):
-		return json_data["best"]
+	if file == null:
+		return 0
+	var json_data: Variant = JSON.parse_string(file.get_as_text())
+	if json_data is Dictionary and json_data.has("best"):
+		return int(json_data["best"])
 	return 0
 
 static func save_best(value: int, path: String = "user://best.json") -> int:
 	var current_best := load_best(path)
 	if value > current_best:
 		var file := FileAccess.open(path, FileAccess.WRITE)
-		var json_data := {"best": value}
-		file.store_string(JSON.stringify(json_data))
+		if file == null:   # no writable user:// (e.g. a private browser window): the best lasts this session only
+			return value
+		file.store_string(JSON.stringify({"best": value}))
 		return value
 	return current_best

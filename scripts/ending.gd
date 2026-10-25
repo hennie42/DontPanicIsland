@@ -53,12 +53,9 @@ func _play_win_sequence() -> void:
 	confetti.color = Color.GOLD
 	add_child(confetti)
 
-	var first_cell: Vector2i = Vector2i.ZERO
-	for c in board.revealed.keys():
-		first_cell = c
-		break
-
-	if first_cell != Vector2i.ZERO:
+	# the camp: the first revealed cell (testing it against (0, 0) skipped the pile there, a land cell on every island)
+	if not board.revealed.is_empty():
+		var first_cell: Vector2i = board.revealed.keys()[0]
 		var pos := Hex.to_world(first_cell)
 		confetti.global_position = pos + Vector3(0, 2, 0)
 
@@ -179,7 +176,7 @@ func _show_panel() -> void:
 	var crew_val := board.crew
 	var turns_val := board.turns
 	var best_score := Board.load_best()
-	score_info.text = "Score: %d\nGold: %d\nCrew: %d\nTurns: %d\nBest: %d" % [score_val, gold_val, crew_val * 100, turns_val, best_score]
+	score_info.text = "Score: %d\nGold: %d\nCrew: %d (+%d)\nTurns: %d\nBest: %d" % [score_val, gold_val, crew_val, crew_val * 100, turns_val, best_score]
 	score_info.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	score_info.add_theme_font_size_override("font_size", 28)
 	vbox.add_child(score_info)

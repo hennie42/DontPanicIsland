@@ -20,6 +20,7 @@ var _music_slider: HSlider
 var _sfx_slider: HSlider
 
 var _font: FontFile
+var _help_from_menu := false   # the help was opened from the Esc menu: closing it goes back there
 
 func _ready() -> void:
 	process_mode = PROCESS_MODE_ALWAYS
@@ -183,10 +184,21 @@ func _hide_all() -> void:
 	_esc_panel.visible = false
 	_board_panel.visible = false
 
-func show_help() -> void:
+func show_help(from_menu: bool = false) -> void:
+	_help_from_menu = from_menu
 	_hide_all()
 	_help_panel.visible = true
 	help_requested.emit()
+
+
+## Close the help (Close button, Esc, H); back to the Esc menu if it was opened from there.
+func close_help() -> void:
+	_on_help_close_pressed()
+
+
+## Close the Esc menu and play on (Resume button, Esc).
+func resume() -> void:
+	_on_resume_pressed()
 
 func show_esc_menu() -> void:
 	_hide_all()
@@ -206,9 +218,12 @@ func _on_board_close_pressed() -> void:
 func _on_help_close_pressed() -> void:
 	_help_panel.visible = false
 	help_closed.emit()
+	if _help_from_menu:
+		_help_from_menu = false
+		show_esc_menu()
 
 func _on_help_requested() -> void:
-	show_help()
+	show_help(true)
 
 func _on_resume_pressed() -> void:
 	_hide_all()
@@ -259,7 +274,9 @@ func _unhandled_input(event: InputEvent) -> void:
 		return
 
 	if event is InputEventKey and event.pressed:
+		# mark the key handled: main.gd sees it next and, with the game unpaused by the close, opened the panel again
 		if event.keycode == KEY_ESCAPE:
+			get_viewport().set_input_as_handled()
 			if _help_panel.visible:
 				_on_help_close_pressed()
 			elif _board_panel.visible:
@@ -267,10 +284,11 @@ func _unhandled_input(event: InputEvent) -> void:
 			elif _esc_panel.visible:
 				_on_resume_pressed()
 		elif event.keycode == KEY_H:
+			get_viewport().set_input_as_handled()
 			if _help_panel.visible:
 				_on_help_close_pressed()
 			else:
-				show_help()
+				show_help(_esc_panel.visible)
 
 
 ## Menu buttons at a readable size (the theme default was tiny at 1920 wide).

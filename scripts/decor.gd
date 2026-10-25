@@ -141,7 +141,7 @@ func _rebuild_crew(crew: int) -> void:
 			var fig := Art.prop(CREW_KEYS[i])
 			fig.name = "Crew_%d" % i
 			var to_fire := -_crew_spot(i)
-			fig.rotation_degrees.y = rad_to_deg(atan2(to_fire.z, to_fire.x))
+			fig.rotation_degrees.y = rad_to_deg(atan2(to_fire.x, to_fire.z))   # the models face +z at rotation 0
 			holder.add_child(fig)
 			_crew_figs[i] = fig
 		else:
@@ -154,9 +154,11 @@ func _rebuild_crew(crew: int) -> void:
 
 
 func _crew_spot(i: int) -> Vector3:
-	const ANGLES := [210.0, 90.0, 330.0]
-	var a := rad_to_deg(deg_to_rad(ANGLES[i]))
-	return Vector3(cos(a) * 0.2, 0.0, sin(a) * 0.2)
+	# around the fire in the gaps the flag, barrel and crate leave, clear of the fire's logs (0.17 radius): searched
+	# for the widest clearance (210/90/330 at 0.2 stood two of them in the barrel and the crate)
+	const ANGLES := [185.0, 75.0, 255.0]
+	var a := deg_to_rad(ANGLES[i])   # cos/sin take radians (the degrees went in as radians: the spots were random)
+	return Vector3(cos(a) * 0.26, 0.0, sin(a) * 0.26)
 
 
 func _cell_offset(c: Vector2i) -> Vector3:

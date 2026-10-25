@@ -367,7 +367,7 @@ func _parse_flags() -> void:
 			skip_intro = true
 		elif arg.begins_with("--seed="):
 			seed_given = true
-			seed_val = int(arg.substr(6))
+			seed_val = int(arg.substr(7))
 
 	if seed_given:
 		seed_value = seed_val
@@ -414,9 +414,7 @@ func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventKey and event.pressed and not autopilot:
 		if event.keycode == KEY_ESCAPE:
 			if _playing:
-				menu.show_esc_menu()
-				GameEvent.marker("MENU_OPEN")
-				_playing = false
+				menu.show_esc_menu()   # its menu_requested signal logs MENU_OPEN and pauses (_on_menu_menu_requested)
 		elif event.keycode == KEY_H:
 			if _playing:
 				menu.show_help()   # its help_requested signal logs HELP_OPEN and pauses (_on_menu_help_requested)
@@ -739,7 +737,7 @@ func _end_game() -> void:
 		return
 	_finished = true
 	_playing = false
-	var result: String = "win" if board.won else "lose"
+	var result: String = "lose" if board.lost else "win"   # a loss stands even if the same move opened the rest
 	GameEvent.marker("END", "result=%s score=%d turns=%d" % [result, board.score(), board.turns])
 	if not autopilot:
 		Net.count("won" if result == "win" else "lost", island_id)
@@ -799,13 +797,12 @@ func _play_autopilot() -> void:
 	# 1. Open help, wait 0.5s, close it
 	menu.show_help()
 	await get_tree().create_timer(0.5).timeout
-	_on_menu_help_closed()
+	menu.close_help()   # through the menu, so the panel goes too (help_closed -> _on_menu_help_closed)
 
 	# 2. Open the Esc menu, wait 0.5s, resume
 	menu.show_esc_menu()
 	await get_tree().create_timer(0.5).timeout
-	_on_menu_menu_closed()
-	_on_menu_resume_requested()
+	menu.resume()   # resume_requested + menu_closed
 
 	# 3. Play as before
 	var move_count := 0
@@ -833,6 +830,9 @@ func _play_autopilot() -> void:
 
 func _process(_delta: float) -> void:
 	_process_touch_hold()
+	if rig != null:
+		# camera keys and the wheel: not while a menu or the help is open (the end panel keeps them, minus typing)
+		rig.input_enabled = _playing or _finished
 	if rig != null and _sun != null:
 		# the sun keeps its place relative to the camera, so shadows fall the same way on screen when rotating
 		_sun.rotation_degrees.y = SUN_YAW + rig.yaw

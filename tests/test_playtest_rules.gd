@@ -3,6 +3,7 @@ extends SceneTree
 ## - chording counts skulls (mines that went off) as known mines, like towels
 ## - the metal detector: costs 3 wood and one turn; a mine gets a towel, a safe tile opens; refused moves change
 ##   nothing
+## - (review, 2026-10-25) a win after a crew loss counts safe tiles only; a chord stops at the game-ending mine
 
 var fails := 0
 
@@ -30,6 +31,14 @@ func fenced(centre: Vector2i, extra: Array[Vector2i]) -> Board:
 			m.append(c)
 	b.place_fixed(m, {})
 	return b
+
+
+func _hidden_safe(b: Board) -> int:
+	var n := 0
+	for c in b.land:
+		if not b.mines.has(c) and not b.revealed.has(c):
+			n += 1
+	return n
 
 
 func _init() -> void:
@@ -84,6 +93,48 @@ func _init() -> void:
 		and d.wood == 2, "refused without 3 wood")
 	d.wood = 5
 	check(far != Vector2i(9999, 9999) and d.use_detector(far) == -1 and d.wood == 5, "refused out of reach, wood kept")
+
+	# --- winning after a crew loss (review, 2026-10-25): the skull's cell is in `revealed`, and the win check counted
+	# it as a safe tile: a win one tile early, or never when the last move opened two or more tiles
+	var far_mine := Vector2i(9999, 9999)
+	for c in probe.land:
+		if Hex.distance(c, centre) > 6:
+			far_mine = c
+			break
+	var zero := Vector2i(9999, 9999)   # next to nbs[0], two from the centre mine: a 0 that floods the island
+	for c in Hex.neighbors(nbs[0]):
+		if Hex.distance(c, centre) == 2 and Hex.distance(c, far_mine) > 1:
+			zero = c
+			break
+	var two_mines: Array[Vector2i] = [centre, far_mine]
+	var w := Board.new()
+	w.place_fixed(two_mines, {})
+	w.reveal(nbs[0])
+	w.reveal(centre)                      # a skull: one crewmate lost
+	check(w.crew == 2 and not w.won, "a mine went off, game on")
+	w.reveal(zero)                        # one flood opens every other safe tile
+	check(_hidden_safe(w) == 0 and w.won and not w.lost, "won when the last move opens many tiles after a loss")
+
+	var e := Board.new()
+	e.place_fixed(two_mines, {})
+	e.reveal(nbs[0])
+	e.reveal(centre)
+	e.toggle_flag(nbs[2])                 # a towel on a safe tile keeps it out of the flood
+	e.reveal(zero)
+	check(_hidden_safe(e) == 1 and not e.won, "not won while a safe tile is still hidden (one skull)")
+	e.toggle_flag(nbs[2])
+	e.reveal(nbs[2])
+	check(_hidden_safe(e) == 0 and e.won, "won once it is dug")
+
+	# --- chording over wrong towels with the last crewmate: the first mine ends the game, the rest stays shut
+	var lc := fenced(centre, two)          # centre shows 2: mines nbs[0], nbs[1]
+	lc.reveal(centre)
+	lc.toggle_flag(nbs[2])                 # two wrong towels: the chord is accepted and opens both mines
+	lc.toggle_flag(nbs[3])
+	lc.crew = 1
+	lc.chord(centre)
+	check(lc.lost and lc.crew == 0 and not lc.won, "the last crewmate lost: crew 0, lost, not won (crew %d)" % lc.crew)
+	check(lc.exploded.size() == 1 and not lc.revealed.has(nbs[1]), "the chord stops at the game-ending mine")
 
 	if fails == 0:
 		print("ALL TESTS PASSED")

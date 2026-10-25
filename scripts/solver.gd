@@ -4,12 +4,6 @@ extends RefCounted
 ## never reads `b.mines` or `b.chests`. Every move returned by `next_move` is
 ## one the board will accept (so `apply` always changes the board).
 
-## Set when we hit a "dead" board (no legal move, yet not won or lost). This
-## happens when a mine was hit and the board's win count is off: the board then
-## has no accepted move but also does not flag a win. We force a clean ending
-## by unflagging and detonating mines to reduce the crew to zero.
-var _force_loss := false
-
 # ---------------------------------------------------------------------------
 # Helpers over the board's public state.
 # ---------------------------------------------------------------------------
@@ -89,15 +83,6 @@ func _flaggable(b: Board) -> Array[Vector2i]:
 	return out
 
 
-## First flagged cell, in `b.flagged` order. In the dead state every flagged
-## cell is a mine; unflagging it (via toggle_flag) makes it revealable so the
-## next move can detonate it. Returns a non-land sentinel when there are none.
-func _any_flagged_cell(b: Board) -> Vector2i:
-	for c in b.flagged:
-		return c
-	return Vector2i(0, 1000)
-
-
 ## Risk of `c` = max over its revealed, un-exploded, numbered neighbours of
 ## (N - F) / H (F = known mines, H = hidden-land neighbour count). 0.25 when
 ## it has no such neighbour.
@@ -160,17 +145,6 @@ func next_move(b: Board) -> Dictionary:
 	if b.revealed.is_empty():
 		return {"action": "reveal", "cell": _most_inland(b)}
 
-	# Forced-loss path: the board is dead (no legal move, not won/lost).
-	# Detonate mines one by one (unflag -> reveal) to reduce crew to zero.
-	if _force_loss:
-		var revealable: Array[Vector2i] = _revealable(b)
-		if not revealable.is_empty():
-			return {"action": "reveal", "cell": revealable[0]}
-		var fc: Vector2i = _any_flagged_cell(b)
-		if b.flagged.has(fc):
-			return {"action": "flag", "cell": fc}   # toggle_flag unflags it
-		return {"action": "towel"}
-
 	# 2. Safe deductions on every numbered cell (revealed and/or peeked).
 	for c in b.land:
 		var n: int = _num(b, c)
@@ -198,15 +172,8 @@ func next_move(b: Board) -> Dictionary:
 
 	var revealable: Array[Vector2i] = _revealable(b)
 	if revealable.is_empty():
-		# A "dead" board: every remaining hidden land cell is flagged (no cell
-		# is revealable and none is flaggable) yet the game has not ended. This
-		# is the off-by-one the board's win check cannot resolve (a mine was hit
-		# and all safe cells are revealed). Force a clean ending as a loss.
-		_force_loss = true
-		var fc: Vector2i = _any_flagged_cell(b)
-		if b.flagged.has(fc):
-			return {"action": "flag", "cell": fc}   # unflag a mine to detonate
-		# No flagged mine left (should not happen): fall back to a towel.
+		# Every hidden cell has a towel. The solver only towels proven mines, so all safe land is open and the
+		# board has already declared the win; this towel (refused) only makes the caller stop.
 		return {"action": "towel"}
 
 	if b.wood >= 3:

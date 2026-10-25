@@ -20,6 +20,7 @@ var max_dist: float = MAX_DIST
 var _fit_points: Array = []      # world points that must stay on screen at home_distance
 var _fit_centre := Vector3.ZERO  # the island centre; the aim point slides from here along z to balance the frame
 var _user_zoomed := false        # after the player zooms, window resizes no longer reframe
+var input_enabled := true        # camera keys and wheel (main.gd turns them off while a menu is open)
 
 # T18 camera shake: a decaying random offset applied to the camera position, so the
 # view jolts (rather than merely the lens turning) when a mine goes off.
@@ -147,6 +148,8 @@ func _setup_input_actions() -> void:
 
 func _unhandled_input(event: InputEvent) -> void:
 	# drags (pan, rotate) and touch gestures are handled by main.gd, which tells a drag from a click; the wheel here
+	if not input_enabled:
+		return
 	if event is InputEventMouseButton and event.pressed and event.device != InputEvent.DEVICE_ID_EMULATION:
 		if event.button_index == MOUSE_BUTTON_WHEEL_UP:
 			zoom_by(0.9)
@@ -154,18 +157,25 @@ func _unhandled_input(event: InputEvent) -> void:
 			zoom_by(1.1)
 
 
+## Camera keys act unless main.gd turned them off or a text field has the keyboard (the nickname on the end panel:
+## the Input state sees every key, so typing W, A, S, D, Q, E moved the camera behind the panel).
+func _keys_active() -> bool:
+	return input_enabled and not get_viewport().gui_get_focus_owner() is LineEdit
+
+
 func _process(delta: float) -> void:
-	if Input.is_action_pressed("camera_rotate_left"):
-		rotate_by(-90.0 * delta)
-	if Input.is_action_pressed("camera_rotate_right"):
-		rotate_by(90.0 * delta)
-	var pan := Vector2(Input.get_axis("camera_pan_left", "camera_pan_right"), Input.get_axis("camera_pan_down", "camera_pan_up"))
-	if pan != Vector2.ZERO:
-		pan_by(pan * distance * 0.6 * delta)   # about 60 % of the view distance per second
-	if Input.is_action_just_pressed("camera_zoom_in_key"):
-		zoom_by(0.9)
-	if Input.is_action_just_pressed("camera_zoom_out_key"):
-		zoom_by(1.1)
+	if _keys_active():
+		if Input.is_action_pressed("camera_rotate_left"):
+			rotate_by(-90.0 * delta)
+		if Input.is_action_pressed("camera_rotate_right"):
+			rotate_by(90.0 * delta)
+		var pan := Vector2(Input.get_axis("camera_pan_left", "camera_pan_right"), Input.get_axis("camera_pan_down", "camera_pan_up"))
+		if pan != Vector2.ZERO:
+			pan_by(pan * distance * 0.6 * delta)   # about 60 % of the view distance per second
+		if Input.is_action_just_pressed("camera_zoom_in_key"):
+			zoom_by(0.9)
+		if Input.is_action_just_pressed("camera_zoom_out_key"):
+			zoom_by(1.1)
 
 	# T18 camera shake: every frame while it runs, re-roll the random offset and
 	# decay it with the remaining time, then settle back to zero when it ends.
@@ -203,6 +213,7 @@ func go_home() -> void:
 	_refit()                 # sets the home target and distance
 	var to := target
 	target = from
+	yaw = wrapf(yaw, -180.0, 180.0)   # the shortest way back: yaw adds up with every turn, and 720 spun twice
 	var tw := create_tween().set_parallel()
 	tw.tween_property(self, "distance", home_distance, 0.35)
 	tw.tween_property(self, "target", to, 0.35)

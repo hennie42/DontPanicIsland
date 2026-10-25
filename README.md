@@ -23,7 +23,8 @@ a home PC can build (see [How it was made](#how-it-was-made)).
   - Parrot scout (2 wood): shows a hidden number
   - Towel of safety (5 wood): the next mine costs no crewmate
 
-25 islands: the hand-made original and 24 generated ones, each checked by a solver bot to be winnable. Every game
+25 islands: the hand-made original and 24 generated ones, each played by a solver bot that wins it about as often as
+the original. Every game
 picks one at random; mines and treasure are placed after your first click.
 
 ### Controls

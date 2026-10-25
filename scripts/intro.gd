@@ -9,155 +9,135 @@ const UFO_Y := 4.5   # flight height: at 6 it flew above the top of a 16:9 frame
 var rig: CameraRig
 var board: Board
 var _sfx: Sfx
-var _is_skipping: bool = false
-var _tween: Tween
+var _ended: bool = false
+var _tween: Tween    # the UFO and camera timeline; its end is the intro's end
 
 # For driving rig.yaw and rig.distance via Intro's _process
 var _tween_yaw: float = 0.0
-var _tween_dist: float = 14.0   # set from rig.home_distance when the intro starts
+var _tween_zoom: float = 1.5    # rig.distance = rig.home_distance * this: the home distance changes when the window
+                                # is resized (it is at startup), and a distance fixed at the start ended in a jump
 
-func _ready() -> void:
-	pass
-
+## Plays the intro and returns when it is over, played to the end or skipped. Every timed step is a tween of this
+## node, so a skip (which frees it) also stops the steps still to come.
 func play(full: bool, camera_rig: CameraRig, sfx: Sfx) -> void:
 	rig = camera_rig
 	board = get_parent().board
 	_sfx = sfx
-	_is_skipping = false
 
 	GameEvent.marker("INTRO_START", "full=%s" % str(full))
 
 	if full:
-		await _do_full_intro()
+		_do_full_intro()
 	else:
-		await _do_short_intro()
-
-	GameEvent.marker("INTRO_END", "t=%d" % (Time.get_ticks_msec() / 1000))
-	# hand the camera back: left alive, _process kept forcing rig.yaw and rig.distance every frame, so the
-	# player's turns and zooms snapped back (only a skipped intro freed itself)
-	set_process(false)
-	finished.emit()
-	queue_free()
+		_do_short_intro()
+	await finished
 
 func _input(event: InputEvent) -> void:
-	if _is_skipping: return
+	if _ended: return
 	if event is InputEventMouseButton or event is InputEventKey:
 		if event.pressed:
-			_skip()
+			# the skip press is the intro's: passed on, its release dug the tile under the mouse (landing the camp)
+			get_viewport().set_input_as_handled()
+			_end(true)
 
-func _skip() -> void:
-	_is_skipping = true
+## Ends the intro (once): the camera in the play view, then `finished` and free.
+func _end(skipped: bool = false) -> void:
+	if _ended:
+		return
+	_ended = true
 	if _tween:
 		_tween.kill()
-
-	# Skip to the end: camera at play view, nodes freed
+	# hand the camera back: left alive, _process kept forcing rig.yaw and rig.distance every frame, so the
+	# player's turns and zooms snapped back
+	set_process(false)
 	rig.distance = rig.home_distance
 	rig.yaw = 0.0
 	rig.apply()
-
+	GameEvent.marker("INTRO_END", "t=%d skipped=%s" % [Time.get_ticks_msec() / 1000, skipped])
 	finished.emit()
 	queue_free()
 
 func _process(_delta: float) -> void:
 	if rig:
 		rig.yaw = _tween_yaw
-		rig.distance = _tween_dist
+		rig.distance = rig.home_distance * _tween_zoom
 		rig.apply()
 
 func _do_full_intro() -> void:
-	_tween = create_tween()
-
 	# Setup UFO
 	var ufo := Ufo.make()   # glass dome, the alien inside
 	ufo.scale *= 2.0
 	add_child(ufo)
-	ufo.global_position = Vector3(-25, UFO_Y, 0)
+	ufo.position = Vector3(-25, UFO_Y, 0)
 
 	# Setup Camera
-	_tween_dist = rig.home_distance * 1.5
+	_tween_zoom = 1.5
 	_tween_yaw = 0.0
 
-	# 0-3s: Camera starts far and rotating
-	_tween.set_parallel(true)
-	_tween.tween_property(self, "_tween_yaw", 360.0, 12.0)
-	_tween.tween_property(self, "_tween_dist", rig.home_distance * 1.5, 12.0)
-	_tween.tween_property(ufo, "global_position", Vector3(25, UFO_Y, 0), 12.0)
-
-	# Bobbing and tilting
-	var bob_tween := create_tween()
-	bob_tween.tween_method(func(t: float):
+	# 0-8 s: the camera circles far out while the UFO crosses, bobbing and tilting. One timeline: two tweens on the
+	# same property fought (the 12 s circle undid the swoop and left the camera at 1.5x the play distance).
+	_tween = create_tween().set_parallel(true)
+	_tween.tween_property(self, "_tween_yaw", 240.0, 8.0)
+	_tween.tween_property(ufo, "position:x", 8.0, 8.0)
+	_tween.tween_method(func(t: float):
 		ufo.position.y = UFO_Y + sin(t * 2.0) * 0.5
 		ufo.rotation.z = sin(t * 2.0) * 0.2
-	, 0.0, 12.0, 12.0)
+	, 0.0, 8.0, 8.0)
+	# 8-11 s: the UFO zips off and the camera swoops down to the play view, still turning the same way
+	_tween.chain().tween_property(ufo, "position", Vector3(40, 10, 0), 3.0)
+	_tween.tween_property(ufo, "rotation:z", 0.0, 3.0)
+	_tween.tween_property(self, "_tween_yaw", 360.0, 3.0)
+	_tween.tween_property(self, "_tween_zoom", 1.0, 3.0).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+	_tween.finished.connect(_end)
 
-	# 3-8s: Bombs
-	get_tree().create_timer(3.0).timeout.connect(func(): _drop_bombs(ufo))
-
-	# 3-8s: Speech bubble
-	# once the UFO is well into the picture (at 3 s it was at the left edge and the text was clipped)
-	get_tree().create_timer(4.5).timeout.connect(func(): _show_speech_bubble(ufo))
-
-	# 3-8s: Whale and Petunias
-	get_tree().create_timer(6.0).timeout.connect(func(): _drop_gag(ufo))
-
-	# 8-11s: UFO zips off and Camera swoops
-	get_tree().create_timer(8.0).timeout.connect(func():
-		var zip_tween := create_tween()
-		zip_tween.tween_property(ufo, "global_position", Vector3(40, 10, 0), 3.0)
-
-		var cam_swoop := create_tween()
-		cam_swoop.tween_property(self, "_tween_dist", rig.home_distance, 3.0)
-		cam_swoop.parallel().tween_property(self, "_tween_yaw", 0.0, 3.0)
-	)
-
-	await _tween.finished
+	# 3 s: bombs; 4.5 s: the speech bubble, once the UFO is well into the picture (at 3 s it was at the left edge
+	# and the text was clipped); 6 s: the whale and the petunias
+	var cues := create_tween()
+	cues.tween_interval(3.0)
+	cues.tween_callback(_drop_bombs.bind(8, 0.6))
+	cues.tween_interval(1.5)
+	cues.tween_callback(_show_speech_bubble.bind(ufo))
+	cues.tween_interval(1.5)
+	cues.tween_callback(_drop_gag)
 
 func _do_short_intro() -> void:
-	_tween = create_tween()
-
 	# Setup UFO
 	var ufo := Ufo.make()   # glass dome, the alien inside
 	ufo.scale *= 2.0
 	add_child(ufo)
-	ufo.global_position = Vector3(-25, UFO_Y, 0)
+	ufo.position = Vector3(-25, UFO_Y, 0)
 
-	_tween_dist = rig.home_distance * 1.5
+	_tween_zoom = 1.5
 	_tween_yaw = 0.0
 
-	_tween.set_parallel(true)
+	# one turn while closing in to the play view (it used to stay out at 1.5x and jump in at the end)
+	_tween = create_tween().set_parallel(true)
 	_tween.tween_property(self, "_tween_yaw", 360.0, 3.0)
-	_tween.tween_property(self, "_tween_dist", rig.home_distance * 1.5, 3.0)
-	_tween.tween_property(ufo, "global_position", Vector3(25, UFO_Y, 0), 3.0)
+	_tween.tween_property(self, "_tween_zoom", 1.0, 3.0).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+	_tween.tween_property(ufo, "position:x", 25.0, 3.0)
+	_tween.finished.connect(_end)
 
 	# 3 bombs
-	get_tree().create_timer(0.5).timeout.connect(func(): _drop_bombs_short(ufo))
+	var cues := create_tween()
+	cues.tween_interval(0.5)
+	cues.tween_callback(_drop_bombs.bind(3, 0.5))
 
-	await _tween.finished
+## `count` bombs at random cells, `gap` seconds apart (decoys: the real mines are placed after the first click).
+func _drop_bombs(count: int, gap: float) -> void:
+	var tw := create_tween()
+	for i in count:
+		tw.tween_callback(_drop_bomb)
+		tw.tween_interval(gap)
 
-func _drop_bombs_short(ufo: Node3D) -> void:
-	var land_cells = board.land.keys()
-	for i in range(3):
-		var cell = land_cells.pick_random()
-		var pos = Hex.to_world(cell) + Vector3(0, 10, 0)
-		_sfx.play("ufo")
-		_sfx.play("drop")
-		_drop_item(pos, Art.prop("bomb"), 2.0, cell)
-		await get_tree().create_timer(0.5).timeout
+func _drop_bomb() -> void:
+	var cell: Vector2i = board.land.keys().pick_random()
+	_sfx.play("ufo")
+	_sfx.play("drop")
+	_drop_item(Hex.to_world(cell) + Vector3(0, 10, 0), Art.prop("bomb"), 2.0, cell)
 
-func _drop_bombs(ufo: Node3D) -> void:
-	var land_cells = board.land.keys()
-	for i in range(8):
-		var cell = land_cells.pick_random()
-		var pos = Hex.to_world(cell) + Vector3(0, 10, 0)
-		_sfx.play("ufo")
-		_sfx.play("drop")
-		_drop_item(pos, Art.prop("bomb"), 2.0, cell)
-		await get_tree().create_timer(0.6).timeout
-
-func _drop_gag(ufo: Node3D) -> void:
-	var land_cells = board.land.keys()
-	var cell = land_cells.pick_random()
-	var pos = Hex.to_world(cell) + Vector3(0, 10, 0)
+func _drop_gag() -> void:
+	var cell: Vector2i = board.land.keys().pick_random()
+	var pos := Hex.to_world(cell) + Vector3(0, 10, 0)
 	_sfx.play("ufo")
 	_sfx.play("drop")
 
